@@ -1,0 +1,12 @@
+{
+    "controller": "controllers/record",
+    "recordViews":{
+       "list": "crm:views/package/record/list",
+       "detail": "crm:views/package/record/detail"
+    },
+    "views": {
+       "list": "crm:views/package/list",
+       "detail": "crm:views/package/detail"
+    }
+ }
+ 

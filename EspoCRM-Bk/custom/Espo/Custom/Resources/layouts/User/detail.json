@@ -1,0 +1,38 @@
+[
+    {
+        "label": "Overview",
+        "style": "default",
+        "rows": [
+            [
+                {
+                    "name": "userName",
+                    "fullWidth": true
+                }
+            ],
+            [
+                {
+                    "name": "firstName"
+                },
+                {
+                    "name": "lastName"
+                }
+            ],
+            [
+                {
+                    "name": "phoneNumber"
+                },
+                {
+                    "name": "userType"
+                }
+            ],
+            [
+                {
+                    "name": "avatar"
+                },
+                {
+                    "name": "isActive"
+                }
+            ]
+        ]
+    }
+]

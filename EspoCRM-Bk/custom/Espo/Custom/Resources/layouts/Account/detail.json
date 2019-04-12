@@ -1,0 +1,36 @@
+[
+    {
+        "label": "Overview",
+        "style": "default",
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                false
+            ],
+            [
+                {
+                    "name": "emailAddress"
+                },
+                {
+                    "name": "phoneNumber"
+                }
+            ],
+            [
+                {
+                    "name": "website"
+                },
+                {
+                    "name": "package"
+                }
+            ],
+            [
+                {
+                    "name": "billingAddress"
+                },
+                false
+            ]
+        ]
+    }
+]

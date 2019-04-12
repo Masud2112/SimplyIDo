@@ -1,0 +1,20 @@
+[
+    {
+        "label": "Overview",
+        "style": "default",
+        "rows": [
+            [
+                {
+                    "name": "name",
+                    "fullWidth": true
+                }
+            ],
+            [
+                {
+                    "name": "rate",
+                    "fullWidth": true
+                }
+            ]
+        ]
+    }
+]

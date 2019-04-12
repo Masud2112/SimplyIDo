@@ -1,0 +1,59 @@
+{
+    "fields": {
+        "roles": {
+            "type": "linkMultiple",
+            "layoutDetailDisabled": true,
+            "layoutListDisabled": true,
+            "layoutMassUpdateDisabled": true,
+            "noLoad": true,
+            "importDisabled": true,
+            "isCustom": true
+        },
+        "package": {
+            "type": "link"
+        },
+        "billingAddressCountry": {
+            "default": "United States",
+            "readOnly": true,
+            "required": false,
+            "trim": false,
+            "audited": false,
+            "tooltip": false
+        },
+        "emailAddress": {
+            "notStorable": true,
+            "required": true,
+            "tooltip": false,
+            "readOnly": true
+        },
+        "phoneNumber": {
+            "notStorable": true,
+            "required": false,
+            "tooltip": false
+        }
+    },
+    "links": {
+        "roles": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "Role",
+            "audited": false,
+            "isCustom": true
+        },
+        "package": {
+            "type": "belongsTo",
+            "foreign": "accounts",
+            "entity": "Package",
+            "audited": false,
+            "isCustom": true
+        }
+    },
+    "collection": {
+        "sortBy": "name",
+        "asc": true,
+        "textFilterFields": [
+            "name",
+            "emailAddress"
+        ]
+    }
+}

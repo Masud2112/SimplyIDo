@@ -1,0 +1,16 @@
+{
+    "fields": {
+        "roles": {
+            "tooltip": false,
+            "layoutListDisabled": true,
+            "required": false,
+            "readOnly": false
+        },
+        "name": {
+            "required": true,
+            "audited": false,
+            "readOnly": false,
+            "tooltip": false
+        }
+    }
+}

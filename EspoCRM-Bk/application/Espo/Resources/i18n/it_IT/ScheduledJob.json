@@ -1,0 +1,37 @@
+{
+  "fields": {
+    "name": "Nome",
+    "status": "Stato",
+    "job": "Job",
+    "scheduling": "Programmazione"
+  },
+  "links": {
+    "log": "Log"
+  },
+  "labels": {
+    "Create ScheduledJob": "Crea un Job Schedulato"
+  },
+  "options": {
+    "job": {
+      "Cleanup": "Pulisci",
+      "CheckInboundEmails": "Controlla gli Account E-mail di Gruppo",
+      "CheckEmailAccounts": "Controlla gli Account E-mail Personali",
+      "SendEmailReminders": "Invia promemoria via email",
+      "AuthTokenControl": "Controllo dell'Auth Token",
+      "SendEmailNotifications": "Invia notifiche e-mail"
+    },
+    "cronSetup": {
+      "linux": "Nota: Aggiungi questa riga al file crontab per eseguire gli Scheduled Jobs di Espo:",
+      "mac": "Nota: Aggiungi questa riga al file crontab per eseguire gli Scheduled Jobs di Espo:",
+      "windows": "Nota: Creare un file batch con i seguenti comandi per eseguire gli Scheduled Jobs di Espo utilizzando Operazioni pianificate di Windows:",
+      "default": "Nota: Aggiungi questo comando al Cron Job (Scheduled Task):"
+    },
+    "status": {
+      "Active": "Attivo",
+      "Inactive": "Non Attivo"
+    }
+  },
+  "tooltips": {
+    "scheduling": "Formato Crontab. Definisce la frequenza dell'esecuzione dei job.\n\n*/5 * * * * - ogni 5 minuti\n\n0 */2 * * * - ogni 2 ore\n\n30 1 * * * - all'01:30 una volta al giorno\n\n0 0 1 * * - il primo del mese"
+  }
+}

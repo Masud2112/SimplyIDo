@@ -1,0 +1,25 @@
+{
+    "fields": {
+        "roles": "Roles",
+        "billingAddress": "Address",
+        "services": "Services",
+        "package": "Package",
+        "billingAddressCountry": "Country"
+    },
+    "links": {
+        "roles": "Roles",
+        "services": "Services",
+        "package": "Package"
+    },
+    "labels": {
+        "Create Account": "Create Account"
+    },
+    "options": {
+        "phoneNumber": {
+            "Office": "Phone",
+            "Mobile": "Home",
+            "Fax": "Work",
+            "Other": "Mobile"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "collection": {
+        "sortBy": "createdAt",
+        "asc": false,
+        "textFilterFields": [
+            "name"
+        ]
+    },
+    "fields": {
+        "rate": {
+            "notNull": false,
+            "audited": false,
+            "readOnly": false,
+            "tooltip": false
+        }
+    }
+}

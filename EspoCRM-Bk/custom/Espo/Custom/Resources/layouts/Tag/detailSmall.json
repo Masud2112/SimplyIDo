@@ -1,0 +1,20 @@
+[
+    {
+        "label": "",
+        "style": "default",
+        "rows": [
+            [
+                {
+                    "name": "name",
+                    "fullWidth": true
+                }
+            ],
+            [
+                {
+                    "name": "color",
+                    "fullWidth": true
+                }
+            ]
+        ]
+    }
+]

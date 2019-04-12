@@ -1,0 +1,28 @@
+{
+    "scopeNames": {
+        "Tag": "Tag",
+        "Tax": "Tax",
+        "Contact": "Address Book",
+        "Document": "File",
+        "Email": "Email",
+        "PackageType": "PackageType",
+        "Package": "Package"
+    },
+    "scopeNamesPlural": {
+        "Tag": "Tags",
+        "Tax": "Taxs",
+        "Contact": "Address Book",
+        "Document": "Files",
+        "Email": "Emails",
+        "PackageType": "PackageTypes",
+        "Package": "Packages"
+    },
+    "scopeMenuIcon": {
+        "Contact": "tune",
+        "Document": "import_contacts",
+        "Email": "mail_outline",
+        "PackageType": "PackageType",
+        "Package": "Package",
+        "ServiceType": "ServiceType"
+    }
+}

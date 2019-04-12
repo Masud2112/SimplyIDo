@@ -1,0 +1,14 @@
+{
+    "fields": {
+        "account": "Account"
+    },
+    "links": {
+        "account": "Account"
+    },
+    "actions": {
+        "stream": "Notes"
+    },
+    "labels": {
+        "Scope Level": "Features"
+    }
+}

@@ -1,0 +1,36 @@
+[
+    {
+        "label": "Overview",
+        "style": "default",
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                false
+            ]
+        ]
+    },
+    {
+        "label": "New panel",
+        "style": "default",
+        "rows": [
+            [
+                {
+                    "name": "billingaddress_city"
+                },
+                {
+                    "name": "billingaddress_state"
+                }
+            ],
+            [
+                {
+                    "name": "billingaddress_postal_code"
+                },
+                {
+                    "name": "billingaddress_country"
+                }
+            ]
+        ]
+    }
+]

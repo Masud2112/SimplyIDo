@@ -1,0 +1,29 @@
+{
+    "collection": {
+        "sortBy": "createdAt",
+        "asc": false,
+        "textFilterFields": [
+            "name"
+        ]
+    },
+    "fields": {
+        "services": {
+            "type": "linkMultiple",
+            "layoutDetailDisabled": true,
+            "layoutListDisabled": true,
+            "layoutMassUpdateDisabled": true,
+            "noLoad": true,
+            "importDisabled": true,
+            "isCustom": true
+        }
+    },
+    "links": {
+        "services": {
+            "type": "hasMany",
+            "foreign": "serviceType",
+            "entity": "Service",
+            "audited": false,
+            "isCustom": true
+        }
+    }
+}

@@ -1,0 +1,53 @@
+{
+  "fields": {
+    "name": "Nome",
+    "status": "Stato",
+    "storeSentEmails": "Archiviare Email Inviate",
+    "startAt": "Data d'Inizio",
+    "fromAddress": "Indirizzo mittente",
+    "fromName": "Mittente",
+    "replyToAddress": "Indirizzo Email per il Reply-To",
+    "replyToName": "Nome per il Reply-To",
+    "campaign": "Campagna",
+    "emailTemplate": "Modello Email",
+    "inboundEmail": "Email Account",
+    "targetLists": "Liste di Target",
+    "excludingTargetLists": "Liste di Target Escluse",
+    "optOutEntirely": "Opt-Out da tutto"
+  },
+  "links": {
+    "targetLists": "Liste di Target",
+    "excludingTargetLists": "Target List Escluse",
+    "queueItems": "Item in Coda",
+    "campaign": "Campagna",
+    "emailTemplate": "Modello Email",
+    "inboundEmail": "Email Account"
+  },
+  "options": {
+    "status": {
+      "Draft": "Bozza",
+      "Pending": "In attesa",
+      "In Process": "In Corso",
+      "Complete": "Completato",
+      "Canceled": "Cancellato",
+      "Failed": "Fallito"
+    }
+  },
+  "labels": {
+    "Create MassEmail": "Crea Email Massiva",
+    "Send Test": "Invia Test"
+  },
+  "messages": {
+    "selectAtLeastOneTarget": "Selezionare almeno un target.",
+    "testSent": "L'Email di prova dovrebbe essere stata inviata"
+  },
+  "tooltips": {
+    "optOutEntirely": "Gli Indirizzi e-mail dei destinatari che si sono disiscritti saranno contrassegnati come opted-out e non riceveranno più e-mail massive.",
+    "targetLists": "Target che devono ricevere i messaggi.",
+    "excludingTargetLists": "Target che non devono ricevere i messaggi."
+  },
+  "presetFilters": {
+    "actual": "Attuale",
+    "complete": "Completato"
+  }
+}

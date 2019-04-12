@@ -1,0 +1,25 @@
+{
+    "mandatory": {
+        "scopeLevel": {
+            "MassEmail": "Campaign",
+            "CampaignLogRecord": "Campaign",
+            "CampaignTrackingUrl": "Campaign",
+            "EmailQueueItem": false
+        }
+    },
+    "default": {
+        "scopeFieldLevel": {
+            "KnowledgeBaseArticle": {
+                "portals": false,
+                "order": false,
+                "status": false
+            },
+            "Case": {
+                "status": {
+                    "read": "yes",
+                    "edit": "no"
+                }
+            }
+        }
+    }
+}

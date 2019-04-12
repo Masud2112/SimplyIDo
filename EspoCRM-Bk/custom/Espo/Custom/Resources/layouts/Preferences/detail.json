@@ -1,0 +1,24 @@
+[
+    {
+        "label": "Calendar Settings",
+        "style": "default",
+        "rows": [
+            [
+                {
+                    "name": "dateFormat"
+                },
+                {
+                    "name": "timeZone"
+                }
+            ],
+            [
+                {
+                    "name": "timeFormat"
+                },
+                {
+                    "name": "weekStart"
+                }
+            ]
+        ]
+    }
+]

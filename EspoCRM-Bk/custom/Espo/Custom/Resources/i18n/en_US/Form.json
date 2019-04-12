@@ -1,0 +1,11 @@
+{
+    "links": {
+        "formType": "FormType"
+    },
+    "labels": {
+        "Create Form": "Create Form"
+    },
+    "fields": {
+        "formType": "FormType"
+    }
+}

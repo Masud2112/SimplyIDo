@@ -1,0 +1,75 @@
+{
+  "fields": {
+    "name": "Nome",
+    "description": "Descrizione",
+    "status": "Stato",
+    "type": "Tipo",
+    "startDate": "Data d'Inizio",
+    "endDate": "Data di Termine",
+    "targetLists": "Liste di Target",
+    "excludingTargetLists": "Escludi Lista Target",
+    "sentCount": "Inviato",
+    "openedCount": "Aperto",
+    "clickedCount": "Cliccato",
+    "optedOutCount": "Rinuncia",
+    "bouncedCount": "Bounced",
+    "hardBouncedCount": "Hard Bounced",
+    "softBouncedCount": "Soft Bounced",
+    "leadCreatedCount": "Lead Creata",
+    "revenue": "Fatturato",
+    "revenueConverted": "Fatturato (convertito)",
+    "budget": "Budget",
+    "budgetConverted": "Budget (convertito)"
+  },
+  "links": {
+    "targetLists": "Liste di Target",
+    "excludingTargetLists": "Escludi Liste di Target",
+    "accounts": "Account",
+    "contacts": "Contatti",
+    "leads": "Lead",
+    "opportunities": "Opportunità",
+    "campaignLogRecords": "Log",
+    "massEmails": "Email Massiva",
+    "trackingUrls": "URL di Tracking"
+  },
+  "options": {
+    "type": {
+      "Email": "Email",
+      "Web": "Web",
+      "Television": "Televisione",
+      "Radio": "Radio",
+      "Newsletter": "Newsletter",
+      "Mail": "Mail"
+    },
+    "status": {
+      "Planning": "Pianificazione",
+      "Active": "Attivo",
+      "Inactive": "Non Attivo",
+      "Complete": "Completo"
+    }
+  },
+  "labels": {
+    "Create Campaign": "Crea Campaigna",
+    "Target Lists": "Liste di Target",
+    "Statistics": "Statistiche",
+    "hard": "hard",
+    "soft": "soft",
+    "Unsubscribe": "Annulla l'iscrizione",
+    "Mass Emails": "Email Massive",
+    "Email Templates": "Modelli Email",
+    "Unsubscribe again": "Disiscriviti ancora",
+    "Subscribe again": "Iscriviti ancora",
+    "Create Target List": "Crea Lista Target"
+  },
+  "presetFilters": {
+    "active": "Attivo"
+  },
+  "messages": {
+    "unsubscribed": "Sei stato rimosso dalla nostra mailing list.",
+    "subscribedAgain": "Ti sei iscritto nuovamente."
+  },
+  "tooltips": {
+    "targetLists": "Target che devono ricevere i messaggi.",
+    "excludingTargetLists": "Target che non dovrebbe ricevere messaggi."
+  }
+}

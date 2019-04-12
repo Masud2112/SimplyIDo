@@ -1,0 +1,20 @@
+{
+  "fields": {
+    "status": "Stato",
+    "executeTime": "Esegui Alle",
+    "attempts": "Tentativi Rimasti",
+    "failedAttempts": "Tentativi Falliti",
+    "serviceName": "Servizio",
+    "method": "Metodo",
+    "scheduledJob": "Job Schedulato",
+    "data": "Data"
+  },
+  "options": {
+    "status": {
+      "Pending": "In attesa",
+      "Success": "Successo",
+      "Running": "In esecuzione",
+      "Failed": "Fallito"
+    }
+  }
+}

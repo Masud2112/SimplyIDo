@@ -1,0 +1,70 @@
+{
+    "scopeNames": {
+        "Tag": "Tag",
+        "Template": "Template",
+        "UserType": "UserType",
+        "Package": "Package",
+        "Role": "Role",
+        "Tax": "Tax",
+        "Account": "Account",
+        "Document": "File",
+        "DocumentFolder": "Folder",
+        "PackageType": "Package Type",
+        "Service": "Service"
+    },
+    "scopeNamesPlural": {
+        "Tag": "Tag",
+        "Template": "Templates",
+        "UserType": "UserTypes",
+        "Package": "Package",
+        "Role": "Roles",
+        "Tax": "Taxes",
+        "Account": "Accounts",
+        "Document": "Files",
+        "DocumentFolder": "Folders",
+        "Service": "Services",
+        "PackageType": "Package Types"
+    },
+    "scopeMenuIcon": {
+        "Tag": "label",
+        "Template": "tune",
+        "UserType": "User Type",
+        "Package": "attach_money",
+        "Role": "Role",
+        "Test123": "Test123",
+        "Tax": "account_balance",
+        "Account": "account_circle",
+        "Document": "import_contacts",
+        "DocumentFolder": "DocumentFolder",
+        "Service": "event",
+        "RoleUserTeam": "RoleUserTeam",
+        "PackageType": "PackageType"
+    },
+    "scopeIsVisible": {
+        "Tag": "Yes",
+        "Template": "Yes",
+        "UserType": "No",
+        "Package": "No",
+        "Role": "Yes",
+        "Test123": "No",
+        "Tax": "Yes",
+        "Account": "No",
+        "Document": "Yes",
+        "DocumentFolder": "Yes",
+        "Service": "Yes",
+        "RoleUserTeam": "No",
+        "PackageType": "Yes"
+    },
+    "labels": {
+        "create": "Create"
+    },
+    "options": {
+        "phoneNumber": {
+            "Mobile": "Mobile",
+            "Office": "Work",
+            "Fax": "Fax",
+            "Home": "Home",
+            "Other": "Other"
+        }
+    }
+}

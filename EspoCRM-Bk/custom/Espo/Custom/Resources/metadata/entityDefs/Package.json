@@ -1,0 +1,104 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "required": true,
+            "trim": true
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "price": {
+            "type": "varchar",
+            "required": true,
+            "trim": true,
+            "audited": false,
+            "readOnly": false,
+            "tooltip": false,
+            "isCustom": true
+        },
+        "data": {
+            "type": "jsonObject"
+        },
+        "trialPeriod": {
+            "type": "varchar",
+            "required": false,
+            "trim": true,
+            "maxLength": 5,
+            "audited": false,
+            "readOnly": false,
+            "tooltip": false,
+            "isCustom": true
+        },
+        "packageType": {
+            "type": "link",
+            "required": true,
+            "audited": false,
+            "readOnly": false,
+            "tooltip": false
+        },
+        "accounts": {
+            "type": "linkMultiple",
+            "layoutDetailDisabled": true,
+            "layoutListDisabled": true,
+            "layoutMassUpdateDisabled": true,
+            "noLoad": true,
+            "importDisabled": true,
+            "isCustom": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "packageType": {
+            "type": "belongsTo",
+            "foreign": "packages",
+            "entity": "PackageType",
+            "audited": false,
+            "isCustom": true
+        },
+        "accounts": {
+            "type": "hasMany",
+            "foreign": "package",
+            "entity": "Account",
+            "audited": false,
+            "isCustom": true
+        }
+    },
+    "collection": {
+        "sortBy": "createdAt",
+        "asc": false,
+        "textFilterFields": [
+            "name"
+        ]
+    },
+    "indexes": {
+        "name": {
+            "columns": [
+                "name",
+                "deleted"
+            ]
+        }
+    }
+}

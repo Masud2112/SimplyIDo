@@ -1,0 +1,47 @@
+{
+  "fields": {
+    "name": "Nome",
+    "parent": "Parente",
+    "status": "Stato",
+    "dateStart": "Data d'inizio",
+    "dateEnd": "Data di scadenza",
+    "dateStartDate": "Data d'Inizio (tutto il giorno)",
+    "dateEndDate": "Data di Termine (tutto il giorno)",
+    "priority": "Priorità",
+    "description": "Descrizione",
+    "isOverdue": "In ritardo",
+    "account": "Account",
+    "dateCompleted": "Data Completamento",
+    "attachments": "Allegati",
+    "reminders": "Promemoria"
+  },
+  "links": {
+    "attachments": "Allegati"
+  },
+  "options": {
+    "status": {
+      "Not Started": "Non iniziato",
+      "Started": "Iniziato",
+      "Completed": "Completato",
+      "Canceled": "Cancellato",
+      "Deferred": "Prorogato"
+    },
+    "priority": {
+      "Low": "Basso",
+      "Normal": "Normale",
+      "High": "Alto",
+      "Urgent": "Urgente"
+    }
+  },
+  "labels": {
+    "Create Task": "Crea Task",
+    "Complete": "Completo"
+  },
+  "presetFilters": {
+    "actual": "Attuale",
+    "completed": "Completato",
+    "deferred": "Prorogato",
+    "todays": "Oggi",
+    "overdue": "In RItardo"
+  }
+}

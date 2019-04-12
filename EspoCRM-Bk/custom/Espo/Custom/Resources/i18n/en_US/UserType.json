@@ -1,0 +1,11 @@
+{
+    "links": {
+        "users": "Users"
+    },
+    "labels": {
+        "Create UserType": "Create User Type"
+    },
+    "fields": {
+        "users": "Users"
+    }
+}

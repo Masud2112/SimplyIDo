@@ -1,0 +1,42 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "required": true,
+            "trim": true
+        },
+        "packages": {
+            "type": "linkMultiple",
+            "layoutDetailDisabled": true,
+            "layoutListDisabled": true,
+            "layoutMassUpdateDisabled": true,
+            "noLoad": true,
+            "importDisabled": true,
+            "isCustom": true
+        }
+    },
+    "links": {
+        "packages": {
+            "type": "hasMany",
+            "foreign": "packageType",
+            "entity": "Package",
+            "audited": false,
+            "isCustom": true
+        }
+    },
+    "collection": {
+        "sortBy": "name",
+        "asc": false,
+        "textFilterFields": [
+            "name"
+        ]
+    },
+    "indexes": {
+        "name": {
+            "columns": [
+                "name",
+                "deleted"
+            ]
+        }
+    }
+}

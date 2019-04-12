@@ -1,0 +1,17 @@
+{
+    "links": {
+        "serviceType": "ServiceType",
+        "account": "Account"
+    },
+    "labels": {
+        "Create Service": "Create Service"
+    },
+    "fields": {
+        "serviceType": "ServiceType",
+        "account": "Account",
+        "billingaddress_city": "Billing_address_city",
+        "billingaddress_state": "Billing_address_state",
+        "billingaddress_postal_code": "Billing_address_postal_code",
+        "billingaddress_country": "Billing_address_country"
+    }
+}

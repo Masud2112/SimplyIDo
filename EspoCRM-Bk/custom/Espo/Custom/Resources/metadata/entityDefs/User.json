@@ -1,0 +1,82 @@
+{
+    "fields": {
+        "userName": {
+            "tooltipText": "",
+            "trim": false,
+            "audited": false,
+            "readOnly": false,
+            "tooltip": false
+        },
+        "phoneno": {
+            "type": "varchar",
+            "required": false,
+            "trim": true,
+            "audited": false,
+            "readOnly": false,
+            "tooltip": false,
+            "isCustom": true
+        },
+        "isSidoAdmin": {
+            "type": "int",
+            "required": false,
+            "min": 1,
+            "disableFormatting": false,
+            "audited": false,
+            "readOnly": false,
+            "tooltip": false,
+            "isCustom": true
+        },
+        "userType": {
+            "type": "link",
+            "required": false,
+            "audited": false,
+            "readOnly": false,
+            "tooltip": false
+        },
+        "accountUserId": {
+            "type": "varchar",
+            "required": false,
+            "trim": true,
+            "maxLength": 24,
+            "audited": false,
+            "readOnly": false,
+            "tooltip": false,
+            "isCustom": true
+        },
+        "roles": {
+            "tooltip": false,
+            "layoutListDisabled": true,
+            "required": false,
+            "readOnly": false
+        },
+        "teams": {
+            "tooltip": false,
+            "columns": {
+                "role": "userRole"
+            },
+            "layoutListDisabled": true,
+            "required": false,
+            "readOnly": false
+        },
+        "phoneNumber": {
+            "typeList": [
+                "Mobile",
+                "Home",
+                "Fax",
+                "Other"
+            ],
+            "notStorable": true,
+            "required": false,
+            "tooltip": false
+        }
+    },
+    "links": {
+        "userType": {
+            "type": "belongsTo",
+            "foreign": "users",
+            "entity": "UserType",
+            "audited": false,
+            "isCustom": true
+        }
+    }
+}

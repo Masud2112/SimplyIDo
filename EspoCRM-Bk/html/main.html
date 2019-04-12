@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+    <head>
+        <title>{{applicationName}}</title>
+        
+        <link rel="icon" href="{{basePath}}client/img/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="{{basePath}}client/img/favicon.ico" type="image/x-icon">
+        
+
+        <link rel="stylesheet" href="{{basePath}}client/assets/css/pace.css">
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+        <link href="{{basePath}}client/assets/vendors/material-icons/material-icons.css" rel="stylesheet" type="text/css">
+        <link href="{{basePath}}client/assets/vendors/mono-social-icons/monosocialiconsfont.css" rel="stylesheet" type="text/css">
+        <link href="{{basePath}}client/assets/css/sweetalert2.css" rel="stylesheet" type="text/css">
+        <link href="{{basePath}}client/assets/css/magnific-popup.min.css" rel="stylesheet" type="text/css">
+        
+        <link href="{{basePath}}client/assets/css/perfect-scrollbar.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+       
+        <!-- Added By: Vaidehi
+            Dt: 09/20/2017
+            for multi select box-->
+        <link href="{{basePath}}client/assets/css/select2.min.css" rel="stylesheet" type="text/css">
+        
+        <link href="{{basePath}}client/css/style.css" rel="stylesheet" type="text/css">
+
+        <!-- Head Libs -->
+        <script src="{{basePath}}client/assets/js/modernizr.min.js"></script>
+
+        <script src="{{basePath}}client/assets/js/jquery-3.2.1.min.js"></script>
+
+        <script src="{{basePath}}client/assets/js/popper.min.js"></script>
+        <script src="{{basePath}}client/assets/js/bootstrap.min.js"></script>
+        <script src="{{basePath}}client/assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="{{basePath}}client/assets/js/mediaelementplayer.min.js"></script>
+        <script src="{{basePath}}client/assets/js/metisMenu.min.js"></script>
+        <script src="{{basePath}}client/assets/js/perfect-scrollbar.jquery.js"></script>
+        <script src="{{basePath}}client/assets/js/sweetalert2.min.js"></script>
+        
+        <script src="{{basePath}}client/assets/vendors/theme-widgets/widgets.js"></script>
+        <script src="{{basePath}}client/assets/js/moment.min.js"></script>
+
+        <!-- Added By: Vaidehi
+            Dt: 09/20/2017
+            for stripe payment-->
+        <!--<script src="https://js.stripe.com/v3/"></script>-->
+                
+        <script src="{{basePath}}client/assets/js/jquery-ui.min.js"></script>
+        <script src="{{basePath}}client/assets/js/theme.js"></script>
+        <script src="{{basePath}}client/assets/js/custom.js"></script>
+        
+        <script type="text/javascript" src="{{basePath}}client/espo.min.js?r={{cacheTimestamp}}" data-base-path="{{basePath}}"></script>
+
+		<!-- Added By: Vaidehi
+            Dt: 09/20/2017
+            for multi select box-->
+        <script src="{{basePath}}client/assets/js/select2.min.js"></script>
+
+        <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+
+        <!-- <link href="{{basePath}}{{stylesheet}}?r={{cacheTimestamp}}" rel="stylesheet" id='main-stylesheet'> -->
+        <meta name="description" content="Simply I Do is Open Source CRM application. Increase profitability through customer loyalty!">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        
+        <script type="text/javascript" src="{{basePath}}client/js/parsley.min.js" data-base-path="{{basePath}}"></script>
+
+        <script type="text/javascript">
+            $(function () {
+                Espo.loader.cacheTimestamp = {{cacheTimestamp}};
+                Espo.require('app', function (App) {
+                    var app = new App({
+                        useCache: {{useCache}},
+                        cacheTimestamp: {{cacheTimestamp}},
+                        basePath: '{{basePath}}'
+                    }, function (app) {
+                        {{runScript}}
+                    });
+                });
+            });
+        </script>
+        
+    </head>
+    <body class="profile-page header-light sidebar-dark sidebar-expand  pace-done">
+        <div class="container content"></div>
+        <footer>
+            <p class="credit small">&copy; 2017 <a href="" title="Powered by Simply I Do" alt="Visit official Simply I Do website">Simply I Do</a></p>
+        </footer>
+        
+    </body>
+</html>

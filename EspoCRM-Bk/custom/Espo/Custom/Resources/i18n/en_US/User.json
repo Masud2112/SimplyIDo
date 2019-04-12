@@ -1,0 +1,26 @@
+{
+    "fields": {
+        "userType": "User Type",
+        "userTypeId": "UserTypeId",
+        "isSidoAdmin": "IsSidoAdmin",
+        "phoneno": "Phone Number",
+        "userName": "Email",
+        "accountUserId": "Account User Id",
+        "teams": "Teams",
+        "isActive": "Active"
+    },
+    "links": {
+        "userType": "UserType"
+    },
+    "labels": {
+        "Email Address": "Email"
+    },
+    "options": {
+        "phoneNumber": {
+            "Mobile": "Phone",
+            "Home": "Home",
+            "Fax": "Work",
+            "Other": "Mobile"
+        }
+    }
+}

@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fa250d70-3ab3-4afc-ad87-9279e95550bf" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Development/application/config/app-config.php" beforeDir="false" afterPath="$PROJECT_DIR$/Development/application/config/app-config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Development/application/helpers/perfex_db_helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/Development/application/helpers/perfex_db_helper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Development/application/helpers/perfex_misc_helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/Development/application/helpers/perfex_misc_helper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Development/application/models/Staff_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/Development/application/models/Staff_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Development/application/views/admin/staff/member.php" beforeDir="false" afterPath="$PROJECT_DIR$/Development/application/views/admin/staff/member.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Development/application/views/admin/subscription/manage_subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/Development/application/views/admin/subscription/manage_subscription.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Development/application/views/admin/subscription/subscription_payment.php" beforeDir="false" afterPath="$PROJECT_DIR$/Development/application/views/admin/subscription/subscription_payment.php" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Development/application/views/admin/packages/package.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="99" column="59" selection-start-line="99" selection-start-column="59" selection-end-line="99" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Development/application/helpers/perfex_misc_helper.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="203">
+              <caret line="1561" column="33" selection-start-line="1561" selection-start-column="33" selection-end-line="1561" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Development/application/views/admin/staff/member.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="229">
+              <caret line="726" column="73" selection-start-line="726" selection-start-column="73" selection-end-line="726" selection-end-column="73" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Development/application/controllers/admin/Staff.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1088">
+              <caret line="64" column="46" selection-start-line="64" selection-start-column="35" selection-end-line="64" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Development/application/views/admin/tables/staff.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="833">
+              <caret line="64" column="17" selection-start-line="62" selection-end-line="64" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Development/application/models/Staff_model.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-995">
+              <caret line="525" column="30" lean-forward="true" selection-start-line="525" selection-start-column="30" selection-end-line="525" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Development/application/helpers/perfex_db_helper.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1">
+              <caret line="2503" column="5" selection-start-line="2503" selection-start-column="5" selection-end-line="2503" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Development/application/controllers/admin/Subscription.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="178">
+              <caret line="44" column="52" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Development/application/views/admin/subscription/subscription_payment.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Development/application/views/admin/setup/setup.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="25" column="76" selection-start-line="25" selection-start-column="63" selection-end-line="25" selection-end-column="76" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>project(</find>
+      <find>item_im</find>
+      <find>COLUMN DISPLAY OPTION</find>
+      <find>modal</find>
+      <find>load</find>
+      <find>display_column</find>
+      <find>group</find>
+      <find>prev</find>
+      <find>pre</find>
+      <find>display_column_popup</find>
+      <find>desc_title</find>
+      <find>.reminder-modal-invoic</find>
+      <find>activi</find>
+      <find>invoice-status</find>
+      <find>options</find>
+      <find>page-services-admin</find>
+      <find>fa fa-chevron-left</find>
+      <find>eventInfo</find>
+      <find>table-services</find>
+      <find>service</find>
+      <find>new</find>
+      <find>bannerImg</find>
+      <find>eventimg</find>
+      <find>profilr</find>
+      <find>kan-ban-exp-clps</find>
+      <find>task</find>
+      <find>clien</find>
+      <find>record_subscription_payment_ajax</find>
+      <find>role</find>
+      <find>n add</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>$project</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>C:\xampp\htdocs\SimplyIDo\Development\application\views\admin\invoice_items</dir>
+      <dir>C:\xampp\htdocs\SimplyIDo\Development\application\views\admin\home</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/agreement.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/recurring_payment.php" />
+        <option value="$PROJECT_DIR$/Development/application/models/Proposaltemplates_model.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/signatures.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/gallery.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/files.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/payment.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/single_signature.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/proposal_bullets.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/viewproposal/proposal_bullets.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/viewproposal/viewproposal.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/viewproposal/payment_schedule.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/viewproposal/paymentschedule_temp.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/viewproposal/payment.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/invoices/invoice_template.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/invoices/invoice.php" />
+        <option value="$PROJECT_DIR$/Development/application/controllers/admin/Invoices.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/projects/invite.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/tasks/manage.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/tasks/kan_ban.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/tasks/_kan_ban_card.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/tasks/task.php" />
+        <option value="$USER_HOME$/Downloads/invoice_preview_template.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/invoices/invoice_payments_table.php" />
+        <option value="E:/masud/Projects/SimplyIDo/SimplyIDoDatabase/Tables/tbloptions.sql" />
+        <option value="$PROJECT_DIR$/Development/application/controllers/admin/Tasks.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/tasks/dashboard.php" />
+        <option value="$PROJECT_DIR$/Development/application/models/Projects_model.php" />
+        <option value="$PROJECT_DIR$/Development/application/controllers/admin/Projects.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/projects/invite_details.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/viewproposal/quote_item.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/quote_item.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/quote_group.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/tickets/services/manage.php" />
+        <option value="$PROJECT_DIR$/Development/application/controllers/admin/Services.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/brandtype/manage.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/tables/brandtype.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/packages/package.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/tables/packages.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/packages/manage.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/invoices/invoice_preview_template.php" />
+        <option value="$PROJECT_DIR$/Development/assets/js/main.min.js" />
+        <option value="$PROJECT_DIR$/Development/assets/css/style.min.css" />
+        <option value="$PROJECT_DIR$/Development/application/config/app-config.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/subscription/manage_subscription.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/subscription/subscription_payment.php" />
+        <option value="$PROJECT_DIR$/Development/application/helpers/perfex_misc_helper.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/staff/member.php" />
+        <option value="$PROJECT_DIR$/Development/application/helpers/perfex_db_helper.php" />
+        <option value="$PROJECT_DIR$/Development/application/models/Staff_model.php" />
+        <option value="$PROJECT_DIR$/Development/application/views/admin/tables/staff.php" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="10" />
+    <option name="y" value="20" />
+    <option name="width" value="1346" />
+    <option name="height" value="688" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="sidopermission" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sidopermission" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sidopermission" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sidopermission" type="462c0819:PsiDirectoryNode" />
+              <item name="Development" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sidopermission" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sidopermission" type="462c0819:PsiDirectoryNode" />
+              <item name="Development" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sidopermission" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sidopermission" type="462c0819:PsiDirectoryNode" />
+              <item name="Development" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sidopermission" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sidopermission" type="462c0819:PsiDirectoryNode" />
+              <item name="Development" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sidopermission" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sidopermission" type="462c0819:PsiDirectoryNode" />
+              <item name="Development" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sidopermission" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sidopermission" type="462c0819:PsiDirectoryNode" />
+              <item name="Development" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sidopermission" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sidopermission" type="462c0819:PsiDirectoryNode" />
+              <item name="Development" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="subscription" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sidopermission" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sidopermission" type="462c0819:PsiDirectoryNode" />
+              <item name="Development" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="tables" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL&#10;MariaDB" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fa250d70-3ab3-4afc-ad87-9279e95550bf" name="Default" comment="" />
+      <created>1525326972394</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1525326972394</updated>
+      <workItem from="1525326973738" duration="22220000" />
+      <workItem from="1525412512598" duration="1124000" />
+      <workItem from="1525415498045" duration="10540000" />
+      <workItem from="1525429377004" duration="274000" />
+      <workItem from="1525429863638" duration="2827000" />
+      <workItem from="1525434326880" duration="8289000" />
+      <workItem from="1525673014159" duration="20647000" />
+      <workItem from="1525757945604" duration="25154000" />
+      <workItem from="1525845740439" duration="1980000" />
+      <workItem from="1554986242273" duration="9256000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="79157000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30559757" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" weight="0.08850227" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2920937" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Development/application/config/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/masud/Projects/SimplyIDo/SimplyIDoDatabase/Tables/tbloptions.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="9" column="1334" lean-forward="true" selection-start-line="9" selection-start-column="1334" selection-end-line="9" selection-end-column="1334" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/models/Tasks_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="10" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/controllers/admin/Tasks.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="1020" column="77" selection-start-line="1020" selection-start-column="77" selection-end-line="1020" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/models/Leads_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="57" column="50" selection-start-line="57" selection-start-column="50" selection-end-line="57" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/projects/kan-ban.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/models/Projects_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="429" column="64" selection-start-line="429" selection-start-column="64" selection-end-line="429" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/controllers/admin/Projects.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="1624" column="24" selection-start-line="1624" selection-start-column="19" selection-end-line="1624" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/projects/dashboard.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="112" column="50" selection-start-line="101" selection-start-column="40" selection-end-line="112" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/tasks/dashboard.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="47" column="48" selection-start-line="47" selection-start-column="48" selection-end-line="47" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/quote_group_options.php" />
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/quote_group.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="415">
+          <caret line="296" lean-forward="true" selection-start-line="296" selection-end-line="296" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/invoice_items/group--.php" />
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/invoice_items/group.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="105" column="159" selection-start-line="105" selection-start-column="139" selection-end-line="105" selection-end-column="159" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/invoice_items/item-option.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-408" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/invoice_items/group_options.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="85" column="6" lean-forward="true" selection-start-line="85" selection-start-column="6" selection-end-line="85" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/quote_item.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="138" column="22" lean-forward="true" selection-start-line="138" selection-start-column="22" selection-end-line="138" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/proposaltemplates/viewproposal/quote_item.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/home/task_list.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="59" column="34" lean-forward="true" selection-start-line="52" selection-start-column="28" selection-end-line="59" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/helpers/perfex_sales_helper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="290" column="9" selection-start-line="290" selection-start-column="9" selection-end-line="290" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/invoices/list_template.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="59" column="35" selection-start-line="59" selection-start-column="35" selection-end-line="59" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/tickets/services/manage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="42" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/config/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1020" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/controllers/admin/Services.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/brandtype/manage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="23" column="38" lean-forward="true" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/tables/brandtype.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="41" column="18" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/tables/tasks.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6035">
+          <caret line="355" column="29" selection-start-line="355" selection-start-column="29" selection-end-line="355" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/helpers/perfex_html_helper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28747">
+          <caret line="1691" column="9" selection-start-line="1691" selection-start-column="9" selection-end-line="1691" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/projects/invite_details.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/controllers/admin/Packages.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/assets/js/main.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167739">
+          <caret line="9867" column="20" selection-start-line="9867" selection-start-column="20" selection-end-line="9867" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/tables/packages.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="55" column="10" selection-start-line="55" selection-start-column="10" selection-end-line="55" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/packages/manage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/invoices/invoice_preview_template.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10302">
+          <caret line="606" column="30" selection-start-line="606" selection-start-column="30" selection-end-line="606" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/assets/css/style.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15283">
+          <caret line="899" column="26" selection-start-line="899" selection-start-column="26" selection-end-line="899" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/tasks/_kan_ban_card.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/config/app-config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="21" column="62" selection-start-line="21" selection-start-column="62" selection-end-line="21" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/roles/role.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="51" column="55" selection-start-line="51" selection-start-column="55" selection-end-line="51" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/clients/client.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="41" lean-forward="true" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/subscription/manage_subscription.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="48" column="31" lean-forward="true" selection-start-line="48" selection-start-column="31" selection-end-line="48" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/subscription/manage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="103" column="96" selection-start-line="103" selection-start-column="64" selection-end-line="103" selection-end-column="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/controllers/admin/Subscription.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="44" column="52" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/subscription/subscription_payment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/setup/setup.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="25" column="76" selection-start-line="25" selection-start-column="63" selection-end-line="25" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/packages/package.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="99" column="59" selection-start-line="99" selection-start-column="59" selection-end-line="99" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/helpers/perfex_misc_helper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="1561" column="33" selection-start-line="1561" selection-start-column="33" selection-end-line="1561" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/staff/member.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="726" column="73" selection-start-line="726" selection-start-column="73" selection-end-line="726" selection-end-column="73" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/helpers/perfex_db_helper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1">
+          <caret line="2503" column="5" selection-start-line="2503" selection-start-column="5" selection-end-line="2503" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/models/Staff_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-995">
+          <caret line="525" column="30" lean-forward="true" selection-start-line="525" selection-start-column="30" selection-end-line="525" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/controllers/admin/Staff.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="64" column="46" selection-start-line="64" selection-start-column="35" selection-end-line="64" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Development/application/views/admin/tables/staff.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="64" column="17" selection-start-line="62" selection-end-line="64" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

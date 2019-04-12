@@ -1,0 +1,43 @@
+{
+  "labels": {
+    "Create Document": "Crea documento",
+    "Details": "Dettagli"
+  },
+  "fields": {
+    "name": "Nome",
+    "status": "Stato",
+    "file": "File",
+    "type": "Tipo",
+    "publishDate": "Data di pubblicazione",
+    "expirationDate": "Data di scadenza",
+    "description": "Descrizione",
+    "accounts": "Account",
+    "folder": "Cartella"
+  },
+  "links": {
+    "accounts": "Account",
+    "opportunities": "Opportunità",
+    "folder": "Cartella",
+    "leads": "Lead",
+    "contacts": "Contatti"
+  },
+  "options": {
+    "status": {
+      "Active": "Attivo",
+      "Draft": "Bozza",
+      "Expired": "Scaduto",
+      "Canceled": "Cancellato"
+    },
+    "type": {
+      "": "Nessun",
+      "Contract": "Contratto",
+      "NDA": "NDA",
+      "EULA": "EULA",
+      "License Agreement": "Contratto di licenza"
+    }
+  },
+  "presetFilters": {
+    "active": "Attivo",
+    "draft": "Bozza"
+  }
+}

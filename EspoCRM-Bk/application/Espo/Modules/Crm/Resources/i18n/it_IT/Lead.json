@@ -1,0 +1,70 @@
+{
+  "labels": {
+    "Converted To": "Convertito in",
+    "Create Lead": "Crea Lead",
+    "Convert": "Converti",
+    "convert": "converti"
+  },
+  "fields": {
+    "name": "Nome",
+    "emailAddress": "Email",
+    "title": "Titolo",
+    "website": "Sito Web",
+    "phoneNumber": "Telefono",
+    "accountName": "Nome utente",
+    "doNotCall": "Non chiamare",
+    "address": "Indirizzo",
+    "status": "Stato",
+    "source": "Provenienza",
+    "opportunityAmount": "Ammontare Opportunità",
+    "opportunityAmountConverted": "Ammontare Opportunità (convertito)",
+    "description": "Descrizione",
+    "createdAccount": "Account",
+    "createdContact": "Contatto",
+    "createdOpportunity": "Opportunità",
+    "campaign": "Campagna",
+    "targetLists": "Liste di Target",
+    "targetList": "Lista di Target",
+    "industry": "Settore",
+    "acceptanceStatus": "Stato Accettazione",
+    "opportunityAmountCurrency": "Valuta dell'Ammontare dell'Opportunità",
+    "acceptanceStatusMeetings": "Stato Accettazione (Meeting)",
+    "acceptanceStatusCalls": "Stato Accettazione (Chiamate)"
+  },
+  "links": {
+    "targetLists": "Liste di Target",
+    "campaignLogRecords": "Log Campagna",
+    "campaign": "Campagna",
+    "createdAccount": "Account",
+    "createdContact": "Contatto",
+    "createdOpportunity": "Opportunità",
+    "cases": "Casi",
+    "documents": "Documenti"
+  },
+  "options": {
+    "status": {
+      "New": "Nuovo",
+      "Assigned": "Assegnato",
+      "In Process": "In Corso",
+      "Converted": "Convertito",
+      "Recycled": "Recuperato",
+      "Dead": "Fuori uso"
+    },
+    "source": {
+      "": "Nessun",
+      "Call": "Chiamata",
+      "Email": "Email",
+      "Existing Customer": "Cliente Esistente",
+      "Partner": "Partner",
+      "Public Relations": "Pubbliche Relazioni",
+      "Web Site": "Sito Web",
+      "Campaign": "Campagna",
+      "Other": "Altro"
+    }
+  },
+  "presetFilters": {
+    "active": "Attivo",
+    "actual": "Attuale",
+    "converted": "Convertito"
+  }
+}

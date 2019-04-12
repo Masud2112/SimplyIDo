@@ -1,0 +1,44 @@
+{
+    "controller": "controllers/record",
+    "recordViews": {
+        "list": "crm:views/package/record/list",
+        "detail": "crm:views/package/record/detail",
+        "edit": "crm:views/package/record/edit"
+    },
+    "views": {
+        "list": "crm:views/package/list",
+        "detail": "crm:views/package/detail"
+    },
+    "dynamicLogic": {
+        "fields": {
+            "trialPeriod": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "packageTypeId",
+                            "data": {
+                                "field": "packageType",
+                                "values": {
+                                    "packageTypeName": "Trial"
+                                }
+                            },
+                            "value": "59c22f03dcb0b2de7"
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "isNotEmpty",
+                            "attribute": "packageTypeId",
+                            "data": {
+                                "field": "packageType"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

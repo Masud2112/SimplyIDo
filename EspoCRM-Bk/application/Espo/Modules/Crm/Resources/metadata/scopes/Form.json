@@ -1,0 +1,14 @@
+{
+    "entity": true,
+    "layouts": true,
+    "tab": true,
+    "acl": true,
+    "module": "Crm",
+    "customizable": true,
+    "importable": true,
+    "notifications": false,
+    "calendar": false,
+    "object": false,
+    "stream": false,
+    "emailtemplate":false
+}

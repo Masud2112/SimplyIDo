@@ -1,0 +1,21 @@
+{
+    "links": {
+        "packageTypes": "Package Types",
+        "id": "id",
+        "packageType": "Package Type",
+        "accounts": "Accounts"
+    },
+    "labels": {
+        "Create Package": "Create Package"
+    },
+    "fields": {
+        "price": "Price / Month (USD)",
+        "data": "Data",
+        "trialPeriod": "Trial Period",
+        "packageTypes": "Package Types",
+        "id": "id",
+        "packageType": "Package Type",
+        "createdAt": "Created On",
+        "accounts": "Accounts"
+    }
+}

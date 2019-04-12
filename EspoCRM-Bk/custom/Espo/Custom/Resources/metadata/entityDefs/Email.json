@@ -1,0 +1,13 @@
+{
+    "collection": {
+        "sortBy": "dateSent",
+        "asc": false,
+        "textFilterFields": [
+            "name",
+            "bodyPlain",
+            "from",
+            "to",
+            "fromName"
+        ]
+    }
+}

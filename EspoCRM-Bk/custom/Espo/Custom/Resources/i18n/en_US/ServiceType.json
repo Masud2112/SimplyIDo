@@ -1,0 +1,13 @@
+{
+    "fields": {
+        "createdAt": "Created On",
+        "modifiedAt": "Modified On",
+        "services": "Services"
+    },
+    "links": {
+        "services": "Services"
+    },
+    "labels": {
+        "Create ServiceType": "Create ServiceType"
+    }
+}

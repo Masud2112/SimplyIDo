@@ -1,0 +1,9 @@
+{
+    "collection": {
+        "sortBy": "dateStart",
+        "asc": false,
+        "textFilterFields": [
+            "name"
+        ]
+    }
+}

@@ -1,0 +1,27 @@
+[
+    {
+        "label":"",
+        "rows":[
+            [
+                {
+                    "name":"from",
+                    "view": "views/email/fields/compose-from-address"
+                },
+                {"name":"to"}
+            ],
+            [
+                {"name":"cc"},
+                {"name":"bcc"}
+            ],
+            [
+                {
+                    "name":"selectTemplate",
+                    "view":"views/email/fields/select-template"
+                },
+                {"name":"subject"}
+            ],
+            [{"name":"body","fullWidth":true}],
+            [{"name":"attachments"}]
+        ]
+    }
+]

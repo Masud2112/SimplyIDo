@@ -1,0 +1,17 @@
+[
+    {
+        "name": "name",
+        "width": 30,
+        "link": true
+    },
+    {
+        "name": "userName"
+    },
+    {
+        "name": "userType"
+    },
+    {
+        "name": "isActive",
+        "width": 10
+    }
+]

@@ -1,0 +1,16 @@
+{
+    "fields": {
+        "account": {
+            "type": "link"
+        }
+    },
+    "links": {
+        "account": {
+            "type": "belongsTo",
+            "foreign": "roles",
+            "entity": "Account",
+            "audited": false,
+            "isCustom": true
+        }
+    }
+}

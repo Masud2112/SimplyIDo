@@ -1,0 +1,10 @@
+{
+    "fields": {
+        "name": "Name",
+        "rate": "Rate",        
+        "account": "Account"        
+    },    
+    "labels": {
+        "Create Tax": "Create Tax"       
+    }    
+}

@@ -1,0 +1,13 @@
+{
+    "links": {
+        "packageTypeId": "Package",
+        "packages": "Packages"
+    },
+    "labels": {
+        "Create PackageType": "Create Package Type"
+    },
+    "fields": {
+        "packageTypeId": "Package",
+        "packages": "Packages"
+    }
+}

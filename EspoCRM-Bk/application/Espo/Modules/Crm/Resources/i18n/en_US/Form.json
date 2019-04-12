@@ -1,0 +1,10 @@
+{
+    "fields": {
+        "name": "Name",
+        "type": "Type",        
+        "account": "Account"        
+    },    
+    "labels": {
+        "Create Form": "Create Form"       
+    }    
+}

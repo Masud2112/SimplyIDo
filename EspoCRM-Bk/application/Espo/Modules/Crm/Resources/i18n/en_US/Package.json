@@ -1,0 +1,18 @@
+{
+    "links": {
+        "packageTypes": "PackageTypes",
+        "id": "id",
+        "packageType": "PackageType"
+    },
+    "labels": {
+        "Create Package": "Create Package"
+    },
+    "fields": {
+        "price": "Price",
+        "data": "Data",
+        "trialPeriod": "Trial Period",
+        "packageTypes": "PackageTypes",
+        "id": "id",
+        "packageType": "Package Type"
+    }
+}

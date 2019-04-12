@@ -1,0 +1,10 @@
+{
+    "fields": {
+        "name": "Name",
+        "color": "Color",        
+        "account": "Account"        
+    },    
+    "labels": {
+        "Create Tag": "Create Tag"       
+    }    
+}
