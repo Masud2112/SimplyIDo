@@ -112,12 +112,9 @@ init_head(); ?>
                             <?php if (isset($_GET['pg']) && $_GET['pg'] != "") { ?>
                                 <input type="hidden" name="pg" value="<?php echo $_GET['pg']; ?>">
                             <?php } ?>
-                            <?php if (has_permission('account_setup', '', 'edit')) { ?>
-                                <div class="btn-bottom-toolbar text-right">
-                                    <button id="saveSettings" type="button"
-                                            class="btn btn-info"><?php echo _l('settings_save'); ?></button>
-                                </div>
-                            <?php } ?>
+                            <div class="btn-bottom-toolbar text-right">
+                                <button id= "saveSettings" type="button" class="btn btn-info"><?php echo _l('settings_save'); ?></button>
+                            </div>
                         </div>
                         <div class="optionInnerPageMain_blk">
                             <div class="optionInnerPage_blk">
@@ -479,15 +476,15 @@ init_head(); ?>
         $('.companyphoneext').mask("99999", {placeholder: "12345"});
     });
 
-    $(function () {
+    $(function(){
         _validate_form($('#service_type_form'), {
-            brand_type: {
-                required: true,
+            brand_type:{
+                required:true,
                 remote: {
                     url: admin_url + "misc/service_type_exists",
                     type: 'post',
                     data: {
-                        itemid: function () {
+                        itemid:function(){
                             return $('input[name="itemid"]').val();
                         }
                     }

@@ -527,12 +527,35 @@
 
     $(function () {
 
-        _validate_form($('.task-form'), {
+       /* _validate_form($('.task-form'), {
             name: 'required',
             //startdate: 'required',
             duedate: 'required', //, greaterThan: "#startdate"
             //'assigned[]': 'required',
             status: 'required'
+        });*/
+
+        var validator = $(".task-form").validate({
+            rules: {
+                name: {
+                    required: true,
+                    remote: {
+                        url: admin_url + "tasks/task_name_exists",
+                        type: 'post',
+                        data: {
+                            tagid: function () {
+                                return $('input[name="tagid"]').val();
+                            }
+                        }
+                    }
+                },
+                duedate: {required: true},
+                status: {required: true},
+            },
+            messages: {
+                name: "The name already exist",
+
+            }
         });
 
         $("#rel_type").on('change', function () {

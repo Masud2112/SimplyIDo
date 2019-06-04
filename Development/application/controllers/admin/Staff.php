@@ -102,6 +102,7 @@ class Staff extends Admin_controller
             $data['member'] = $member;
             $title = $member->firstname . ' ' . $member->lastname;
             $data['staff_permissions'] = $this->roles_model->get_staff_permissions($id);
+            $data['dashboard_widget'] = $this->staff_model->get_staff_dashboard_widgets($id);
             $data['staff_departments'] = $this->departments_model->get_staff_departments($member->staffid);
 
             $ts_filter_data = array();
@@ -395,6 +396,11 @@ class Staff extends Admin_controller
                 $notifications[$i]['date'] = time_ago($notification['date']);
                 $i++;
             } //$notifications as $notification
+            foreach ($notifications as $key=>$notification) {
+                if (!has_permission(strtolower($notification['not_type']), '','view')) {
+                    unset($notifications[$key]);
+                }
+            }
             echo json_encode($notifications);
             die;
         }

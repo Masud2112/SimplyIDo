@@ -60,6 +60,7 @@
                         /*if ((isset($venue) && $venue->venuecoverimage != NULL)) {
                             $src = base_url() . 'uploads/venue_cover_images/' . $venue->venueid . '/croppie_' . $venue->venuecoverimage;
                         }*/
+
                         if ((isset($venue) && $venue->venuecoverimage != NULL)) {
                             $venueid = $venue->venueid;
                             $path = get_upload_path_by_type('venue_coverimage') . $venueid . '/' . $venue->venuecoverimage;
@@ -81,9 +82,10 @@
                                 <a class="btn btn-info mtop10" href="javascript:void(0)"
                                    onclick="reCropp('banner');">
                                     <?php //echo _l('recrop')?></a> -->
-                                    
+
                                 <div class="actionToEdit">
-                                    <a class="clicktoaddimage" href="javascript:void(0)" onclick="croppedDelete('banner');">
+                                    <a class="clicktoaddimage" href="javascript:void(0)"
+                                       onclick="croppedDelete('banner');">
                                         <span><i class="fa fa-trash"></i></span>
                                     </a>
                                     <a class="recropIcon_blk" href="javascript:void(0)" onclick="reCropp('banner');">
@@ -186,16 +188,19 @@
                                                        onclick="reCropp('profile');">
                                                         <?php //echo _l('recrop')?></a> -->
                                                     <div class="actionToEdit">
-                                                        <a class="clicktoaddimage" href="javascript:void(0)" onclick="croppedDelete('profile');">
+                                                        <a class="clicktoaddimage" href="javascript:void(0)"
+                                                           onclick="croppedDelete('profile');">
                                                             <span><i class="fa fa-trash"></i></span>
                                                         </a>
-                                                        <a class="recropIcon_blk" href="javascript:void(0)" onclick="reCropp('profile');">
+                                                        <a class="recropIcon_blk" href="javascript:void(0)"
+                                                           onclick="reCropp('profile');">
                                                             <span><i class="fa fa-crop" aria-hidden="true"></i></span>
                                                         </a>
                                                     </div>
                                                 <?php } else { ?>
                                                     <div class="actionToEdit">
-                                                        <a class="_delete clicktoaddimage" href="<?php echo admin_url('venues/remove_venue_logo_image/' . $venueid); ?>">
+                                                        <a class="_delete clicktoaddimage"
+                                                           href="<?php echo admin_url('venues/remove_venue_logo_image/' . $venue->venueid); ?>">
                                                             <span><i class="fa fa-trash"></i></span>
                                                         </a>
                                                     </div>
@@ -1020,7 +1025,13 @@
         } else if (eid > '0') {
             location.href = '<?php echo base_url(); ?>admin/venues/view/<?php echo isset($venue->venueid) ? $venue->venueid : ""; ?>?eid=' + eid;
         } else {
-            location.href = '<?php echo base_url(); ?>admin/venues/<?php echo isset($venue->venueid) ? $venue->venueid : ""; ?>';
+            <?php if( isset($venue->venueid) && $venue->venueid > 0 ){ ?>
+            location.href = '<?php echo base_url(); ?>admin/venues/view/<?php echo isset($venue->venueid) ? $venue->venueid : ""; ?>';
+            <?php }else{ ?>
+            location.href = '<?php echo base_url(); ?>admin/venues/';
+
+            <?php } ?>
+
         }
     }
 

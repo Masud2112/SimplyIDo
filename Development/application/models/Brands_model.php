@@ -99,7 +99,6 @@ class Brands_model extends CRM_Model
     function add($data)
     {
         $session_data = get_session_data();
-
         $staffid = $session_data['staff_user_id'];
 
         $this->db->select('userid');
@@ -107,11 +106,17 @@ class Brands_model extends CRM_Model
         $clientdata = $this->db->get('tblclients')->row();
 
         $clientid = $clientdata->userid;
-
+        $brandtypes = $data['brandtype'];
+        if (in_array('other', $brandtypes) && $data['otherbrandval'] != "") {
+            $newbrandtype = add_brand_type($data['otherbrandval']);
+            array_push($brandtypes, $newbrandtype);
+        }
+        $brandtypes = array_diff($brandtypes, array('other'));
+        unset($data['otherbrandval']);
         //make entry in tblbrand table
         $branddata = array();
         $branddata['name'] = $data['brandname'];
-        $branddata['brandtypeid'] = $data['brandtype'];
+        //$branddata['brandtypeid'] = serialize($brandtypes);
         $branddata['userid'] = $clientid;
         $branddata['billing_street'] = $data['address'];
         $branddata['billing_city'] = $data['city'];
@@ -125,10 +130,26 @@ class Brands_model extends CRM_Model
         $this->db->insert('tblbrand', $branddata);
         $brandid = $this->db->insert_id();
 
+        if (isset($brandtypes) && $brandtypes != "") {
+            $optiondata = array();
+            $optiondata['name'] = "brandtypes";
+            $optiondata['value'] = serialize($brandtypes);
+            $optiondata['brandid'] = $brandid;
+            $optiondata['isvisible'] = 1;
+            $optiondata['created_by'] = $clientid;
+            $optiondata['datecreated'] = date('Y-m-d H:i:s');
+            $this->db->insert('tblbrandsettings', $optiondata);
+        }
+
         //make entry in tblstaffbrand table
+        if($data['isdefault']==1){
+            $this->db->where('staffid', get_staff_user_id());
+            $this->db->update('tblstaffbrand', array('isdefault'=>0));
+        }
         $staffbranddata = array();
         $staffbranddata['staffid'] = $staffid;
         $staffbranddata['brandid'] = $brandid;
+        $staffbranddata['isdefault'] = $data['isdefault'];
 
         $this->db->insert('tblstaffbrand', $staffbranddata);
         $staffbrandid = $this->db->insert_id();
@@ -231,7 +252,7 @@ class Brands_model extends CRM_Model
 
         //get all options created by sido admin
         //$visible_array = array('companyname', 'company_logo', 'favicon', 'main_domain', 'rtl_support_client', 'rtl_support_admin', 'allowed_files', 'invoice_company_name', 'invoice_company_address', 'invoice_company_city', 'company_state', 'invoice_company_country_code', 'invoice_company_postal_code', 'invoice_company_phonenumber', 'company_vat', 'company_info_format', 'dateformat', 'time_format', 'default_timezone', 'active_language', 'disable_language', 'output_client_pdfs_from_admin_area_in_client_language', 'email_protocol', 'smtp_email', 'smtp_password', 'smtp_port', 'smtp_host', 'smtp_email_charset', 'smtp_encryption', 'smtp_username', 'email_signature', 'email_header', 'email_footer', 'decimal_separator', 'thousand_separator', 'number_padding_prefixes', 'show_tax_per_item', 'remove_tax_name_from_item_table', 'remove_decimals_on_zero', 'currency_placement', 'default_tax', 'total_to_words_lowercase', 'total_to_words_enabled', 'invoice_prefix', 'next_invoice_number', 'next_proposal_number', 'invoice_due_after', 'view_invoice_only_logged_in', 'delete_only_on_last_invoice', 'invoice_number_decrement_on_delete', 'exclude_invoice_from_client_area_with_draft_status', 'show_sale_agent_on_invoices', 'invoice_number_format', 'predefined_clientnote_invoice', 'predefined_terms_invoice', 'estimate_prefix', 'next_estimate_number', 'delete_only_on_last_estimate', 'estimate_number_decrement_on_delete', 'estimate_due_after', 'view_estimate_only_logged_in', 'show_sale_agent_on_estimates', 'estimate_auto_convert_to_invoice_on_client_accept', 'exclude_estimate_from_client_area_with_draft_status', 'estimate_number_format', 'estimates_pipeline_limit', 'default_estimates_pipeline_sort', 'predefined_clientnote_estimate', 'predefined_terms_estimate', 'proposal_number_prefix', 'proposal_due_after', 'proposals_pipeline_limit', 'default_proposals_pipeline_sort', 'exclude_proposal_from_client_area_with_draft_status', 'allow_staff_view_proposals_assigned', 'paymentmethod_stripe_active', 'paymentmethod_stripe_label', 'paymentmethod_stripe_description_dashboard', 'paymentmethod_stripe_currencies', 'paymentmethod_stripe_test_mode_enabled', 'paymentmethod_stripe_default_selected', 'paymentmethod_stripe_initialized', 'paymentmethod_paypal_active', 'paymentmethod_paypal_label', 'paymentmethod_paypal_username', 'paymentmethod_paypal_password', 'paymentmethod_paypal_signature', 'paymentmethod_paypal_description_dashboard', 'paymentmethod_paypal_currencies', 'paymentmethod_paypal_test_mode_enabled', 'paymentmethod_paypal_default_selected', 'paymentmethod_paypal_initialized', 'clients_default_theme', 'default_view_calendar', 'calendar_first_day', 'show_invoices_on_calendar', 'show_estimates_on_calendar', 'show_proposals_on_calendar', 'show_contracts_on_calendar', 'show_tasks_on_calendar','show_meetings_on_calendar', 'show_lead_on_calendar','show_projects_on_calendar', 'show_lead_reminders_on_calendar', 'show_customer_reminders_on_calendar', 'show_estimate_reminders_on_calendar', 'show_invoice_reminders_on_calendar', 'show_proposal_reminders_on_calendar', 'show_expense_reminders_on_calendar', 'calendar_invoice_color', 'calendar_estimate_color', 'calendar_proposal_color', 'calendar_reminder_color', 'calendar_contract_color', 'calendar_project_color', 'invoice_auto_operations_hour', 'cron_send_invoice_overdue_reminder', 'automatically_send_invoice_overdue_reminder_after', 'automatically_resend_invoice_overdue_reminder_after', 'create_invoice_from_recurring_only_on_paid_invoices', 'send_renewed_invoice_from_recurring_to_email', 'estimate_expiry_reminder_enabled', 'send_estimate_expiry_reminder_before', 'proposal_expiry_reminder_enabled', 'send_proposal_expiry_reminder_before', 'expenses_auto_operations_hour', 'contract_expiry_reminder_enabled', 'contract_expiration_before', 'tasks_reminder_notification_before', 'banner', 'theme_style', 'filter_tags');
-        $visible_array = array('companyname', 'company_logo', 'favicon', 'main_domain', 'rtl_support_client', 'rtl_support_admin', 'allowed_files', 'invoice_company_name', 'invoice_company_address', 'invoice_company_city', 'company_state', 'invoice_company_country_code', 'invoice_company_postal_code', 'invoice_company_phonenumber', 'company_vat', 'company_info_format', 'dateformat', 'time_format', 'default_timezone', 'active_language', 'disable_language', 'output_client_pdfs_from_admin_area_in_client_language', 'email_protocol', 'smtp_email', 'smtp_password', 'smtp_port', 'smtp_host', 'smtp_email_charset', 'smtp_encryption', 'smtp_username', 'email_signature', 'email_header', 'email_footer', 'decimal_separator', 'thousand_separator', 'number_padding_prefixes', 'show_tax_per_item', 'remove_tax_name_from_item_table', 'remove_decimals_on_zero', 'currency_placement', 'default_tax', 'total_to_words_lowercase', 'total_to_words_enabled', 'invoice_prefix', 'next_invoice_number', 'invoice_due_after', 'view_invoice_only_logged_in', 'delete_only_on_last_invoice', 'invoice_number_decrement_on_delete', 'exclude_invoice_from_client_area_with_draft_status', 'show_sale_agent_on_invoices', 'invoice_number_format', 'predefined_clientnote_invoice', 'predefined_terms_invoice', 'estimate_prefix', 'next_estimate_number', 'delete_only_on_last_estimate', 'estimate_number_decrement_on_delete', 'estimate_due_after', 'view_estimate_only_logged_in', 'show_sale_agent_on_estimates', 'estimate_auto_convert_to_invoice_on_client_accept', 'exclude_estimate_from_client_area_with_draft_status', 'estimate_number_format', 'estimates_pipeline_limit', 'default_estimates_pipeline_sort', 'predefined_clientnote_estimate', 'predefined_terms_estimate', 'proposal_number_prefix', 'proposal_due_after', 'proposals_pipeline_limit', 'default_proposals_pipeline_sort', 'exclude_proposal_from_client_area_with_draft_status', 'allow_staff_view_proposals_assigned', 'paymentmethod_stripe_active', 'paymentmethod_stripe_label', 'paymentmethod_stripe_api_secret_key', 'paymentmethod_stripe_api_publishable_key', 'paymentmethod_stripe_description_dashboard', 'paymentmethod_stripe_currencies', 'paymentmethod_stripe_test_mode_enabled', 'paymentmethod_stripe_default_selected', 'paymentmethod_stripe_initialized', 'paymentmethod_paypal_active', 'paymentmethod_paypal_label', 'paymentmethod_paypal_username', 'paymentmethod_paypal_password', 'paymentmethod_paypal_signature', 'paymentmethod_paypal_description_dashboard', 'paymentmethod_paypal_currencies', 'paymentmethod_paypal_test_mode_enabled', 'paymentmethod_paypal_default_selected', 'paymentmethod_paypal_initialized', 'clients_default_theme', 'default_view_calendar', 'calendar_first_day', 'show_invoices_on_calendar', 'show_estimates_on_calendar', 'show_proposals_on_calendar', 'show_contracts_on_calendar', 'show_tasks_on_calendar', 'show_meetings_on_calendar', 'show_lead_on_calendar', 'show_projects_on_calendar', 'show_lead_reminders_on_calendar', 'show_customer_reminders_on_calendar', 'show_estimate_reminders_on_calendar', 'show_invoice_reminders_on_calendar', 'show_proposal_reminders_on_calendar', 'show_expense_reminders_on_calendar', 'calendar_invoice_color', 'calendar_estimate_color', 'calendar_proposal_color', 'calendar_reminder_color', 'calendar_contract_color', 'calendar_project_color', 'invoice_auto_operations_hour', 'cron_send_invoice_overdue_reminder', 'automatically_send_invoice_overdue_reminder_after', 'automatically_resend_invoice_overdue_reminder_after', 'create_invoice_from_recurring_only_on_paid_invoices', 'send_renewed_invoice_from_recurring_to_email', 'estimate_expiry_reminder_enabled', 'send_estimate_expiry_reminder_before', 'proposal_expiry_reminder_enabled', 'send_proposal_expiry_reminder_before', 'expenses_auto_operations_hour', 'contract_expiry_reminder_enabled', 'contract_expiration_before', 'tasks_reminder_notification_before', 'banner', 'theme_style','filter_tags');
+        $visible_array = array('companyname', 'company_logo', 'favicon', 'main_domain', 'rtl_support_client', 'rtl_support_admin', 'allowed_files', 'invoice_company_name', 'invoice_company_address', 'invoice_company_city', 'company_state', 'invoice_company_country_code', 'invoice_company_postal_code', 'invoice_company_phonenumber','invoice_company_email', 'company_vat', 'company_info_format', 'dateformat', 'time_format', 'default_timezone', 'active_language', 'disable_language', 'output_client_pdfs_from_admin_area_in_client_language', 'email_protocol', 'smtp_email', 'smtp_password', 'smtp_port', 'smtp_host', 'smtp_email_charset', 'smtp_encryption', 'smtp_username', 'email_signature', 'email_header', 'email_footer', 'decimal_separator', 'thousand_separator', 'number_padding_prefixes', 'show_tax_per_item', 'remove_tax_name_from_item_table', 'remove_decimals_on_zero', 'currency_placement', 'default_tax', 'total_to_words_lowercase', 'total_to_words_enabled', 'invoice_prefix', 'next_invoice_number', 'invoice_due_after', 'view_invoice_only_logged_in', 'delete_only_on_last_invoice', 'invoice_number_decrement_on_delete', 'exclude_invoice_from_client_area_with_draft_status', 'show_sale_agent_on_invoices', 'invoice_number_format', 'predefined_clientnote_invoice', 'predefined_terms_invoice', 'estimate_prefix', 'next_estimate_number', 'delete_only_on_last_estimate', 'estimate_number_decrement_on_delete', 'estimate_due_after', 'view_estimate_only_logged_in', 'show_sale_agent_on_estimates', 'estimate_auto_convert_to_invoice_on_client_accept', 'exclude_estimate_from_client_area_with_draft_status', 'estimate_number_format', 'estimates_pipeline_limit', 'default_estimates_pipeline_sort', 'predefined_clientnote_estimate', 'predefined_terms_estimate', 'proposal_number_prefix', 'proposal_due_after', 'proposals_pipeline_limit', 'default_proposals_pipeline_sort', 'exclude_proposal_from_client_area_with_draft_status', 'allow_staff_view_proposals_assigned', 'paymentmethod_stripe_active', 'paymentmethod_stripe_label', 'paymentmethod_stripe_api_secret_key', 'paymentmethod_stripe_api_publishable_key', 'paymentmethod_stripe_description_dashboard', 'paymentmethod_stripe_currencies', 'paymentmethod_stripe_test_mode_enabled', 'paymentmethod_stripe_default_selected', 'paymentmethod_stripe_initialized', 'paymentmethod_paypal_active', 'paymentmethod_paypal_label', 'paymentmethod_paypal_username', 'paymentmethod_paypal_password', 'paymentmethod_paypal_signature', 'paymentmethod_paypal_description_dashboard', 'paymentmethod_paypal_currencies', 'paymentmethod_paypal_test_mode_enabled', 'paymentmethod_paypal_default_selected', 'paymentmethod_paypal_initialized', 'clients_default_theme', 'default_view_calendar', 'calendar_first_day', 'show_invoices_on_calendar', 'show_estimates_on_calendar', 'show_proposals_on_calendar', 'show_contracts_on_calendar', 'show_tasks_on_calendar', 'show_meetings_on_calendar', 'show_lead_on_calendar', 'show_projects_on_calendar', 'show_lead_reminders_on_calendar', 'show_customer_reminders_on_calendar', 'show_estimate_reminders_on_calendar', 'show_invoice_reminders_on_calendar', 'show_proposal_reminders_on_calendar', 'show_expense_reminders_on_calendar', 'calendar_invoice_color', 'calendar_estimate_color', 'calendar_proposal_color', 'calendar_reminder_color', 'calendar_contract_color', 'calendar_project_color', 'invoice_auto_operations_hour', 'cron_send_invoice_overdue_reminder', 'automatically_send_invoice_overdue_reminder_after', 'automatically_resend_invoice_overdue_reminder_after', 'create_invoice_from_recurring_only_on_paid_invoices', 'send_renewed_invoice_from_recurring_to_email', 'estimate_expiry_reminder_enabled', 'send_estimate_expiry_reminder_before', 'proposal_expiry_reminder_enabled', 'send_proposal_expiry_reminder_before', 'expenses_auto_operations_hour', 'contract_expiry_reminder_enabled', 'contract_expiration_before', 'tasks_reminder_notification_before', 'banner', 'theme_style', 'filter_tags');
 
         $alloptions = $this->db->get('tbloptions')->result();
 
@@ -265,6 +286,10 @@ class Brands_model extends CRM_Model
                 $optiondata['value'] = $data['brandname'];
             } elseif ($option->name == 'invoice_company_address') {
                 $optiondata['value'] = $data['address'];
+            }elseif ($option->name == 'invoice_company_phonenumber') {
+                $optiondata['value'] = $data['phone'];
+            }elseif ($option->name == 'invoice_company_email') {
+                $optiondata['value'] = $data['email'];
             } elseif ($option->name == 'invoice_company_city') {
                 $optiondata['value'] = $data['city'];
             } elseif ($option->name == 'company_state') {
@@ -473,7 +498,7 @@ class Brands_model extends CRM_Model
         $dashboard_data['staffid'] = $staffid;
         $dashboard_data['widget_type'] = 'upcoming_project,pinned_item,calendar,weather,favourite,quick_link,lead_pipeline,messages,getting_started,task_list';
         $dashboard_data['quick_link_type'] = 'lead,project,message,task_due,meeting,amount_receivable,amount_received,invite';
-        $dashboard_data['order'] = '[{"widget_name":"getting_started","order":0},{"widget_name":"lead_pipeline","order":1},{"widget_name":"calendar","order":2},{"widget_name":"pinned_item","order":3},{"widget_name":"quick_link","order":4},{"widget_name":"upcoming_project","order":5},{"widget_name":"contacts","order":6},{"widget_name":"messages","order":7},{"widget_name":"task_list","order":8}]';
+        $dashboard_data['order'] = '[{"widget_name":"getting_started","order":0},{"widget_name":"lead_pipeline","order":1},{"widget_name":"calendar","order":2},{"widget_name":"pinned_item","order":3},{"widget_name":"quick_link","order":4},{"widget_name":"upcoming_project","order":5},{"widget_name":"contacts","order":6},{"widget_name":"messages","order":7},{"widget_name":"task_list","order":8},{"widget_name":"mybrands","order":9}]';
         $dashboard_data['is_visible'] = 1;
         $dashboard_data['brandid'] = $brandid;
         $dashboard_data['dateadded'] = date('Y-m-d H:i:s');

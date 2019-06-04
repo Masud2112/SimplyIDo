@@ -111,7 +111,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-3">
-                                <?php if ($profile_allow == 1) { ?>
+                                <?php /*if ($profile_allow == 1) { */?>
                                     <div class="profile-pic">
                                         <?php /*if ((isset($addressbook) && $addressbook->profile_image == NULL) || !isset($addressbook)) { */ ?><!--
                                             <div class="form-group uploadProfilepic">
@@ -204,9 +204,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                <?php } else { ?>
+                                <?php /*} else { */?><!--
                                     <input type="hidden" name="profile_image" value="">
-                                <?php } ?>
+                                --><?php /*} */?>
                             </div>
                             <div class="col-sm-9">
                                 <?php if (isset($lid) || isset($eid) || isset($pid)) { ?>
@@ -791,31 +791,39 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-8 col-xs-11">
-                                                        <div id="locationField" class="form-group">
-                                                            <label class="control-label" for="address">Address</label>
-                                                            <input id="autocomplete<?php echo $pa; ?>"
-                                                                   class="form-control searchmap"
-                                                                   data-addmap="<?php echo $pa; ?>"
-                                                                   placeholder="Search Google Maps..."
-                                                                   onFocus="geolocate()"
-                                                                   type="text">
+                                                        <div class="row">
+                                                            <div class="col-sm-8">
+                                                                <div id="locationField" class="form-group">
+                                                                    <label class="control-label" for="address">Address</label>
+                                                                    <input id="autocomplete<?php echo $pa; ?>"
+                                                                        class="form-control searchmap"
+                                                                        data-addmap="<?php echo $pa; ?>"
+                                                                        placeholder="Search Google Maps..."
+                                                                        onFocus="geolocate()"
+                                                                        type="text">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="customadd-btn">
+                                                                    <?php /*if (empty($pv['address']) && empty($pv['address2']) && empty($pv['city']) && empty($pv['state']) && empty($pv['zip'])) { */ ?>
+                                                                    <button type="button"
+                                                                            class="btn btn-info custom_address customadd-<?php echo $pa; ?>"
+                                                                            data-addressid="<?php echo $pa; ?>">Custom
+                                                                    </button>
+                                                                    <?php /*} */ ?>
+                                                                    <?php if (!empty($pv['address']) || !empty($pv['address2']) || !empty($pv['city']) || !empty($pv['state']) || !empty($pv['zip'])) { ?>
+                                                                        <!--<button type="button"
+                                                                                class="btn btn-default remove_address removeadd-<?php /*echo $pa; */ ?>"
+                                                                                data-addressid="<?php /*echo $pa; */ ?>">Remove &
+                                                                            Search
+                                                                            Again
+                                                                        </button>-->
+                                                                    <?php } ?>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="customadd-btn">
-                                                            <?php /*if (empty($pv['address']) && empty($pv['address2']) && empty($pv['city']) && empty($pv['state']) && empty($pv['zip'])) { */ ?>
-                                                            <button type="button"
-                                                                    class="btn btn-info custom_address customadd-<?php echo $pa; ?>"
-                                                                    data-addressid="<?php echo $pa; ?>">Custom
-                                                            </button>
-                                                            <?php /*} */ ?>
-                                                            <?php if (!empty($pv['address']) || !empty($pv['address2']) || !empty($pv['city']) || !empty($pv['state']) || !empty($pv['zip'])) { ?>
-                                                                <!--<button type="button"
-                                                                        class="btn btn-default remove_address removeadd-<?php /*echo $pa; */ ?>"
-                                                                        data-addressid="<?php /*echo $pa; */ ?>">Remove &
-                                                                    Search
-                                                                    Again
-                                                                </button>-->
-                                                            <?php } ?>
-                                                        </div>
+                                                        
+                                                        
                                                     </div>
                                                     <div class="col-sm-1 col-xs-1">
                                                         <div class="form-group">
@@ -901,28 +909,35 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <div id="locationField" class="form-group">
-                                                        <label class="control-label" for="address">Address</label>
-                                                        <input id="autocomplete0" class="form-control searchmap"
-                                                               data-addmap="0"
-                                                               placeholder="Search Google Maps..." onFocus="geolocate()"
-                                                               type="text">
-                                                    </div>
-
-                                                    <div class="customadd-btn">
-                                                        <div class="form-group">
-                                                            <!--<label class="control-label" for="search">&nbsp</label>-->
-                                                            <button type="button"
-                                                                    class="btn btn-info custom_address customadd-0"
-                                                                    style="display:block" data-addressid="0">Custom
-                                                            </button>
-                                                            <!--<button type="button"
-                                                                    class="btn btn-default remove_address removeadd-0"
-                                                                    style="display:none" data-addressid="0">Remove & Search
-                                                                Again
-                                                            </button>-->
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <div id="locationField" class="form-group">
+                                                                <label class="control-label" for="address">Address</label>
+                                                                <input id="autocomplete0" class="form-control searchmap"
+                                                                    data-addmap="0"
+                                                                    placeholder="Search Google Maps..." onFocus="geolocate()"
+                                                                    type="text">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="customadd-btn">
+                                                                <div class="form-group">
+                                                                    <!--<label class="control-label" for="search">&nbsp</label>-->
+                                                                    <button type="button"
+                                                                            class="btn btn-info custom_address customadd-0"
+                                                                            style="display:block" data-addressid="0">Custom
+                                                                    </button>
+                                                                    <!--<button type="button"
+                                                                            class="btn btn-default remove_address removeadd-0"
+                                                                            style="display:none" data-addressid="0">Remove & Search
+                                                                        Again
+                                                                    </button>-->
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    
+
                                                 </div>
                                             </div>
                                             <?php
@@ -1002,26 +1017,33 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-8 col-xs-11">
-                                                <div id="locationField" class="form-group">
-                                                    <label class="control-label" for="address">Address</label>
-                                                    <input id="autocomplete0" class="form-control searchmap"
-                                                           data-addmap="0"
-                                                           placeholder="Search Google Maps..." onFocus="geolocate()"
-                                                           type="text">
-                                                </div>
-                                                <div class="customadd-btn">
-                                                    <div class="form-group">
-                                                        <button type="button"
-                                                                class="btn btn-info custom_address customadd-0"
-                                                                style="display:block" data-addressid="0">Custom
-                                                        </button>
-                                                        <!--<button type="button"
-                                                                class="btn btn-default remove_address removeadd-0"
-                                                                style="display:none" data-addressid="0">Remove & Search
-                                                            Again
-                                                        </button>-->
+                                                <div class="row">
+                                                    <div class="col-sm-8">
+                                                        <div id="locationField" class="form-group">
+                                                            <label class="control-label" for="address">Address</label>
+                                                            <input id="autocomplete0" class="form-control searchmap"
+                                                                data-addmap="0"
+                                                                placeholder="Search Google Maps..." onFocus="geolocate()"
+                                                                type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="customadd-btn">
+                                                            <div class="form-group">
+                                                                <button type="button"
+                                                                        class="btn btn-info custom_address customadd-0"
+                                                                        style="display:block" data-addressid="0">Custom
+                                                                </button>
+                                                                <!--<button type="button"
+                                                                        class="btn btn-default remove_address removeadd-0"
+                                                                        style="display:none" data-addressid="0">Remove & Search
+                                                                    Again
+                                                                </button>-->
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                         <?php
@@ -1088,7 +1110,7 @@
                                     </div>
                                 <?php } ?>
                                 <div class="text-left col-sm-12">
-                                    <button id="address-add-more" name="address-add-more" class="btn btn-primary">
+                                    <button id="address-add-more" class="btn btn-primary">
                                         <i class="fa fa-plus"></i><span class="mleft5">Address</span>
                                     </button>
                                 </div>

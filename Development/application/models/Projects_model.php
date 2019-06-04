@@ -1,4 +1,3 @@
-
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -94,7 +93,7 @@ class Projects_model extends CRM_Model
      * Added By : Vaidehi
      * Dt : 12/18/2017
      * Get project statuses
-     * @param  mixed $id status id
+     * @param mixed $id status id
      * @return mixed      object if id passed else array
      */
     public function get_project_status($id = '', $where = array())
@@ -167,7 +166,7 @@ class Projects_model extends CRM_Model
      * Added By : Vaidehi
      * Dt : 12/18/2017
      * Delete project status from database
-     * @param  mixed $id status id
+     * @param mixed $id status id
      * @return boolean
      */
     public function delete_status($id)
@@ -344,7 +343,7 @@ class Projects_model extends CRM_Model
         $user_type = $staff->user_type;
         // get all projects which are assigned to team member, if team member logged in
         if ($user_type == 2) {
-            $this->db->select('*,maintbl.name, maintbl.id,tblprojectstatus.name as status_name, concat(tblstaff.firstname,  \'  \', tblstaff.lastname) as assigned_name,tblstaff.email as assigned_email, tblstaff.phonenumber as assigned_phone, maintbl.project_profile_image, DATE_FORMAT( maintbl.eventstartdatetime, "%Y-%m-%d %H:%i") as eventstartdate, (SELECT COUNT(id) FROM tblprojects p1 WHERE p1.parent = maintbl.id AND p1.deleted = 0 AND p1.assigned = ' . $userid . ') AS no_of_events, tblleadssources.name as source_name, tbleventtype.eventtypename');
+            $this->db->select('*,maintbl.name, maintbl.id,tblprojectstatus.name as status_name, concat(tblstaff.firstname,  \'  \', tblstaff.lastname) as assigned_name,tblstaff.email as assigned_email, tblstaff.phonenumber as assigned_phone, maintbl.project_profile_image, DATE_FORMAT( maintbl.eventstartdatetime, "%Y-%m-%d %H:%i") as eventstartdate, (SELECT COUNT(id) FROM tblprojects p1 WHERE p1.parent = maintbl.id AND p1.deleted = 0 ) AS no_of_events, tblleadssources.name as source_name, tbleventtype.eventtypename');
 
             //$this->db->select('*,maintbl.name, maintbl.id,tblprojectstatus.name as status_name, concat(tblstaff.firstname,  \'  \', tblstaff.lastname) as assigned_name,tblstaff.email as assigned_email,tblstaff.phonenumber as assigned_phone,maintbl.project_profile_image, DATE_FORMAT( maintbl.eventstartdatetime, "%Y-%m-%d %H:%i") as eventstartdate, tblleadssources.name as source_name, tbleventtype.eventtypename');
 
@@ -413,9 +412,11 @@ class Projects_model extends CRM_Model
         $is_sido_admin = $session_data['is_sido_admin'];
         $is_admin = $session_data['is_admin'];
 
-        //if($is_sido_admin == 0 && $is_admin == 0) {
-        $this->db->where('maintbl.brandid', get_user_session());
-        //}
+        if ($is_sido_admin == 0 && $is_admin == 0) {
+            /*if (!is_brand_private()) {*/
+            $this->db->where('maintbl.brandid', get_user_session());
+            /*}*/
+        }
 
         if (is_numeric($id)) {
 
@@ -438,13 +439,19 @@ class Projects_model extends CRM_Model
                 //return $this->db->get('tblprojects as maintbl')->result_array();
             } else if ($venueid > 0) {
                 $this->db->where('tblprojectvenue.venueid', $venueid);
-                return $this->db->get('tblprojects')->result_array();
+                $this->db->group_by('maintbl.id');
+                return $this->db->get('tblprojects as maintbl')->result_array();
             } else {
                 $this->db->where('maintbl.id', $id);
                 $project = $this->db->get('tblprojects as maintbl')->row();
                 if ($project) {
                     $project->attachments = $this->get_files($id);
                     $project->assigned = $this->get_project_assignee($id);
+                    $project->pcontact = $this->get_project_contact($id);
+                    /*echo "<pre>";
+                    print_r($project->pcontact);
+                    die('<--here');*/
+
                 }
                 return $project;
             }
@@ -465,7 +472,10 @@ class Projects_model extends CRM_Model
 
         $is_sido_admin = $session_data['is_sido_admin'];
         $is_admin = $session_data['is_admin'];
+        $user_id = $session_data['staff_user_id'];
+        $user_type = $session_data['user_type'];
 
+        $brandid = get_user_session();
         // if($is_sido_admin == 0 && $is_admin == 0) {
         //     $limit                          = get_brand_option('projects_kanban_limit');
         //     $default_leads_kanban_sort      = get_brand_option('default_projects_kanban_sort');
@@ -490,7 +500,11 @@ class Projects_model extends CRM_Model
         $this->db->group_by('tblprojects.id');
 
         if (!$this->is_admin) {
-            $this->db->where('(tblstaffprojectassignee.assigned = ' . get_staff_user_id() . ' OR addedfrom =' . get_staff_user_id() . ' OR tblprojectcontact.contactid = ' . get_staff_user_id() . ')');
+            /*if (!is_brand_private()) {*/
+                $this->db->where('tblprojects.brandid =' . $brandid);
+            /*} else {*/
+                $this->db->where('(tblstaffprojectassignee.assigned = ' . get_staff_user_id() . ' OR addedfrom =' . get_staff_user_id() . ' OR tblprojectcontact.contactid = ' . get_staff_user_id() . ')');
+            /*}*/
         }
         if ($search != '') {
             if (!_startsWith($search, '#')) {
@@ -585,9 +599,10 @@ class Projects_model extends CRM_Model
             if ($user_type == 2) {
                 $today_subproject_query = $this->db->query('SELECT `tblprojects`.*, CONCAT(firstname, \' \', lastname) as assigned_name, CURRENT_DATE() as currentdatetime
     FROM `tblprojects`
-    LEFT JOIN `tblstaff` ON `tblstaff`.`staffid`=`tblprojects`.`assigned`
+    LEFT JOIN `tblstaffprojectassignee` ON `tblstaffprojectassignee`.`projectid`=`tblprojects`.`id`
+    LEFT JOIN `tblstaff` ON `tblstaff`.`staffid`=`tblstaffprojectassignee`.`assigned`
     LEFT JOIN `tblprojectcontact` ON `tblprojects`.`id` = `tblprojectcontact`.`eventid` 
-    WHERE `tblprojects`.`parent` = ' . $parent . ' AND `tblprojects`.`deleted` = 0 AND DATE(`tblprojects`.`eventstartdatetime`) = CURRENT_DATE() AND (`tblprojects`.`assigned` = ' . $userid . ' OR `tblprojectcontact`.`contactid` = ' . $userid . ')
+    WHERE `tblprojects`.`parent` = ' . $parent . ' AND `tblprojects`.`deleted` = 0 AND DATE(`tblprojects`.`eventstartdatetime`) = CURRENT_DATE() AND (`tblstaffprojectassignee`.`assigned` = ' . $userid . ' OR `tblprojectcontact`.`contactid` = ' . $userid . ')
 ');
             } else {
                 //get all sub projects for today for account owner
@@ -603,9 +618,10 @@ class Projects_model extends CRM_Model
             if ($user_type == 2) {
                 $future_subproject_query = $this->db->query('SELECT `tblprojects`.*, CONCAT(firstname, \' \', lastname) as assigned_name, CURRENT_DATE() as currentdatetime
     FROM `tblprojects`
-    LEFT JOIN `tblstaff` ON `tblstaff`.`staffid`=`tblprojects`.`assigned`
+    LEFT JOIN `tblstaffprojectassignee` ON `tblstaffprojectassignee`.`projectid`=`tblprojects`.`id`
+    LEFT JOIN `tblstaff` ON `tblstaff`.`staffid`=`tblstaffprojectassignee`.`assigned`
     LEFT JOIN `tblprojectcontact` ON `tblprojects`.`id` = `tblprojectcontact`.`eventid` 
-    WHERE `tblprojects`.`parent` = ' . $parent . ' AND `tblprojects`.`deleted` = 0 AND DATE(`tblprojects`.`eventstartdatetime`) > CURRENT_DATE() AND (`tblprojects`.`assigned` = ' . $userid . ' OR `tblprojectcontact`.`contactid` = ' . $userid . ')
+    WHERE `tblprojects`.`parent` = ' . $parent . ' AND `tblprojects`.`deleted` = 0 AND DATE(`tblprojects`.`eventstartdatetime`) > CURRENT_DATE() AND (`tblstaffprojectassignee`.`assigned` = ' . $userid . ' OR `tblprojectcontact`.`contactid` = ' . $userid . ')
     ORDER BY `tblprojects`.`eventstartdatetime` ASC');
             } else {
                 //get all sub projects for future date for account owner
@@ -621,9 +637,10 @@ class Projects_model extends CRM_Model
             if ($user_type == 2) {
                 $past_subproject_query = $this->db->query('SELECT `tblprojects`.*, CONCAT(firstname, \' \', lastname) as assigned_name, CURRENT_DATE() as currentdatetime
     FROM `tblprojects`
-    LEFT JOIN `tblstaff` ON `tblstaff`.`staffid`=`tblprojects`.`assigned`
+    LEFT JOIN `tblstaffprojectassignee` ON `tblstaffprojectassignee`.`projectid`=`tblprojects`.`id`
+    LEFT JOIN `tblstaff` ON `tblstaff`.`staffid`=`tblstaffprojectassignee`.`assigned`
     LEFT JOIN `tblprojectcontact` ON `tblprojects`.`id` = `tblprojectcontact`.`eventid` 
-    WHERE `tblprojects`.`parent` = ' . $parent . ' AND `tblprojects`.`deleted` = 0 AND DATE(`tblprojects`.`eventstartdatetime`) < CURRENT_DATE() AND (`tblprojects`.`assigned` = ' . $userid . ' OR `tblprojectcontact`.`contactid` = ' . $userid . ')
+    WHERE `tblprojects`.`parent` = ' . $parent . ' AND `tblprojects`.`deleted` = 0 AND DATE(`tblprojects`.`eventstartdatetime`) < CURRENT_DATE() AND (`tblstaffprojectassignee`.`assigned` = ' . $userid . ' OR `tblprojectcontact`.`contactid` = ' . $userid . ')
     ORDER BY `tblprojects`.`eventstartdatetime` DESC');
             } else {
                 //get all sub projects for past date for account owner
@@ -637,7 +654,6 @@ class Projects_model extends CRM_Model
 
             //merging all sub projects in one array
             $project->sub_projects = array_merge($today_subproject, $future_subproject, $past_subproject);
-
             $sub_projects_id = array();
             array_push($sub_projects_id, $id);
 
@@ -1031,7 +1047,7 @@ class Projects_model extends CRM_Model
             $this->db->where('rel_id in(' . $related_project_ids . ')');
             $this->db->where('rel_type in("project", "event")');
         } else {
-            $this->db->where('rel_id = ' . $pid);
+            $this->db->where('rel_id = ' . $projectid);
             $this->db->where('rel_type = "project"');
         }
         $_attachments = $this->db->get('tblfiles')->result_array();
@@ -1832,14 +1848,22 @@ class Projects_model extends CRM_Model
                             $staffdata['brandtype'] = 1;
                             $staffdata['is_not_staff'] = 1;
                             $staffdata['user_type'] = 2;
+                            /*$staffdata['permission'] = array(array('role' => 4));*/
                             $staffdata['packagetype'] = (isset($package->packageid) ? $package->packageid : 2);
+                            /*$this->load->model('staff_model');
+                            $this->staff_model->add($staffdata);*/
                             $this->load->model('register_model');
-                            $this->register_model->saveclient($staffdata, 'invite');
-                            logActivity('New User Created [Email Address:' . $satff_email . ' for invitation: ' . $insert_id . 'staffdata IP:' . $this->input->ip_address() . ']');
+                            $this->register_model->saveclient($staffdata, 'invite', 'client');
+                            logActivity('New Client Created [Email Address:' . $satff_email . ' for Project: ' . $insert_id . 'staffdata IP:' . $this->input->ip_address() . ']');
                             $where = array('email' => $satff_email, 'deleted' => 0);
                             $staff_det = $this->db->where($where)->get('tblstaff')->row();
                         } else {
                             $staff_det = $staff_exist;
+                            /*$roleiddata = get_role('client');
+                            $roledata = array();
+                            $roledata['role_id'] = $roleiddata;
+                            $roledata['user_id'] = $staff_det->staffid;
+                            $this->db->insert('tblroleuserteam', $roledata);*/
                         }
                         $project_contact = array();
                         if ($pdet->parent == 0) {
@@ -1865,6 +1889,21 @@ class Projects_model extends CRM_Model
                         $this->db->insert('tblstaffbrand', $staff_brand);
                         $this->db->where('staffid', $staff_det->staffid);
                         $this->db->update('tblstaff', array('active' => 1));
+
+                        /**
+                         * Added By : Masud
+                         * Dt : 03/23/2018
+                         * prefill dashboard values
+                         */
+                        $dashboard_data = array();
+                        $dashboard_data['staffid'] = $staff_det->staffid;
+
+                        $dashboard_data['order'] = '[{"widget_name":"getting_started","order":0},{"widget_name":"lead_pipeline","order":1},{"widget_name":"calendar","order":2},{"widget_name":"pinned_item","order":3},{"widget_name":"quick_link","order":4},{"widget_name":"upcoming_project","order":5},{"widget_name":"contacts","order":6},{"widget_name":"messages","order":7},{"widget_name":"task_list","order":8}]';
+                        $dashboard_data['is_visible'] = 1;
+                        $dashboard_data['brandid'] = get_user_session();
+                        $dashboard_data['dateadded'] = date('Y-m-d H:i:s');
+                        $dashboard_data['addedby'] = $staff_det->staffid;
+                        $this->db->insert('  tbldashboard_settings', $dashboard_data);
 
                         /*$event = '<h3>Event details below:</h3><br/><br/>';*/
                         $event = 'Event: ' . $pdet->name . '<br/><br/>';
@@ -1985,6 +2024,7 @@ class Projects_model extends CRM_Model
                             $staffdata['created_by'] = $this->session->userdata['staff_user_id'];
                             $staffdata['datecreated'] = date('Y-m-d H:i:s');
                             $staffdata['active'] = 0;
+                            $staffdata['email_signature'] = "";
                             $staffdata['facebook'] = null;
                             $staffdata['twitter'] = null;
                             $staffdata['google'] = null;
@@ -1992,14 +2032,22 @@ class Projects_model extends CRM_Model
                             $staffdata['brandtype'] = 1;
                             $staffdata['is_not_staff'] = 1;
                             $staffdata['user_type'] = 2;
+                            /*$staffdata['permission'] = array(array('role' => 4));*/
                             $staffdata['packagetype'] = (isset($package->packageid) ? $package->packageid : 2);
+                            /*$this->load->model('staff_model');
+                            $this->staff_model->add($staffdata);*/
                             $this->load->model('register_model');
-                            $this->register_model->saveclient($staffdata, 'invite');
-                            logActivity('New User Created [Email Address:' . $client_email . ' for invitation: ' . $insert_id . 'staffdata IP:' . $this->input->ip_address() . ']');
+                            $this->register_model->saveclient($staffdata, 'invite', 'client');
+                            logActivity('New Client Created [Email Address:' . $client_email . ' for project: ' . $insert_id . 'staffdata IP:' . $this->input->ip_address() . ']');
                             $where = array('email' => $client_email, 'deleted' => 0);
                             $staff_det = $this->db->where($where)->get('tblstaff')->row();
                         } else {
                             $staff_det = $staff_exist;
+                            /*$roleiddata = get_role('client');
+                            $roledata = array();
+                            $roledata['role_id'] = $roleiddata;
+                            $roledata['user_id'] = $staff_det->staffid;
+                            $this->db->insert('tblroleuserteam', $roledata);*/
                         }
                         $project_contact = [];
                         if ($pdet->parent == 0) {
@@ -2024,6 +2072,22 @@ class Projects_model extends CRM_Model
                         $this->db->insert('tblstaffbrand', $staff_brand);
                         $this->db->where('staffid', $staff_det->staffid);
                         $this->db->update('tblstaff', array('active' => 1));
+
+                        /**
+                         * Added By : Masud
+                         * Dt : 03/23/2018
+                         * prefill dashboard values
+                         */
+                        $dashboard_data = array();
+                        $dashboard_data['staffid'] = $staff_det->staffid;
+                        $dashboard_data['widget_type'] = 'upcoming_project,pinned_item,calendar,weather,favourite,quick_link,message,getting_started,task_list,contacts,messages';
+                        $dashboard_data['quick_link_type'] = 'project,message,task_due,meeting,invite';
+                        $dashboard_data['order'] = '[{"widget_name":"getting_started","order":0},{"widget_name":"lead_pipeline","order":1},{"widget_name":"calendar","order":2},{"widget_name":"pinned_item","order":3},{"widget_name":"quick_link","order":4},{"widget_name":"upcoming_project","order":5},{"widget_name":"contacts","order":6},{"widget_name":"messages","order":7},{"widget_name":"task_list","order":8}]';
+                        $dashboard_data['is_visible'] = 1;
+                        $dashboard_data['brandid'] = get_user_session();
+                        $dashboard_data['dateadded'] = date('Y-m-d H:i:s');
+                        $dashboard_data['addedby'] = $staff_det->staffid;
+                        $this->db->insert('  tbldashboard_settings', $dashboard_data);
 
                         /*$event = '<h3>Event details below:</h3><br/><br/>';*/
                         $event = 'Event: ' . $pdet->name . '<br/><br/>';
@@ -2055,8 +2119,8 @@ class Projects_model extends CRM_Model
      * Added By : Vaidehi
      * Dt : 12/20/2017
      * Update project
-     * @param  array $data lead data
-     * @param  mixed $id leadid
+     * @param array $data lead data
+     * @param mixed $id leadid
      * @return boolean
      */
     public function update($data, $id)
@@ -2231,11 +2295,21 @@ class Projects_model extends CRM_Model
         return $assignee;
     }
 
+    function get_project_contact($id)
+    {
+        $this->db->select('contactid');
+        $this->db->where('projectid', $id);
+        $this->db->where('(isvendor=1 OR iscollaborator=1 OR isclient=1)');
+        $assignee = $this->db->get('tblprojectcontact')->result_array();
+        $assignee = array_map('current', $assignee);
+        return $assignee;
+    }
+
     /**
      * Added By : Vaidehi
      * Dt : 12/22/2017
      * Update canban lead status when drag and drop
-     * @param  array $data lead data
+     * @param array $data lead data
      * @return boolean
      */
     public function update_project_status($data)
@@ -2402,7 +2476,7 @@ class Projects_model extends CRM_Model
                 'brandid' => get_user_session(),
                 'touserid' => $assigned,
                 'eid' => $project_id,
-                'not_type' => 'project',
+                'not_type' => 'projects',
                 'link' => 'projects/dashboard/' . $project_id,
                 'additional_data' => ($integration == false ? serialize(array(
                     $name
@@ -2449,7 +2523,7 @@ class Projects_model extends CRM_Model
      * Added By : Masud
      * Dt : 04/01/2018
      * Get project statuses
-     * @param  mixed $id status id
+     * @param mixed $id status id
      * @return mixed      object if id passed else array
      */
 
@@ -2465,7 +2539,7 @@ class Projects_model extends CRM_Model
             'brandid' => get_user_session(),
             'touserid' => '',
             'eid' => $project_id,
-            'not_type' => "project",
+            'not_type' => "projects",
             'link' => 'projects/dashboard/' . $project_id,
             'additional_data' => ($integration == false ? serialize(array(
                 $name
@@ -2510,7 +2584,7 @@ class Projects_model extends CRM_Model
      * Added By : Masud
      * Dt : 04/01/2018
      * Get project statuses
-     * @param  mixed $id status id
+     * @param mixed $id status id
      * @return mixed      object if id passed else array
      */
 
@@ -2527,7 +2601,7 @@ class Projects_model extends CRM_Model
             'brandid' => get_user_session(),
             'touserid' => $assigned,
             'eid' => $project_id,
-            'not_type' => "project",
+            'not_type' => "projects",
             'link' => 'projects/dashboard/' . $project_id,
             'additional_data' => ($integration == false ? serialize(array(
                 $name, $status
@@ -2570,7 +2644,7 @@ class Projects_model extends CRM_Model
 
     /**
      * Simplified function to send non complicated email templates for project contacts
-     * @param  mixed $id project id
+     * @param mixed $id project id
      * @return boolean
      */
     public function send_project_customer_email($id, $template)
@@ -3898,7 +3972,7 @@ class Projects_model extends CRM_Model
                 array_push($not_user_ids, $project->addedfrom);
             }
             if ($project->assigned != get_staff_user_id() && $project->assigned != 0) {
-                array_push($not_user_ids, $project->assigned);
+                array_merge($not_user_ids, $project->assigned);
             }
             $notifiedUsers = array();
             foreach ($not_user_ids as $uid) {
@@ -3907,7 +3981,7 @@ class Projects_model extends CRM_Model
                     'touserid' => $uid,
                     'brandid' => get_user_session(),
                     'eid' => $project_id,
-                    'not_type' => 'project',
+                    'not_type' => 'projects',
                     'link' => '#projectid=' . $project_id,
                     'additional_data' => serialize(array(
                         $project->name
@@ -4389,6 +4463,21 @@ class Projects_model extends CRM_Model
                         $staff_brand['staffid'] = $staff_det->staffid;
                         $staff_brand['brandid'] = get_user_session();
                         $this->db->insert('tblstaffbrand', $staff_brand);
+                        /**
+                         * Added By : Masud
+                         * Dt : 03/23/2018
+                         * prefill dashboard values
+                         */
+                        $dashboard_data = array();
+                        $dashboard_data['staffid'] = $staff_det->staffid;
+                        $dashboard_data['widget_type'] = 'upcoming_project,pinned_item,calendar,weather,favourite,quick_link,lead_pipeline,message,getting_started,task_list,contacts,messages';
+                        $dashboard_data['quick_link_type'] = 'lead,project,message,task_due,meeting,amount_receivable,amount_received,invite';
+                        $dashboard_data['order'] = '[{"widget_name":"getting_started","order":0},{"widget_name":"lead_pipeline","order":1},{"widget_name":"calendar","order":2},{"widget_name":"pinned_item","order":3},{"widget_name":"quick_link","order":4},{"widget_name":"upcoming_project","order":5},{"widget_name":"contacts","order":6},{"widget_name":"messages","order":7},{"widget_name":"task_list","order":8}]';
+                        $dashboard_data['is_visible'] = 1;
+                        $dashboard_data['brandid'] = get_user_session();
+                        $dashboard_data['dateadded'] = date('Y-m-d H:i:s');
+                        $dashboard_data['addedby'] = $staff_det->staffid;
+                        $this->db->insert('  tbldashboard_settings', $dashboard_data);
 
                         $staffdetails['{name}'] = $firstname;
                         $staffdetails['{vendor_password}'] = $password;
@@ -4454,7 +4543,9 @@ class Projects_model extends CRM_Model
         $this->db->join('tblvenue', 'tblvenue.venueid = tblinvite.venueid', 'left');
         $this->db->join('tblinvitestatus', 'tblinvitestatus.inviteid = tblinvite.inviteid', 'inner'); //tblinvitestatus.status as invite_state2
         //$this->db->where('tblinvite.inviteid=tblinvitestatus.inviteid');
-        $this->db->where('tblinvitestatus.userid', get_staff_user_id());
+        /*if ($viewtype != 'vendor-view') {
+            $this->db->where('tblinvitestatus.userid', get_staff_user_id());
+        }*/
         //$this->db->where('tblinvitestatus.deleted=0');
         //add assigned clause for logged in user
         /*if ($viewtype != 'vendor-view') {
@@ -4464,7 +4555,9 @@ class Projects_model extends CRM_Model
         }*/
         //add brand id clause for logged in user
         if ($viewtype != 'vendor-view') {
+            /*if (!is_brand_private()) {*/
             $this->db->where('tblinvite.brandid', get_user_session());
+            /*}*/
         }
         $this->db->where('tblinvite.deleted', 0);
         if (isset($where['projectid'])) {
@@ -4494,7 +4587,6 @@ class Projects_model extends CRM_Model
 
             $query = $this->db->query('SELECT * FROM `tblinvitestatus` WHERE `inviteid` = ' . $id . ' AND `usertype`="venue"');
             $invite->venueinvitee = $query->row();
-
             $query = $this->db->query('SELECT `name` FROM `tbleventpermission` JOIN `tblpermissions` ON `tblpermissions`.`permissionid` = `tbleventpermission`.`permissionid` WHERE `tbleventpermission`.`deleted` = 0 AND `tbleventpermission`.`inviteid` =' . $id . ' AND `tbleventpermission`.`projectid` = ' . $invite->projectid);
             $permission = $query->result_array();
             $invite->permissions = $permission;
@@ -4687,16 +4779,17 @@ class Projects_model extends CRM_Model
         if (is_staff_logged_in()) {
             $this->db->where('userid', $userid);
         } else {
-            $this->db->where('usertype', "invitee");
+            $this->db->where('(usertype="invitee" OR usertype="venue")');
         }
         $curentUserInvitesStatus = $this->db->get('tblinvitestatus')->row();
 
         $this->db->where('inviteid', $data['inviteid']);
-        $this->db->where('usertype', "invitee");
+        $this->db->where('(usertype="invitee" OR usertype="venue")');
         $InviteesStatus = $this->db->get('tblinvitestatus')->row();
 
         $oldstatus = $curentUserInvitesStatus->status;
         $usertype = $curentUserInvitesStatus->usertype;
+        $userid = $curentUserInvitesStatus->userid;
         $data['dateupdated'] = date('Y-m-d H:i:s');
         $data['updated_by'] = $userid;
         $this->db->where('inviteid', $data['inviteid']);
@@ -4707,6 +4800,9 @@ class Projects_model extends CRM_Model
             $currentuser = get_staff_user_id();
         } else {
             $currentuser = $invitedetails->staffid;
+            if($invitedetails->contacttype == 5){
+                $currentuser = $invitedetails->venueid;
+            }
         }
         if ($newstatus == "declined") {
             $this->db->where('inviteid', $data['inviteid']);
@@ -4779,7 +4875,9 @@ class Projects_model extends CRM_Model
                 $this->db->update('tblstaff',array('active'=>1,));
             }*/
             $approved_by = get_staff_full_name($currentuser);
-
+            if($invitedetails->contacttype == 5){
+                $approved_by = get_venue_name($currentuser);
+            }
             foreach ($inviteusers as $inviteuser) {
                 if ($inviteuser['userid'] > 0) {
                     $inviteuserid = $inviteuser['userid'];
@@ -4797,7 +4895,7 @@ class Projects_model extends CRM_Model
                         if ($invited_by_type == "client") {
                             $message = '<h2><span style="font-size: 14pt;">Hi ' . $firstname . '</span>,</h2><br/><br/>';
                             $message .= 'Your ' . $inv_type . ' invitation for the event <b>' . $eventname . '</b> is approved by ' . $approved_by . '<br/><br/>';
-                            $this->emails_model->send_simple_email($client_email, $inv_type . " invitation appeoved", $message);
+                            $this->emails_model->send_simple_email($client_email, $inv_type . " invitation approved", $message);
                         } else {
                             if (($invitedetails->status == "pending" || $InviteesStatus->status == "pending") && $invitedetails->invitetype == "new") {
 
@@ -4834,7 +4932,7 @@ class Projects_model extends CRM_Model
 
                                 $message = '<h2><span style="font-size: 14pt;">Hi ' . $firstname . '</span>,</h2><br/><br/>';
                                 $message .= 'Your ' . $inv_type . ' invitation for the event <b>' . $eventname . '</b> is approved by ' . $approved_by . '<br/><br/>';
-                                $this->emails_model->send_simple_email($client_email, $inv_type . " invitation appeoved", $message);
+                                $this->emails_model->send_simple_email($client_email, $inv_type . " invitation approved", $message);
                             }
                         }
                     } else {
@@ -5145,7 +5243,21 @@ class Projects_model extends CRM_Model
                         $staff_brand['staffid'] = $staff_det->staffid;
                         $staff_brand['brandid'] = get_user_session();
                         $this->db->insert('tblstaffbrand', $staff_brand);
-
+                        /**
+                         * Added By : Masud
+                         * Dt : 03/23/2018
+                         * prefill dashboard values
+                         */
+                        $dashboard_data = array();
+                        $dashboard_data['staffid'] = $staff_det->staffid;
+                        $dashboard_data['widget_type'] = 'upcoming_project,pinned_item,calendar,weather,favourite,quick_link,lead_pipeline,message,getting_started,task_list,contacts,messages';
+                        $dashboard_data['quick_link_type'] = 'lead,project,message,task_due,meeting,amount_receivable,amount_received,invite';
+                        $dashboard_data['order'] = '[{"widget_name":"getting_started","order":0},{"widget_name":"lead_pipeline","order":1},{"widget_name":"calendar","order":2},{"widget_name":"pinned_item","order":3},{"widget_name":"quick_link","order":4},{"widget_name":"upcoming_project","order":5},{"widget_name":"contacts","order":6},{"widget_name":"messages","order":7},{"widget_name":"task_list","order":8}]';
+                        $dashboard_data['is_visible'] = 1;
+                        $dashboard_data['brandid'] = get_user_session();
+                        $dashboard_data['dateadded'] = date('Y-m-d H:i:s');
+                        $dashboard_data['addedby'] = $staff_det->staffid;
+                        $this->db->insert('  tbldashboard_settings', $dashboard_data);
                         $staffdetails['{name}'] = $firstname;
                         $staffdetails['{vendor_password'] = $password;
                         $merge_fields = array_merge($merge_fields, $staffdetails);
@@ -5363,7 +5475,6 @@ class Projects_model extends CRM_Model
     function editinvitepermission($data)
     {
         $invite = explode(",", $data['inviteid']);
-
         foreach ($invite as $inviteid) {
             //delete all event permission for specific invite
             $permission_data = [];
@@ -5536,7 +5647,7 @@ class Projects_model extends CRM_Model
     {
         $this->db->select('tblstaff.*,contactid');
         $this->db->where('projectid', $id);
-        $this->db->where('isclient', 1);
+        $this->db->where('tblprojectcontact.isclient', 1);
         $this->db->join('tblstaff', 'tblstaff.staffid = tblprojectcontact.contactid', 'left');
         return $this->db->get('tblprojectcontact')->result_array();
     }
@@ -5716,7 +5827,6 @@ class Projects_model extends CRM_Model
                             array_push($vendorlists, $details);
                         }
                     }
-
                     $vendors = array_map("unserialize", array_unique(array_map("serialize", $vendorlists)));
                 }
             } else {
@@ -5730,15 +5840,17 @@ class Projects_model extends CRM_Model
                         $this->db->where('inviteid', $invite['inviteid']);
                         $this->db->where('usertype="invitee" OR usertype="venue"');
                         $inviteestatus = $this->db->get('tblinvitestatus')->row();
-                        $details['status'] = $inviteestatus->status;
-                        $details['inviteid'] = $invite['inviteid'];
-                        $details['venueid'] = $invite['venueid'];
-                        $details['venuename'] = $invite['venuename'];
-                        $details['venuecontactname'] = $invite['venuecontactname'];
-                        $details['venueemail'] = $invite['venueemail'];
-                        $details['venuelogo'] = venue_logo_image($invite['venueid'], array('venue-logo-image-small'));
+                        if (!empty($inviteestatus)) {
+                            $details['status'] = $inviteestatus->status;
+                            $details['inviteid'] = $invite['inviteid'];
+                            $details['venueid'] = $invite['venueid'];
+                            $details['venuename'] = $invite['venuename'];
+                            $details['venuecontactname'] = $invite['venuecontactname'];
+                            $details['venueemail'] = $invite['venueemail'];
+                            $details['venuelogo'] = venue_logo_image($invite['venueid'], array('venue-logo-image-small'));
 
-                        array_push($vendorlists, $details);
+                            array_push($vendorlists, $details);
+                        }
                     }
 
                     $vendors = array_map("unserialize", array_unique(array_map("serialize", $vendorlists)));
@@ -5954,7 +6066,7 @@ class Projects_model extends CRM_Model
 
     /**
      * Get Event Types
-     * @param  mixed $id Optional - Event Type ID
+     * @param mixed $id Optional - Event Type ID
      * @return mixed object if id passed else array
      */
     public function get_event_type($id = false)
@@ -6039,8 +6151,8 @@ class Projects_model extends CRM_Model
 
     /**
      * Update event type
-     * @param  mixed $data eventtype data
-     * @param  mixed $id eventtype id
+     * @param mixed $data eventtype data
+     * @param mixed $id eventtype id
      * @return boolean
      */
     public function update_eventtype($data, $id)
@@ -6060,7 +6172,7 @@ class Projects_model extends CRM_Model
 
     /**
      * Delete eventtype from database
-     * @param  mixed $id eventtype id
+     * @param mixed $id eventtype id
      * @return mixed
      */
     public function delete_eventtype($id)
@@ -6105,6 +6217,17 @@ class Projects_model extends CRM_Model
      */
     public function sendinvites($data)
     {
+        if ($data['contacttype'] == 3) {
+            $role = "vendor";
+            $widget_type = 'upcoming_project,pinned_item,calendar,quick_link,message,getting_started,contacts,messages';
+            $quick_link_type = 'project,message,task_due,meeting';
+        } elseif ($data['contacttype'] == 4) {
+            $role = "collaborator";
+            $widget_type = 'upcoming_project,pinned_item,calendar,quick_link,message,getting_started,task_list,contacts,messages';
+            $quick_link_type = 'project,message,task_due,meeting,invite';
+        } else {
+            $role = "venue";
+        }
         $userid = get_staff_user_id();
         $inviteType = isset($data['invite'][0]) ? $data['invite'][0] : "";
         if ($inviteType == "existing" && ($data['contacttype'] == 3 || $data['contacttype'] == 4)) {
@@ -6145,18 +6268,13 @@ class Projects_model extends CRM_Model
         //create entry in invite table
         $this->db->insert('tblinvite', $data);
         $insert_id = $this->db->insert_id();
-
         if ($insert_id > 0) {
-            if ($data['contacttype'] == 3 || $data['contacttype'] == 4) {
-                if (isset($data['staffid'])) {
-                    $contact = $data['staffid'];
-                } elseif (isset($data['contactid'])) {
-                    $contact = $data['contactid'];
-                } else {
-                    $contact = $data['email'];
-                }
+            if (isset($data['staffid'])) {
+                $contact = $data['staffid'];
+            } elseif (isset($data['contactid'])) {
+                $contact = $data['contactid'];
             } else {
-                $contact = $data['venueid'];
+                $contact = $data['email'];
             }
 
             logActivity('New invitation has been created by [Created By:' . $data['created_by'] . ' for Project ID:' . $data['projectid'] . ' to Contact ID: ' . $contact . ' IP:' . $this->input->ip_address() . ']');
@@ -6181,7 +6299,7 @@ class Projects_model extends CRM_Model
                 //if account owner has send invite, send email to invited vendor
                 $merge_fields = array();
                 if (in_array($userid, $clients)) {
-                    $merge_fields = array_merge($merge_fields, get_invite_merge_field($insert_id, $data['contacttype'], 'sent-to-vendor'));
+                    $merge_fields = array_merge($merge_fields, get_invite_merge_field($insert_id, $data['contacttype']));
                 } else {
                     $merge_fields = array_merge($merge_fields, get_invite_merge_field($insert_id, $data['contacttype']));
                 }
@@ -6248,6 +6366,8 @@ class Projects_model extends CRM_Model
                     $status_data['created_by'] = $this->session->userdata['staff_user_id'];
                     $status_data['datecreated'] = date('Y-m-d H:i:s');
                     $this->db->insert('tblinvitestatus', $status_data);
+
+                    $this->invite_new_created_notification($insert_id, $data['staffid']);
 
                     if (in_array($userid, $clients)) {
                         //for vendor
@@ -6341,6 +6461,7 @@ class Projects_model extends CRM_Model
                     $status_data['created_by'] = $this->session->userdata['staff_user_id'];
                     $status_data['datecreated'] = date('Y-m-d H:i:s');
                     $this->db->insert('tblinvitestatus', $status_data);
+                    $this->invite_new_created_notification($insert_id, $data['contactid']);
                     if (in_array($userid, $clients)) {
                         //for vendor
                         if ($data['contacttype'] == 3) {
@@ -6357,11 +6478,11 @@ class Projects_model extends CRM_Model
                                 $staffdetails['{name}'] = get_staff_first_name($client);
                                 $merge_fields = array_merge($merge_fields, $staffdetails);
                                 if ($data['contacttype'] == 3) {
-                                    $send = $this->emails_model->send_email_template('invite-new', $clientEmail, $merge_fields);
+                                    $send = $this->emails_model->send_email_template('invite-new', $clientEmail, $merge_fields,'sent-to-vendor');
                                 }
                                 //for collaborator
                                 if ($data['contacttype'] == 4) {
-                                    $send = $this->emails_model->send_email_template('invite-new-collaborator', $clientEmail, $merge_fields);
+                                    $send = $this->emails_model->send_email_template('invite-new-collaborator', $clientEmail, $merge_fields,'sent-to-vendor');
                                 }
                             }
                         }
@@ -6428,7 +6549,7 @@ class Projects_model extends CRM_Model
                         $staffdata['packagetype'] = (isset($package->packageid) ? $package->packageid : 2);
                         $this->load->model('register_model');
 
-                        $this->register_model->saveclient($staffdata, 'invite');
+                        $this->register_model->saveclient($staffdata, 'invite', $role);
 
                         logActivity('New User Created [Email Address:' . $vendor_email . ' for invitation: ' . $insert_id . 'staffdata IP:' . $this->input->ip_address() . ']');
 
@@ -6480,6 +6601,22 @@ class Projects_model extends CRM_Model
                         $staff_brand['brandid'] = get_user_session();
                         $this->db->insert('tblstaffbrand', $staff_brand);
 
+                        /**
+                         * Added By : Masud
+                         * Dt : 03/23/2018
+                         * prefill dashboard values
+                         */
+                        $dashboard_data = array();
+                        $dashboard_data['staffid'] = $staff_det->staffid;
+                        $dashboard_data['widget_type'] = $widget_type;
+                        $dashboard_data['quick_link_type'] = $quick_link_type;
+                        $dashboard_data['order'] = '[{"widget_name":"getting_started","order":0},{"widget_name":"lead_pipeline","order":1},{"widget_name":"calendar","order":2},{"widget_name":"pinned_item","order":3},{"widget_name":"quick_link","order":4},{"widget_name":"upcoming_project","order":5},{"widget_name":"contacts","order":6},{"widget_name":"messages","order":7},{"widget_name":"task_list","order":8}]';
+                        $dashboard_data['is_visible'] = 1;
+                        $dashboard_data['brandid'] = get_user_session();
+                        $dashboard_data['dateadded'] = date('Y-m-d H:i:s');
+                        $dashboard_data['addedby'] = $staff_det->staffid;
+                        $this->db->insert('  tbldashboard_settings', $dashboard_data);
+
                         /* Add invitee status */
                         $status_data = [];
                         $status_data['status'] = "pending";
@@ -6494,7 +6631,7 @@ class Projects_model extends CRM_Model
                         $staffdetails['{name}'] = $firstname;
                         $staffdetails['{vendor_password}'] = $password;
                         $merge_fields = array_merge($merge_fields, $staffdetails);
-
+                        $this->invite_new_created_notification($insert_id, $staff_det->staffid);
                         if (in_array($userid, $clients)) {
                             //for vendor
                             if ($data['contacttype'] == 3) {
@@ -6512,11 +6649,11 @@ class Projects_model extends CRM_Model
                                     $staffdetails['{name}'] = get_staff_first_name($client);
                                     $merge_fields = array_merge($merge_fields, $staffdetails);
                                     if ($data['contacttype'] == 3) {
-                                        $send = $this->emails_model->send_email_template('invite-new', $clientEmail, $merge_fields);
+                                        $send = $this->emails_model->send_email_template('invite-new', $clientEmail, $merge_fields,'sent-to-vendor');
                                     }
                                     //for collaborator
                                     if ($data['contacttype'] == 4) {
-                                        $send = $this->emails_model->send_email_template('invite-new-collaborator', $clientEmail, $merge_fields);
+                                        $send = $this->emails_model->send_email_template('invite-new-collaborator', $clientEmail, $merge_fields,'sent-to-vendor');
                                     }
                                 }
                             }
@@ -6538,19 +6675,17 @@ class Projects_model extends CRM_Model
                     $project_venue['brandid'] = get_user_session();
 
                     $this->db->insert('tblprojectvenue', $project_venue);
-
-                    $status_data = [];
-                    $status_data['status'] = "pending";
-                    $status_data['inviteid'] = $insert_id;
-                    $status_data['projectid'] = $event;
-                    $status_data['userid'] = $userid;
-                    $status_data['usertype'] = "venue";
-                    $status_data['created_by'] = $this->session->userdata['staff_user_id'];
-                    $status_data['datecreated'] = date('Y-m-d H:i:s');
-                    $this->db->insert('tblinvitestatus', $status_data);
                 }
+                $status_data = [];
+                $status_data['status'] = "pending";
+                $status_data['inviteid'] = $insert_id;
+                $status_data['projectid'] = $event;
+                $staff_brand['userid'] = $data['venueid'];
+                $status_data['usertype'] = "venue";
+                $status_data['created_by'] = $this->session->userdata['staff_user_id'];
+                $status_data['datecreated'] = date('Y-m-d H:i:s');
+                $this->db->insert('tblinvitestatus', $status_data);
             }
-
             /* Add invitee status for clients and inviter */
             if (!in_array($userid, $clients)) {
                 $status_data = [];
@@ -6584,6 +6719,11 @@ class Projects_model extends CRM_Model
                     $this->db->insert('tblinvitestatus', $status_data);
                 }
             }
+            $status_data = [];
+            $status_data['userid'] = get_invite_staffid($insert_id);
+            $this->db->where('inviteid', $insert_id);
+            $this->db->where('usertype', 'invitee');
+            $this->db->update('tblinvitestatus', $status_data);
         }
 
         return $insert_id;
@@ -6596,6 +6736,22 @@ class Projects_model extends CRM_Model
         $this->db->where('tblprojectcontact.isclient', 1);
         $this->db->where('tblprojectcontact.projectid', $projectid);
         $clients = $this->db->get('tblprojectcontact')->result_array();
+        $clients = array_map('current', $clients);
+        return $clients;
+    }
+
+    function get_project_client_contact($projectid)
+    {
+        $this->db->select('tblstaff.email');
+        $this->db->join('tblstaff', 'tblstaff.staffid = tblprojectcontact.contactid');
+        $this->db->where('tblprojectcontact.isclient', 1);
+        $this->db->where('tblprojectcontact.projectid', $projectid);
+        $clients = $this->db->get('tblprojectcontact')->result_array();
+        $clients = array_map('current', $clients);
+        $this->db->select('addressbookid');
+        $this->db->where_in('email', $clients);
+        $this->db->where('type', 'primary');
+        $clients = $this->db->get('tbladdressbookemail')->result_array();
         $clients = array_map('current', $clients);
         return $clients;
     }
@@ -6646,6 +6802,66 @@ class Projects_model extends CRM_Model
             return 1;
         }
         return 0;
+    }
+
+    function get_invitedusers($projectid)
+    {
+        $this->db->select('staffid,contactid,venueid');
+        $this->db->where('projectid', $projectid);
+        $invitedusers = $this->db->get('tblinvite')->result_array();
+        //$invitedusers = array_map('current',$invitedusers);
+        $invitedsatff = array();
+        $invitedcontact = array();
+        $invitedvenue = array();
+        foreach ($invitedusers as $key => $inviteduser) {
+            if ($inviteduser['staffid'] > 0) {
+                array_push($invitedsatff, $inviteduser['staffid']);
+            }
+            if ($inviteduser['contactid'] > 0) {
+                array_push($invitedcontact, $inviteduser['contactid']);
+            }
+            if ($inviteduser['venueid'] > 0) {
+                array_push($invitedvenue, $inviteduser['venueid']);
+            }
+        }
+        $invitedusers = array();
+        $invitedusers['staff'] = $invitedsatff;
+        $invitedusers['contact'] = $invitedcontact;
+        $invitedusers['venue'] = $invitedvenue;
+        return $invitedusers;
+    }
+
+    /**
+     * Added By : Masud
+     * Dt : 27/05/2018
+     * to save extra form fields in db
+     */
+    public function invite_new_created_notification($invite_id, $assigned, $integration = false)
+    {
+        $name = $this->db->select('CONCAT(firstname," ",lastname) as name')->from('tblinvite')->where('inviteid', $invite_id)->get()->row()->name;
+        if ($assigned == "") {
+            $assigned = 0;
+        }
+
+        $notification_data = array(
+            'description' => ($integration == false) ? 'not_new_invite_created' : 'not_new_invite_created',
+            'touserid' => $assigned,
+            'eid' => $invite_id,
+            'brandid' => get_user_session(),
+            'not_type' => 'invites',
+            'link' => 'invites/invitedetails/' . $invite_id,
+            'additional_data' => ($integration == false ? serialize(array(
+                $name
+            )) : serialize(array()))
+        );
+
+        if ($integration != false) {
+            $notification_data['fromcompany'] = 1;
+        }
+
+        if (add_notification($notification_data)) {
+            pusher_trigger_notification(array($assigned));
+        }
     }
 }
 

@@ -44,7 +44,7 @@ init_head();
                                         <h5 class="sub-title">
                                             <?php if ($contacttype == 5) {
                                                 echo _l('choose_venue');
-                                            }else{
+                                            } else {
                                                 echo _l('choose_contact');
                                             } ?>
                                         </h5>
@@ -146,11 +146,13 @@ init_head();
                                                                 <optgroup label="Team Members">
                                                                     <?php
                                                                     foreach ($teammember as $member) {
-                                                                        if ($member['staffid'] != get_staff_user_id() && !in_array($member['staffid'],$clients)) {
-                                                                            ?>
-                                                                            <option value="staff-<?php echo $member['staffid']; ?>"
-                                                                                    data-subtext="<?php echo $member['email']; ?>"><?php echo $member['firstname'] . " " . $member['lastname']; ?></option>
-                                                                            <?php
+                                                                        if ($member['staffid'] != get_staff_user_id() && !in_array($member['staffid'], $clients)) {
+                                                                            if (!in_array($member['staffid'], $invitedusers['staff'])) {
+                                                                                ?>
+                                                                                <option value="staff-<?php echo $member['staffid']; ?>"
+                                                                                        data-subtext="<?php echo $member['email']; ?>"><?php echo $member['firstname'] . " " . $member['lastname']; ?></option>
+                                                                                <?php
+                                                                            }
                                                                         }
                                                                     }
                                                                     ?>
@@ -158,10 +160,14 @@ init_head();
                                                                 <optgroup label="Contacts">
                                                                     <?php
                                                                     foreach ($contacts as $contact) {
-                                                                        ?>
-                                                                        <option value="contact-<?php echo $contact['addressbookid']; ?>"
-                                                                                data-subtext="<?php echo $contact['email']; ?>"><?php echo $contact['firstname'] . " " . $contact['lastname']; ?></option>
-                                                                        <?php
+                                                                        if (!in_array($contact['addressbookid'], $clientConatct)) {
+                                                                            if (!in_array($contact['addressbookid'], $invitedusers['contact'])) {
+                                                                                ?>
+                                                                                <option value="contact-<?php echo $contact['addressbookid']; ?>"
+                                                                                        data-subtext="<?php echo $contact['email']; ?>"><?php echo $contact['firstname'] . " " . $contact['lastname']; ?></option>
+                                                                                <?php
+                                                                            }
+                                                                        }
                                                                     }
                                                                     ?>
                                                                 </optgroup>
@@ -182,12 +188,15 @@ init_head();
                                                     <option value=""></option>
                                                     <?php
                                                     foreach ($venues as $venue) {
-                                                        ?>
-                                                        <option value="<?php echo $venue['venueid']; ?>"
-                                                                data-venueemail="<?php echo $venue['venueemail']; ?>" <?php if ($project->venueid == $venue['venueid']) {
-                                                            echo 'selected="selected"';
-                                                        } ?>><?php echo $venue['venuename']; ?></option>
-                                                        <?php
+                                                        if (!in_array($venue['venueid'], $invitedusers['venue'])) {
+                                                            ?>
+                                                            <option value="<?php echo $venue['venueid']; ?>"
+                                                                    data-venueemail='<?php echo $venue['venueemail']; ?>' <?php if ($project->venueid == $venue['venueid']) {
+                                                                echo 'selected="selected"';
+                                                            } ?>><?php echo $venue['venuename']; ?>
+                                                            </option>
+                                                            <?php
+                                                        }
                                                     }
                                                     ?>
                                                 </select>
@@ -357,7 +366,7 @@ init_head();
             method: "post",
             data: "useremail=" + useremail,
             success: function (data) {
-                if (data ==1) {
+                if (data == 1) {
                     $("#email-error").removeClass("has-error");
                     $(':button[type="submit"]').prop('disabled', false);
                     $("#emailmsg").html("");

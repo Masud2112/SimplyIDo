@@ -9,15 +9,17 @@
 <div id="wrapper">
 	<div class="content packages-manage-admin-page">
 		<div class="row">
-			<div class="col-md-12">                                
-                    <div class="breadcrumb">
+			<div class="col-md-12">
+                <h1 class="pageTitleH1"><i class="fa fa-usd"></i><?php echo $title; ?></h1>
+                <div class="pull-right">
+                    <div class="breadcrumb mb0">
                         <a href="<?php echo admin_url(); ?>"><i class="fa fa-home"></i></a>
                         <i class="fa fa-angle-right breadcrumb-arrow"></i>
                         <a href="<?php echo admin_url('setup'); ?>">Settings</a>
                         <i class="fa fa-angle-right breadcrumb-arrow"></i>
                         <span>Packages</span>
-                    </div>                
-				<h1 class="pageTitleH1"><i class="fa fa-usd"></i><?php echo $title; ?></h1>
+                    </div>
+                </div>
                 <div class="clearfix"></div>
 				<div class="panel_s btmbrd">
 					<div class="panel-body">
@@ -26,7 +28,6 @@
 								<a href="<?php echo admin_url('packages/package'); ?>" class="btn btn-info pull-left display-block"><?php echo _l('new_package'); ?></a>
 							<?php } ?>
 						</div>
-						  <?php if(is_mobile()) { echo '<a class="btn btn-primary  filter_btn_search"><i class="glyphicon glyphicon-search"></i></a>'; } ?>
 						<div class="clearfix"></div>
 						<?php render_datatable(array(
 							_l('packages_dt_name'),
@@ -45,8 +46,7 @@
 	<?php init_tail(); ?>
 	<script>
 		var notSortable = $('.table-packages').find('th').length - 1;
-		initDataTable('.table-packages', window.location.href, [1], notSortable);		
-</script>
+		initDataTable('.table-packages', window.location.href, [1], notSortable);
 	</script>
 </body>
 </html>

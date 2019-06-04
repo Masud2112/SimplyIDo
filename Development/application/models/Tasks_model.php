@@ -654,6 +654,7 @@ class Tasks_model extends CRM_Model
                         'staffid' => $a,
                         'assigned_from' => get_staff_user_id()
                     ));
+                    $this->task_new_created_notification($insert_id,$a);
                 }
             }
             /**
@@ -718,6 +719,39 @@ class Tasks_model extends CRM_Model
         return false;
     }
 
+    /**
+     * Added By : Masud
+     * Dt : 27/05/2018
+     * to save extra form fields in db
+     */
+
+    public function task_new_created_notification($task_id, $assigned, $integration = false)
+    {
+        $name = $this->db->select('name')->from('tblstafftasks')->where('id', $task_id)->get()->row()->name;
+        if ($assigned == "") {
+            $assigned = 0;
+        }
+
+        $notification_data = array(
+            'description' => ($integration == false) ? 'not_new_task_created' : 'not_task_assigned_from_form',
+            'touserid' => $assigned,
+            'eid' => $task_id,
+            'brandid' => get_user_session(),
+            'not_type' => 'tasks',
+            'link' => 'tasks/dashboard/' . $task_id,
+            'additional_data' => ($integration == false ? serialize(array(
+                $name
+            )) : serialize(array()))
+        );
+
+        if ($integration != false) {
+            $notification_data['fromcompany'] = 1;
+        }
+
+        if (add_notification($notification_data)) {
+            pusher_trigger_notification(array($assigned));
+        }
+    }
     /**
      * Update task data
      * @param  array $data task data $_POST
@@ -2351,7 +2385,8 @@ class Tasks_model extends CRM_Model
         $this->db->select('id,name');
         $this->db->where('brandid',  get_user_session());
         $this->db->where('deleted', 0);
-        
+        $this->db->where('converted', 0);
+
         //$this->db->query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
                         
         return $this->db->get('tblleads')->result_array();
@@ -2434,5 +2469,17 @@ class Tasks_model extends CRM_Model
             return 1;
         }
         return 0;
+    }
+    function task_name_exists($name){
+        $this->db->select('*');
+        $this->db->from('tblstafftasks');
+        $this->db->where('name', $name);
+        $this->db->where('brandid', get_user_session());
+        $result = $this->db->get()->result_array();
+        if(count($result) > 0){
+            return json_encode(false);
+        }else{
+            return json_encode(true);
+        }
     }
 }

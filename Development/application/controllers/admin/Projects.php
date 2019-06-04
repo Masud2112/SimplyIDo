@@ -20,7 +20,7 @@ class Projects extends Admin_controller
     {
         $pg = $this->input->get('pg');
 
-        if (!is_staff_member()) {
+        if (!has_permission('projects', '', 'view')) {
             access_denied('Projects');
         }
         if ($this->input->is_ajax_request()) {
@@ -421,7 +421,7 @@ class Projects extends Admin_controller
             }
 
             if ($this->input->post()) {
-                $data=$this->input->post();
+                $data = $this->input->post();
                 if (isset($data['imagebase64'])) {
                     unset($data['imagebase64']);
                 }
@@ -1541,10 +1541,13 @@ class Projects extends Admin_controller
         echo is_sido_admin();
         die('<--here');*/
         $pg = $this->input->get('pg');
-        if (!is_staff_member()) {
+        /*if (!is_staff_member()) {
             header("HTTP/1.0 404 Not Found");
             echo _l('access_denied');
             die;
+        }*/
+        if (!has_permission('projects', '', 'view', true)) {
+            access_denied('project');
         }
         $brandid = $this->projects_model->get_project_details($id);
         $staffbrand = $this->projects_model->get_staff_brand(get_staff_user_id());
@@ -1619,18 +1622,20 @@ class Projects extends Admin_controller
      */
     public function invite($contacttype = '', $projectid = '')
     {
+        if (!has_permission('invites', '', 'create', true)) {
+            access_denied('invites');
+        }
         $this->load->model('staff_model');
         $this->load->model('addressbooks_model');
         $this->load->model('tags_model');
 
         $project = $this->projects_model->get($projectid);
         $data['project'] = $project;
-
         $data['tags'] = $this->tags_model->get();
         $data['contacts'] = $this->addressbooks_model->get_existing_contacts('tblprojectcontact', "projectid", $projectid);
         $data['teammember'] = $this->staff_model->get('', 1);
         $data['clients'] = $this->projects_model->get_project_client($projectid);
-
+        $data['clientConatct'] = $this->projects_model->get_project_client_contact($projectid);
         if ($contacttype == 3) {
             $data['title'] = _l('invite', 'Vendor');
         } else if ($contacttype == 4) {
@@ -1638,7 +1643,6 @@ class Projects extends Admin_controller
         } else if ($contacttype == 5) {
             $data['title'] = _l('invite', 'Venue');
         }
-
         $data['contacttype'] = $contacttype;
         if (!empty($project)) {
             if ($project->no_of_events == 0) {
@@ -1648,7 +1652,6 @@ class Projects extends Admin_controller
                 $data['events'] = $this->projects_model->get('', array('parent' => $projectid));
             }
         }
-
         $data['permissions'] = $this->projects_model->get_project_permission($projectid);
 
         if ($this->input->post()) {
@@ -1685,7 +1688,7 @@ class Projects extends Admin_controller
         $data['venues'] = $this->venues_model->get_approved_venues();
 
         $data['sitelocations'] = $this->venues_model->get_sitelocations($project->venueid);
-
+        $data['invitedusers'] = $this->projects_model->get_invitedusers($projectid);
         $this->load->view('admin/projects/invite', $data);
     }
 
@@ -1713,6 +1716,9 @@ class Projects extends Admin_controller
      */
     public function invites()
     {
+        if (!has_permission('invites', '', 'view', true)) {
+            access_denied('invites');
+        }
 
         $pg = $this->input->get('pg');
         $data['title'] = 'Invites';
@@ -1766,6 +1772,9 @@ class Projects extends Admin_controller
      */
     public function invitedetails($id = '')
     {
+        if (!has_permission('invites', '', 'edit', true)) {
+            access_denied('invites');
+        }
         $brandid = $this->projects_model->get_invite_details($id);
         $staffbrand = $this->projects_model->get_staff_brand(get_staff_user_id());
         if (in_array($brandid, $staffbrand)) {
@@ -1871,16 +1880,13 @@ class Projects extends Admin_controller
      */
     public function viewinvite()
     {
-        /*echo "<pre>";
-        print_r($this->input->post());
-        die('<--here');*/
         $project_id = $this->input->post('projectid');
         $isparent = $this->input->post('isparent');
         $staffid = $this->input->post('staffid');
         $contactid = $this->input->post('addressbookid');
         $isvendor = $this->input->post('isvendor');
         $iscollaborator = $this->input->post('iscollaborator');
-
+        $contacttype = $this->input->post('contacttype');
         $venueid = $this->input->post('venueid');
 
         if ($staffid > 0 || $contactid > 0) {
@@ -1892,14 +1898,13 @@ class Projects extends Admin_controller
         } else {
             $data['events'] = $this->projects_model->get($project_id, array(), '', '', '', '', $venueid);
         }
-        /*echo "<pre>";
-        print_r($data['events']);
-        die('<--here');*/
         $data['staffid'] = $staffid;
         $data['contactid'] = $contactid;
         $data['isvendor'] = $isvendor;
         $data['iscollaborator'] = $iscollaborator;
         $data['venueid'] = $venueid;
+        $data['contacttype'] = $contacttype;
+
         $this->load->view('admin/projects/sub-events', $data);
     }
 
@@ -2173,6 +2178,9 @@ class Projects extends Admin_controller
      */
     public function event_types()
     {
+        if (!has_permission('lists', '', 'view')) {
+            access_denied('Lists');
+        }
         $session_data = get_session_data();
         $is_sido_admin = $session_data['is_sido_admin'];
         //$is_admin = $session_data['is_admin'];

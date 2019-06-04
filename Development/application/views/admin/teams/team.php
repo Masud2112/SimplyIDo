@@ -4,8 +4,10 @@
         <div class="row">
             <?php echo form_open($this->uri->uri_string(),array('class'=>'team-form')); ?>
 
-            <div class="col-md-12">               
-                    <div class="breadcrumb">
+            <div class="col-md-12">
+                <h1 class="pageTitleH1"><i class="fa fa-group"></i><?php echo $title; ?></h1>
+                <div class="pull-right">
+                    <div class="breadcrumb mb0">
                         <a href="<?php echo admin_url(); ?>"><i class="fa fa-home"></i></a>
                         <i class="fa fa-angle-right breadcrumb-arrow"></i>
                         <a href="<?php echo admin_url('setup'); ?>">Settings</a>
@@ -13,11 +15,12 @@
                         <a href="<?php echo admin_url('teams'); ?>">Teams</a>
                         <i class="fa fa-angle-right breadcrumb-arrow"></i>
                         <span><?php echo $value = (isset($team) ? $team->name : 'New Team'); ?></span>
-                    </div>                
-				<h1 class="pageTitleH1"><i class="fa fa-group"></i><?php echo $title; ?></h1>
+                    </div>
+                </div>
                 <div class="clearfix"></div>
                 <div class="panel_s btmbrd">
                     <div class="panel-body">
+
                         <?php $attrs = (isset($team) ? array() : array('autofocus'=>true)); ?>
                         <?php $value = (isset($team) ? $team->name : ''); ?>
                         <?php echo render_input('name','team_add_edit_name',$value,'text',$attrs); ?>
@@ -158,7 +161,7 @@
                             <button class="btn btn-default" type="button" onclick="location.href='<?php echo base_url(); ?>admin/teams'"><?php echo _l( 'Cancel'); ?></button>
                             <button type="submit" class="btn btn-info"><?php echo _l('submit'); ?></button>
                             <?php if(isset($team)){ ?>
-                                <?php if (has_permission('account_setup','','create')) { ?>
+                                <?php if (has_permission('teams','','create')) { ?>
                                     <a href="<?php echo admin_url('teams/team'); ?>" class="btn btn-info pull-right mleft4 mbot20 display-block"><?php echo _l('new_team'); ?></a>
                                     <div class="clearfix"></div>
                                 <?php } ?>

@@ -102,14 +102,14 @@ class Register extends CI_Controller
                         $data['twitter'] = $this->input->post('twitter');
                         $data['google'] = $this->input->post('google');
                     }
-                    $data['brandname']      = $this->input->post('brandname');
-                    $data['brandtype']      = $this->input->post('brandtype');
-                    $data['packagetype']    = $this->input->post('packagetype');
-                    $data['address']        = $this->input->post('address1') . " " . $this->input->post('address2');
-                    $data['city']           = $this->input->post('city');
-                    $data['state']          = $this->input->post('state');
-                    $data['zipcode']        = $this->input->post('zipcode');
-                    $data['paymentmode']    = $this->input->post('payment_method')[0];
+                    $data['brandname'] = $this->input->post('brandname');
+                    $data['brandtype'] = $this->input->post('brandtype');
+                    $data['packagetype'] = $this->input->post('packagetype');
+                    $data['address'] = $this->input->post('address1') . " " . $this->input->post('address2');
+                    $data['city'] = $this->input->post('city');
+                    $data['state'] = $this->input->post('state');
+                    $data['zipcode'] = $this->input->post('zipcode');
+                    $data['paymentmode'] = $this->input->post('payment_method')[0];
                     $client = $this->Register_model->saveclient($data);
                     if ($client <= 0) {
                         set_alert('danger', _l('valid_form'));
@@ -205,11 +205,11 @@ class Register extends CI_Controller
         if ($this->input->post()) {
             if ($this->form_validation->run() !== false) {
                 $brandtypes = $this->input->post('brandtype');
-                if(in_array('other',$brandtypes) && $this->input->post('otherbrandval')!=""){
-                        $newbrandtype = add_brand_type($this->input->post('otherbrandval'));
-                        array_push($brandtypes,$newbrandtype);
+                if (in_array('other', $brandtypes) && $this->input->post('otherbrandval') != "") {
+                    $newbrandtype = add_brand_type($this->input->post('otherbrandval'));
+                    array_push($brandtypes, $newbrandtype);
                 }
-                $brandtypes = array_diff($brandtypes,array('other'));
+                $brandtypes = array_diff($brandtypes, array('other'));
 
                 $account_data = $this->Register_model->check_account_exists($this->input->post('useremail'));                //if account is inactive, set alert message
                 if (is_array($account_data) && isset($account_data['active']) && $account_data['active'] == 0) {
@@ -233,21 +233,45 @@ class Register extends CI_Controller
                         $data['twitter'] = $this->input->post('twitter');
                         $data['google'] = $this->input->post('google');
                     }
-                    $data['brandname']      = $this->input->post('brandname');
-                    $data['brandtype']      = serialize($brandtypes);
+                    $data['brandname'] = $this->input->post('brandname');
+                    $data['brandtype'] = serialize($brandtypes);
                     /*$data['brandtype']      = 1;*/
-                    $data['packagetype']    = $this->input->post('packagetype');
-                    $data['address']        = $this->input->post('address1') . " " . $this->input->post('address2');
-                    $data['city']           = $this->input->post('city');
-                    $data['state']          = $this->input->post('state');
-                    $data['zipcode']        = $this->input->post('zipcode');
-                    $data['paymentmode']    = $this->input->post('payment_method')[0];
-                    $client = $this->Register_model->saveclient($data,"invite");
+                    $data['packagetype'] = $this->input->post('packagetype');
+                    $data['address'] = $this->input->post('address1') . " " . $this->input->post('address2');
+                    $data['city'] = $this->input->post('city');
+                    $data['state'] = $this->input->post('state');
+                    $data['zipcode'] = $this->input->post('zipcode');
+                    $data['paymentmode'] = $this->input->post('payment_method')[0];
+                    $client = $this->Register_model->saveclient($data, "invite");
 
                     if ($client <= 0) {
                         set_alert('danger', _l('valid_form'));
                         redirect(site_url('authentication/admin'));
-                    }else{
+                    } else {
+
+                        if ($this->input->post('page') == 'signup') {
+                            $original_password = $this->input->post('passwd');
+                            $subject = "Welcome home to the Simply I Do";
+
+                            $emailmessage = "<style type='text/css'>table{width: 100%}</style><div style='text-align: center;width: 100%'><div style='width: 670px'>";
+                            $emailmessage .= "<img width=670 src='" . base_url() . "assets/images/emailbanner.jpg'><br /><br />";
+                            $emailmessage .= '<img width=80 src="' . base_url() . 'assets/images/sidoicon.jpg" class="img img-responsive"><br /><br />';
+                            $emailmessage .= "<h3 style='color: #00a9b9'>Hi " . $data['firstname'] . "!</h3><br />";
+                            $emailmessage .= "<div style='font-size: 16px'>Welcome to the <strong>Simply I Do</strong> family!</div><br /><br />";
+
+                            $emailmessage .= "<div style='text-align: left;font-size: 14px'>Thank you for joining! We are so excited for you to get started with our amazing productivity, planning & collaboration platform tailor-made for creatives like us! <br /><br />";
+                            $emailmessage .= "With Simply I Do, you will streamline your productivity with lead tracking, contacts, proposals, projects, invoices, payments, tasks, meetings, messages and so much more! </div><br /><br />";
+                            $emailmessage .= "<i style='color: #00a9b9; font-weight: bold'>Your login info: </i><br />";
+                            $emailmessage .= "<strong>Username: </strong>" . $data['email'] . "<br />";
+                            $emailmessage .= "<strong>Password: </strong>" . $original_password . "<br /><br />";
+                            $emailmessage .= "<i>Click this button to access your dashboard!</i><br /><br />";
+                            $emailmessage .= "<a style='font-size:20px;display: inline-block;background-color: #00a9b9;border-radius: 10px;color: #fff;text-decoration: none;width: 150px;padding: 15px 0;' href='" . admin_url() . "'>LET'S GO!</a>  <br /><br /><br /><br />";
+
+                            $emailmessage .= "<p style='color: #ccc;font-size: 12px;'>You are receiving this email because you signed up for a new account on simplyido.com</p>";
+                            $emailmessage .= "</div></div>";
+                            //$this->emails_model->send_email_template('new-staff-created', $data['email'], $merge_fields);
+                            $this->emails_model->send_simple_email($data['email'], $subject, $emailmessage);
+                        }
                         $staffid = get_staffid_by_client($client);
                         $staff = get_staff_details_by_id($staffid);
                         $this->Authentication_model->login($staff->email, $staff->random_pass, '', true);

@@ -898,7 +898,7 @@ class Clients extends Clients_controller
             // if ($companyname != '') {
             //     $invoice_number .= '-' . mb_strtoupper(slug_it($companyname), 'UTF-8');
             // }
-            ob_end_clean();
+
             $pdf->Output(mb_strtoupper(slug_it($invoice_number), 'UTF-8') . '.pdf', 'D');
             die();
         }
@@ -927,7 +927,6 @@ class Clients extends Clients_controller
                 $payment->invoice_data->phonenumber = '';
             }
             $paymentpdf            = payment_pdf($payment);
-            ob_end_clean();
             $paymentpdf->Output(mb_strtoupper(slug_it(_l('payment') . '-' . $payment->paymentid), 'UTF-8') . '.pdf', 'D');
             die;
         }
@@ -1887,6 +1886,7 @@ class Clients extends Clients_controller
         $this->load->model('projects_model');
         $data['invitelist'] = $this->projects_model->get_invitees('', 'vendor-view');
         $data['title']    = 'Invite List';
+        
         $this->use_navigation  = false;
         $this->use_submenu     = false;
         $this->data            = $data;

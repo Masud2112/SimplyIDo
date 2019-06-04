@@ -38,17 +38,17 @@
                             <?php foreach ($product_service_groups as $pcategory_data) {
                                 $all_category_data = get_line_item_sub_category_list($pcategory_data['id']); ?>
                                 <tr id="<?php echo $pcategory_data['id']; ?>">
-                                    <td >
+                                    <td>
                                         <?php echo $pcategory_data['name']; ?>
                                         <div class="group_edit hide">
                                             <div class="input-group">
                                                 <input type="text" class="form-control">
                                                 <span class="input-group-btn">
-                            <button class="btn btn-info p7 update-line-item-category"
-                                    type="button" data-id="<?php echo $pcategory_data['id'] ?>">
+                                                    <button class="btn btn-info p7 update-line-item-category"
+                                                            type="button" data-id="<?php echo $pcategory_data['id'] ?>">
                                 <?php echo _l('submit'); ?>
-                            </button>
-                          </span>
+                                                    </button>
+                                                </span>
                                             </div>
                                         </div>
                                     </td>

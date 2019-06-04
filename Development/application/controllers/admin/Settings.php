@@ -19,13 +19,13 @@ class Settings extends Admin_controller
     /* View all settings */
     public function index()
     {
-        if (!has_permission('settings', '', 'view', true)) {
+        /*if (!has_permission('settings', '', 'view', true)) {
             access_denied('settings');
-        }
+        }*/
         if ($this->input->post()) {
-            if (!has_permission('settings', '', 'edit', true)) {
+            /*if (!has_permission('settings', '', 'edit', true)) {
                 access_denied('settings');
-            }
+            }*/
             $logo_uploaded    = (handle_company_logo_upload() ? true : false);
             $favicon_uploaded = (handle_favicon_upload() ? true : false);
             $signatureUploaded = (handle_company_signature_upload() ? true : false);
@@ -134,9 +134,9 @@ class Settings extends Admin_controller
             redirect(admin_url('settings?group=tags'));
         }
 
-        if (!has_permission('settings', '', 'delete', true)) {
+        /*if (!has_permission('settings', '', 'delete', true)) {
             access_denied('settings');
-        }
+        }*/
 
         $this->db->where('id',$id);
         $this->db->delete('tbltags');
@@ -166,9 +166,9 @@ class Settings extends Admin_controller
 
     public function remove_signature_image()
     {
-        if (!has_permission('settings', '', 'delete', true)) {
+        /*if (!has_permission('settings', '', 'delete', true)) {
             access_denied('settings');
-        }
+        }*/
 
         $sImage = get_option('signature_image');
         if (file_exists(get_upload_path_by_type('company') . '/' . $sImage)) {
@@ -184,9 +184,9 @@ class Settings extends Admin_controller
     public function remove_company_logo()
     {
         do_action('before_remove_company_logo');
-        if (!has_permission('settings', '', 'delete', true)) {
+        /*if (!has_permission('settings', '', 'delete', true)) {
             access_denied('settings');
-        }
+        }*/
         if (file_exists(get_upload_path_by_type('company') . '/' . get_option('company_logo'))) {
             unlink(get_upload_path_by_type('company') . '/' . get_option('company_logo'));
         }
@@ -209,9 +209,9 @@ class Settings extends Admin_controller
 
     public function delete_option($id)
     {
-        if (!has_permission('settings', '', 'delete', true)) {
+        /*if (!has_permission('settings', '', 'delete', true)) {
             access_denied('settings');
-        }
+        }*/
         echo json_encode(array(
             'success' => delete_option($id)
         ));

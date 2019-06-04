@@ -377,7 +377,9 @@
                             <!-- <input type="text" placeholder="<?php //echo _l('unit'); ?>" name="unit" class="form-control input-transparent text-right"> -->
                         </td>
                         <td>
+                            <div class="input-group"><span class="input-group-addon othrdisc_prefix" id="basic-addon2">$</span>
                             <input type="number" name="rate" class="form-control" placeholder="<?php echo _l('item_rate_placeholder'); ?>">
+                            </div>
                         </td>
                         <td>
                             <?php
@@ -444,7 +446,7 @@
                             // // }
                             // $table_row .= '<input type="text" placeholder="'.$unit_placeholder.'" name="'.$items_indicator.'['.$i.'][unit]" class="form-control input-transparent text-right" value="'.$item['unit'].'">';
                             $table_row .= '</td>';
-                            $table_row .= '<td class="rate"><input type="number" onblur="calculate_total();" onchange="calculate_total();" name="' . $items_indicator . '[' . $i . '][rate]" value="' . $item['rate'] . '" class="form-control"></td>';
+                            $table_row .= '<td class="rate"><div class="input-group"><span class="input-group-addon othrdisc_prefix" id="basic-addon2">$</span><input type="number" onblur="calculate_total();" onchange="calculate_total();" name="' . $items_indicator . '[' . $i . '][rate]" value="' . $item['rate'] . '" class="form-control"></div></td>';
                             $table_row .= '<td class="taxrate">' . $this->misc_model->get_taxes_dropdown_template('' . $items_indicator . '[' . $i . '][taxname][]', $invoice_item_taxes, 'invoice', $item['id'], true, $manual) . '</td>';
                             $table_row .= '<td class="amount">' . $amount . '</td>';
                             $table_row .= '<td><a href="#" class="btn btn-danger pull-right" onclick="delete_item(this,' . $item['id'] . '); return false;"><i class="fa fa-times"></i></a></td>';

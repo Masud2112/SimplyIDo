@@ -56,7 +56,7 @@ var CKEDITOR_BASEPATH = '<?php echo $_SERVER["DOCUMENT_ROOT"]."/SimplyIDO/Develo
 <?php echo app_script('assets/js','jquery.toast.js'); ?>
 <?php echo app_script('assets/js','sweetalert2.js'); ?>
 <?php echo app_script('assets/js','jquery.mask.js'); ?>
-<?php echo app_script('assets/js','main.js'); ?>
+<?php //echo app_script('assets/js','main.js'); ?>
 
 <?php
 /**

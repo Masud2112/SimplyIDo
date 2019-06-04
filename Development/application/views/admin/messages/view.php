@@ -69,6 +69,7 @@ $brandid = get_user_session();
                                         </div>
                                         <div class="text-right col-md-3 col-xs-5">
                                             <b><?php echo time_ago($messages->created_date); ?></b>
+                                            <?php if($messages->created_by == get_staff_user_id() && has_permission('messages','','edit') && $messages->brandid == $brandid){ ?>
                                             <div class='text-right inline-block mleft10 mright10'><a class='show_act' href='javascript:void(0)'><i class='fa fa-ellipsis-v' aria-hidden='true'></i></a></div><div class='table_actions'><ul>
                                                     <?php if($messages->created_by == get_staff_user_id() && has_permission('messages','','edit') && $messages->brandid == $brandid){ ?>
                                                         <li><a data-toggle="tooltip" title="Edit" href="javascript:void(0)" onclick="edit_message(<?php echo $messages->id; ?>); return false;" class="btn-xs btn-icon mright5 mleft5"><i class="fa fa-pencil-square-o"></i>Edit</a></li>
@@ -80,6 +81,7 @@ $brandid = get_user_session();
                                                     <?php } ?>
                                                 </ul>
                                             </div>
+                                            <?php } ?>
                                         </div>
                                         <!-- /.float-right -->
                                     </div>
@@ -148,6 +150,7 @@ $brandid = get_user_session();
                                                 </div>
                                                 <div class="message-date col-md-3">
                                                     <b><?php echo time_ago($childmsg['created_date']); ?></b>
+                                    <?php if($childmsg['created_by'] == get_staff_user_id() && has_permission('messages','','edit') && $childmsg['brandid'] == $brandid){ ?>
                                                     <div class='text-right inline-block mleft10 mright10'><a class='show_act' href='javascript:void(0)'><i class='fa fa-ellipsis-v' aria-hidden='true'></i></a></div><div class='table_actions'><ul>
                                                             <?php if($childmsg['created_by'] == get_staff_user_id() && has_permission('messages','','edit') && $childmsg['brandid'] == $brandid){ ?>
                                                                 <li><a data-toggle="tooltip" title="Edit" href="javascript:void(0)" onclick="edit_message(<?php echo $childmsg['id']; ?>); return false;" class="btn-xs btn-icon mleft10 mright5"><i class="fa fa-pencil-square-o"></i>Edit</a></li>
@@ -156,6 +159,7 @@ $brandid = get_user_session();
                                                                 <li><a data-toggle="tooltip" title="Delete" href="<?php echo admin_url('messages/delete/'.$childmsg['id']); ?>" class="btn-xs btn-icon _delete "><i class="fa fa-remove"></i>Delete</a></li>
                                                             <?php } ?>
                                                         </ul></div>
+                                    <?php } ?>
                                                 </div>
                                                 <!-- /.float-right -->
                                             </div>

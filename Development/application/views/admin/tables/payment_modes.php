@@ -49,29 +49,18 @@ foreach ($rResult as $aRow) {
 
         $row[] = $_data;
     }
-    $options ="";
-    if (has_permission('account_setup','','edit') || has_permission('account_setup', '', 'delete')) {
-        $options = "<div class='text-right mright10'><a class='show_act' href='javascript:void(0)'><i class='fa fa-ellipsis-v' aria-hidden='true'></i></a></div><div class='table_actions'><ul>";
 
-        if (has_permission('account_setup', '', 'edit')) {
-            $options .= icon_url('#' . $aRow['id'], 'pencil-square-o', '', array(
-                'data-toggle' => 'modal',
-                'data-target' => '#payment_mode_modal',
-                'data-id' => $aRow['id'],
-                'data-expenses-only' => $aRow['expenses_only'],
-                'data-invoices-only' => $aRow['invoices_only'],
-                'data-show-on-pdf' => $aRow['show_on_pdf'],
-                'data-default-selected' => $aRow['selected_by_default'],
-            ));
-        }
-        if (has_permission('account_setup', '', 'delete')) {
-            $row[] = $options .= icon_url('paymentmodes/delete/' . $aRow['id'], 'remove', ' _delete');
-        } else {
-            $row[] = $options .= "";
-        }
-    }else{
-        $row[] = $options;
-    }
+    $options = "<div class='text-right mright10'><a class='show_act' href='javascript:void(0)'><i class='fa fa-ellipsis-v' aria-hidden='true'></i></a></div><div class='table_actions'><ul>";
+    $options .= icon_url('#' . $aRow['id'], 'pencil-square-o', '', array(
+        'data-toggle' => 'modal',
+        'data-target' => '#payment_mode_modal',
+        'data-id' => $aRow['id'],
+        'data-expenses-only' => $aRow['expenses_only'],
+        'data-invoices-only' => $aRow['invoices_only'],
+        'data-show-on-pdf' => $aRow['show_on_pdf'],
+        'data-default-selected' => $aRow['selected_by_default'],
+        ));
+    $row[]   = $options .= icon_url('paymentmodes/delete/' . $aRow['id'], 'remove', ' _delete');
     $options.="</ul></div>";
     $output['aaData'][] = $row;
 }

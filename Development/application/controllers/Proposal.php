@@ -676,7 +676,6 @@ class Proposal extends CRM_Controller
      * Dt: 09/07/2018
      * for Gratuity
      */
-
     public function addinvoicegratuity($invoice_id)
     {
         $data = $this->input->post();
@@ -1354,19 +1353,6 @@ class Proposal extends CRM_Controller
             }
         }*/
         $proposal = $this->proposaltemplates_model->getclientproposal($id);
-
-        if (is_staff_logged_in() == false) {
-
-            $newdata = array();
-            $newdata['brand_id'] = $proposal->brandid;
-            $newdata['authclient'] = $proposal->client_id;
-            $newdata['authemail'] = $proposal->email;
-            $newdata['is_sido_admin'] = 0;
-            $newdata['is_admin'] = 0;
-            $newdata['staff_user_id'] = $proposal->created_by;
-            $this->session->set_userdata($newdata);
-        }
-
         $proposal->quotes = $this->proposaltemplates_model->getproposal_quotes($id);
         $proposal->gallery = $this->proposaltemplates_model->getproposal_gallery($id);
         $proposal->files = $this->proposaltemplates_model->getproposal_files($id);

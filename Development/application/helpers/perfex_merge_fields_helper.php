@@ -2412,10 +2412,21 @@ function get_venue_merge_field($id)
     $fields['{venue_name}'] = $venue->venuename;
 
     if (!empty($venue->venueemail)) {
+        if(is_serialized($venue->venueemail)){
+            $venueemail=unserialize($venue->venueemail);
+            $venue->venueemail =$venueemail[0]['email'];
+        }
         $venue_details .= '<b> Email Address: </b>' . $venue->venueemail . '<br/>';
     }
 
     if (!empty($venue->venuephone)) {
+        if (is_serialized($venue->venuephone)) {
+            $venuephone = unserialize($venue->venuephone);
+            $venue->venuephone= $venuephone[0]['phone'];
+            if(!empty($venuephone['ext']) && $venuephone[0]['ext']!=""){
+                $venue->venuephone.= "  x".$venuephone[0]['ext'];
+            }
+        }
         $venue_details .= '<b> Phone Number: </b>' . $venue->venuephone . '<br/>';
     }
 

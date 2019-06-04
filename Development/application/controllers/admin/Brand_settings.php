@@ -261,8 +261,8 @@ class Brand_settings extends Admin_controller
 
     public function remove_signature_image()
     {
-        if (!has_permission('brands', '', 'delete', true)) {
-            access_denied('brands');
+        if (!has_permission('account_setup', '', 'delete', true)) {
+            access_denied('account_setup');
         }
 
         $sImage = get_option('signature_image');
@@ -279,8 +279,8 @@ class Brand_settings extends Admin_controller
     public function remove_company_logo()
     {
         do_action('before_remove_company_logo');
-        if (!has_permission('brands', '', 'delete', true)) {
-            access_denied('brands');
+        if (!has_permission('account_setup', '', 'delete', true)) {
+            access_denied('account_setup');
         }
 
         if (file_exists(get_upload_path_by_type('brands') . '/' . get_brand_option('company_logo'))) {
@@ -302,8 +302,8 @@ class Brand_settings extends Admin_controller
     public function remove_company_icon()
     {
         do_action('before_remove_company_logo');
-        if (!has_permission('brands', '', 'delete', true)) {
-            access_denied('brands');
+        if (!has_permission('account_setup', '', 'delete', true)) {
+            access_denied('account_setup');
         }
 
         if (file_exists(get_upload_path_by_type('brands') . '/' . get_brand_option('company_icon'))) {
@@ -325,8 +325,8 @@ class Brand_settings extends Admin_controller
     public function remove_favicon()
     {
         do_action('before_remove_favicon');
-        if (!has_permission('brands', '', 'delete', true)) {
-            access_denied('brands');
+        if (!has_permission('account_setup', '', 'delete', true)) {
+            access_denied('account_setup');
         }
         if (file_exists(get_upload_path_by_type('brands') . '/' . get_brand_option('favicon'))) {
             unlink(get_upload_path_by_type('brands') . '/' . get_brand_option('favicon'));
@@ -351,8 +351,8 @@ class Brand_settings extends Admin_controller
     public function remove_banner()
     {
         do_action('before_remove_banner');
-        if (!has_permission('brands', '', 'delete', true)) {
-            access_denied('brands');
+        if (!has_permission('account_setup', '', 'delete', true)) {
+            access_denied('account_setup');
         }
 
         if (file_exists(get_upload_path_by_type('brands') . '/' . get_brand_option('banner'))) {

@@ -71,11 +71,11 @@ if (count($projectAssignees) > 0) {
                     $cover_path = base_url() . 'uploads/project_cover_images/' . $project->id . '/croppie_' . $project->projectcoverimage;
                 }
             } else {
-                $cover_path = 'assets/images/default_banner.jpeg/';
+                $cover_path = base_url() . 'assets/images/default_banner.jpg';
             }
 
         } else {
-            $cover_path = 'assets/images/default_banner.jpeg/';
+            $cover_path = base_url() . 'assets/images/default_banner.jpg';
         }
         ?>
         <div class="project_cover_image">
@@ -313,7 +313,7 @@ if (count($projectAssignees) > 0) {
                                                                 <div class="collaborator-det">
                                                                     <h3><?php echo isset($client['companyname']) ? $client['companyname'] : ''; ?></h3>
                                                                     <div class="invite-tags">
-                                                                        <span><?php echo isset($client['firstname']) ? $client['firstname'] : ''; ?></span><span><?php echo isset($client['lastname']) ? $client['lastname'] : ''; ?></span>
+                                                                        <span class="mright5"><?php echo isset($client['firstname']) ? $client['firstname'] : ''; ?></span><span><?php echo isset($client['lastname']) ? $client['lastname'] : ''; ?></span>
                                                                         <!--<span><?php /*echo (isset($client['tags']) && $client['tags'] != '') ? '(' . $client['tags'] . ')' : ''; */ ?></span>-->
                                                                     </div>
                                                                 </div>
@@ -321,20 +321,20 @@ if (count($projectAssignees) > 0) {
                                                             <?php
                                                             $session_data = get_session_data();
                                                             $user_type = $session_data['user_type'];
-                                                            if ($user_type == 1) {
-                                                                $staffid = (isset($client['staffid']) ? $client['staffid'] : 0);
-                                                                $addressbookid = (isset($client['addressbookid']) ? $client['addressbookid'] : 0);
-                                                                ?>
-                                                                <td>
-                                                                    <div>
-                                                                        <span class="isclient"><?php echo _l('project_client') ?></span>
-                                                                        <!--<a role="menuitem" class="btn btn-success btn-icon"
+                                                            /*if ($user_type == 1) {*/
+                                                            $staffid = (isset($client['staffid']) ? $client['staffid'] : 0);
+                                                            $addressbookid = (isset($client['addressbookid']) ? $client['addressbookid'] : 0);
+                                                            ?>
+                                                            <td>
+                                                                <div>
+                                                                    <span class="isclient"><?php echo _l('project_client') ?></span>
+                                                                    <!--<a role="menuitem" class="btn btn-success btn-icon"
                                                                    tabindex="-1" href="javascript: void(0);"
                                                                    onclick="fnViewInvite(<?php /*echo $projectid; */ ?>, <?php /*echo $staffid;  */ ?>, <?php /*echo $addressbookid;  */ ?>, 0 , 1);"><i
                                                                             class="fa fa-eye"></i></a>-->
-                                                                    </div>
-                                                                </td>
-                                                            <?php } ?>
+                                                                </div>
+                                                            </td>
+                                                            <?php /*} */ ?>
                                                         </tr>
                                                     <?php }
                                                 } ?>
@@ -366,7 +366,7 @@ if (count($projectAssignees) > 0) {
                                                             <?php
                                                             $session_data = get_session_data();
                                                             $user_type = $session_data['user_type'];
-                                                            if ($user_type == 1) {
+                                                            /*if ($user_type == 1) {*/
                                                                 $staffid = (isset($collaborators['staffid']) ? $collaborators['staffid'] : 0);
                                                                 $addressbookid = (isset($collaborators['addressbookid']) ? $collaborators['addressbookid'] : 0);
                                                                 //die('<--here');
@@ -379,17 +379,18 @@ if (count($projectAssignees) > 0) {
                                                                                tabindex="-1" href="javascript: void(0);"
                                                                                onclick="fnViewInvite(<?php echo $projectid; ?>, <?php echo $staffid; ?>, <?php echo $addressbookid; ?>, 0 , 1);"><i
                                                                                         class="fa fa-eye"></i></a>
-                                                                        <?php } else { ?>
+                                                                        <?php } else {
+                                                                            ?>
                                                                             <div class="isDetails">
                                                                             <span class="invite_user_status inviteeStatus">
-                                                                                <span class="label">pending</span>
+                                                                                <span class="label">Pending</span>
                                                                             </span>
                                                                             </div>
                                                                         <?php } ?>
 
                                                                     </div>
                                                                 </td>
-                                                            <?php } ?>
+                                                            <?php /*} */?>
                                                         </tr>
                                                     <?php } ?>
                                                 <?php }
@@ -1201,11 +1202,18 @@ if (count($projectAssignees) > 0) {
     });
 
     function fnViewInvite(projectid, staffid, addressbookid, isvendor, iscollaborator) {
+        if (isvendor == 1) {
+            var contacttype = 3;
+        } else if (iscollaborator == 1) {
+            var contacttype = 4;
+        } else {
+            var contacttype = 5;
+        }
         $.ajax({
             method: 'post',
             async: false,
             url: '<?php echo admin_url(); ?>projects/viewinvite',
-            data: 'projectid=' + projectid + '&isvendor=' + isvendor + '&iscollaborator=' + iscollaborator + '&isparent=' + 1 + '&staffid=' + staffid + '&addressbookid=' + addressbookid,
+            data: 'projectid=' + projectid + '&isvendor=' + isvendor + '&iscollaborator=' + iscollaborator + '&isparent=' + 1 + '&staffid=' + staffid + '&addressbookid=' + addressbookid + '&contacttype=' + contacttype,
             dataType: "html",
             success: function (data) {
                 $(".ie-dt-fix").html(data);
@@ -1219,7 +1227,7 @@ if (count($projectAssignees) > 0) {
             method: 'post',
             async: false,
             url: '<?php echo admin_url(); ?>projects/viewinvite',
-            data: 'projectid=' + projectid + '&venueid=' + venueid + '&isparent=' + 1,
+            data: 'projectid=' + projectid + '&venueid=' + venueid + '&isparent=' + 1 + '&contacttype=5',
             dataType: "html",
             success: function (data) {
                 $(".ie-dt-fix").html(data);

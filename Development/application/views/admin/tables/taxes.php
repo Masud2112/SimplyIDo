@@ -53,7 +53,7 @@ foreach ($rResult as $aRow) {
     if($aRow['brandid'] > 0 || $is_sido_admin == 1 || $is_admin == 1){
 
         $options = "<div class='text-right mright10'><a class='show_act' href='javascript:void(0)'><i class='fa fa-ellipsis-v' aria-hidden='true'></i></a></div><div class='table_actions'><ul>";
-        if (has_permission('lists','','edit')) {
+        if (has_permission('taxes','','edit')) {
             $options .= icon_url('#' . $aRow['id'], 'pencil-square-o', '', array(
                 'data-toggle' => 'modal',
                 'data-target' => '#tax_modal',
@@ -63,7 +63,7 @@ foreach ($rResult as $aRow) {
         }else{
             $options = "";
         }
-        if (has_permission('lists','','delete')) {
+        if (has_permission('taxes','','delete')) {
             $row[]   = $options .= icon_url('taxes/delete/' . $aRow['id'], 'remove', '_delete');
         }else{
             $row[]   = $options .= "";

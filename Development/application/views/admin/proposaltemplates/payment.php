@@ -97,7 +97,7 @@ if (isset($pv)) { ?>
                    name='payment_schedule[<?php echo $pe; ?>][order]'>
             <div class='col-sm-8 psMobUI-col custom-payment-wrapper <?php echo($payment_class) ?>'>
                 <div class='col-sm-2 psMobUI-col'>
-                    <input type='number' class='form-control' min='1' value='<?php echo isset($pv[' duedate_number'])?$pv[' duedate_number']:1; ?>'
+                    <input type='number' class='form-control' min='1' value='<?php echo $pv[' duedate_number'] ?>'
                            name='payment_schedule[<?php echo $pe; ?>][duedate_number]'>
                 </div>
                 <div class='col-sm-2 psMobUI-col'>

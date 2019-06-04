@@ -14,10 +14,10 @@ class Authentication_model extends CRM_Model
     }
 
     /**
-     * @param  string Email address for login
-     * @param  string User Password
-     * @param  boolean Set cookies for user if remember me is checked
-     * @param  boolean Is Staff Or Client
+     * @param string Email address for login
+     * @param string User Password
+     * @param boolean Set cookies for user if remember me is checked
+     * @param boolean Is Staff Or Client
      * @return boolean if not redirect url found, if found redirect to the url
      */
     public function login($email, $password, $remember, $staff)
@@ -29,11 +29,9 @@ class Authentication_model extends CRM_Model
                 $table = 'tblstaff';
                 $_id = 'staffid';
             }
-
             $this->db->where('deleted', 0);
             $this->db->where('email', $email);
             $user = $this->db->get($table)->row();
-
             if ($user) {
                 // Email is okey lets check the password now
                 $this->load->helper('phpass');
@@ -64,36 +62,50 @@ class Authentication_model extends CRM_Model
              * Dt: 10/12/2017
              * to get brand id and store in session
              */
-            $where = array('staffid = ' => $user->$_id, 'active = ' => 1);
+            $where = array('staffid = ' => $user->$_id, 'active = ' => 1,'isdefault'=>1);
             $this->db->order_by('staffbrandid', 'asc');
             $this->db->limit(1);
-
             $branddata = $this->db->where($where)->get('tblstaffbrand')->row();
-
+            if(count($branddata) <= 0 ){
+                $where = array('staffid = ' => $user->$_id, 'active = ' => 1);
+                $this->db->order_by('staffbrandid', 'asc');
+                $this->db->limit(1);
+                $branddata = $this->db->where($where)->get('tblstaffbrand')->row();
+            }
+            /*echo "<pre>";
+            print_r($branddata);
+            die('<--here');*/
             $twoFactorAuth = false;
             if ($staff == true) {
                 $twoFactorAuth = $user->two_factor_auth_enabled == 0 ? false : true;
-                /*$this->db->where('userid', $user->clientid);
-                $client_data = $this->db->get('tblclients')->row();*/
-
+                $this->db->select('userid');
+                $this->db->where('primary_user_id', $user->$_id);
+                $result = $this->db->get('tblclients')->row();
+                $clientid=0;
+                if(!empty($result)){
+                    $clientid=$result->userid;
+                }
+                $this->db->select('*,tblclients.datecreated as signupdate, tblclients.userid');
                 $this->db->join('tblclients', 'tblclients.userid = tblbrand.userid');
                 $this->db->join('tblpackages', 'tblpackages.packageid = tblclients.packageid');
                 $this->db->where('brandid', $branddata->brandid);
                 $client_data = $this->db->get('tblbrand')->row();
-
                 if (!$twoFactorAuth) {
                     do_action('before_staff_login', array(
                         'email' => $email,
                         'userid' => $user->$_id
                     ));
-
                     $user_data = array(
                         'staff_user_id' => $user->$_id,
+                        'client_id' => $clientid,
                         'staff_logged_in' => true,
                         //'account_id'      => $user->clientid,
                         'brand_id' => $branddata->brandid,
+                        'brand_private' => $client_data->is_private,
                         'package_id' => !empty($client_data->packageid) ? $client_data->packageid : 0,
                         'package_type_id' => !empty($client_data->packagetypeid) ? $client_data->packagetypeid : 0,
+                        'trial_period' => !empty($client_data->trial_period) ? $client_data->trial_period : 0,
+                        'signupdate' => !empty($client_data->signupdate) ? $client_data->signupdate : 0,
                         'is_sido_admin' => $user->is_sido_admin,
                         'is_admin' => $user->admin,
                         'user_type' => $user->user_type
@@ -154,7 +166,7 @@ class Authentication_model extends CRM_Model
     }
 
     /**
-     * @param  boolean If Client or Staff
+     * @param boolean If Client or Staff
      * @return none
      */
     public function logout($staff = true)
@@ -173,8 +185,8 @@ class Authentication_model extends CRM_Model
     }
 
     /**
-     * @param  integer ID to create autologin
-     * @param  boolean Is Client or Staff
+     * @param integer ID to create autologin
+     * @param boolean Is Client or Staff
      * @return boolean
      */
     private function create_autologin($user_id, $staff)
@@ -199,7 +211,7 @@ class Authentication_model extends CRM_Model
     }
 
     /**
-     * @param  boolean Is Client or Staff
+     * @param boolean Is Client or Staff
      * @return none
      */
     private function delete_autologin($staff)
@@ -261,8 +273,8 @@ class Authentication_model extends CRM_Model
     }
 
     /**
-     * @param  integer ID
-     * @param  boolean Is Client or Staff
+     * @param integer ID
+     * @param boolean Is Client or Staff
      * @return none
      * Update login info on autologin
      */
@@ -337,8 +349,8 @@ class Authentication_model extends CRM_Model
     }
 
     /**
-     * @param  string Email from the user
-     * @param  Is Client or Staff
+     * @param string Email from the user
+     * @param Is Client or Staff
      * @return boolean
      * Generate new password key for the user to reset the password.
      */
@@ -439,10 +451,10 @@ class Authentication_model extends CRM_Model
     }
 
     /**
-     * @param  boolean Is Client or Staff
-     * @param  integer ID
-     * @param  string
-     * @param  string
+     * @param boolean Is Client or Staff
+     * @param integer ID
+     * @param string
+     * @param string
      * @return boolean
      * User reset password after successful validation of the key
      */
@@ -498,9 +510,9 @@ class Authentication_model extends CRM_Model
     }
 
     /**
-     * @param  integer Is Client or Staff
-     * @param  integer ID
-     * @param  string Password reset key
+     * @param integer Is Client or Staff
+     * @param integer ID
+     * @param string Password reset key
      * @return boolean
      * Check if the key is not expired or not exists in database
      */
@@ -530,9 +542,9 @@ class Authentication_model extends CRM_Model
     }
 
     /**
-     * @param  integer Is Client or Staff
-     * @param  integer ID
-     * @param  string Password reset key
+     * @param integer Is Client or Staff
+     * @param integer ID
+     * @param string Password reset key
      * @return boolean
      * Check if the key is not expired or not exists in database
      */

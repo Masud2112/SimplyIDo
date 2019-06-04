@@ -250,6 +250,15 @@ class Misc_model extends CRM_Model
         }
 
         $data['rel_type'] = $rel_type;
+        if ($rel_type == "lead") {
+            $assigned = $this->leads_model->get_lead_assignee($rel_id);
+        } elseif ($rel_type == "project") {
+            $assigned = $this->projects_model->get_project_assignee($rel_id);
+            $projectcontact = $this->projects_model->get_project_contact($rel_id);
+            $assigned = array_merge($assigned, $projectcontact);
+        }
+
+
         /**
          * Modified By : Vaidehi
          * Dt : 11/21/2017
@@ -282,6 +291,11 @@ class Misc_model extends CRM_Model
 
         $this->db->insert('tblfiles', $data);
         $insert_id = $this->db->insert_id();
+        if(isset($assigned) && !empty($assigned)){
+            foreach ($assigned as $a) {
+                $this->files_new_created_notification($insert_id, $a);
+            }
+        }
 
         if ($data['rel_type'] == 'customer' && isset($data['contact_id'])) {
             if (get_option('only_own_files_contacts') == 1) {
@@ -322,10 +336,10 @@ class Misc_model extends CRM_Model
 
     /**
      * Add reminder
-     * @since  Version 1.0.2
      * @param mixed $data All $_POST data for the reminder
      * @param mixed $id relid id
      * @return boolean
+     * @since  Version 1.0.2
      */
     public function add_reminder($data, $id)
     {
@@ -555,9 +569,9 @@ class Misc_model extends CRM_Model
 
     /**
      * Get all reminders or 1 reminder if id is passed
-     * @since Version 1.0.2
-     * @param  mixed $id reminder id OPTIONAL
+     * @param mixed $id reminder id OPTIONAL
      * @return array or object
+     * @since Version 1.0.2
      */
     public function get_reminders($id = '')
     {
@@ -574,9 +588,9 @@ class Misc_model extends CRM_Model
 
     /**
      * Remove client reminder from database
-     * @since Version 1.0.2
-     * @param  mixed $id reminder id
+     * @param mixed $id reminder id
      * @return boolean
+     * @since Version 1.0.2
      */
     public function delete_reminder($id)
     {
@@ -631,30 +645,26 @@ class Misc_model extends CRM_Model
 
     /**
      * Get current user notifications
-     * @param  boolean $read include and readed notifications
+     * @param boolean $read include and readed notifications
      * @return array
      */
     public function get_user_notifications($read = 1)
     {
-
         $this->db->select('user_type');
         $this->db->where('staffid', get_staff_user_id());
         $type = $this->db->get('tblstaff')->row();
-
         $total = $this->notifications_limit;
         $total_unread = total_rows('tblnotifications', array(
             'isread' => $read,
             'touserid' => get_staff_user_id()
         ));
-
         $total_unread_inline = total_rows('tblnotifications', array(
             'isread_inline' => $read,
             'touserid' => get_staff_user_id()
         ));
-
         if (is_numeric($read)) {
             $this->db->where('isread', $read);
-        } //is_numeric($read)
+        }
         if ($total_unread > $total) {
             $_diff = $total_unread - $total;
             $total = $_diff + $total;
@@ -662,10 +672,8 @@ class Misc_model extends CRM_Model
             $_diff = $total_unread_inline - $total;
             $total = $_diff + $total;
         }
-
-
         $this->db->where('brandid', get_user_session());
-        $this->db->where('(ispublic=1 OR fromuserid=' . get_staff_user_id()." OR touserid LIKE '%". get_staff_user_id()."%')");
+        $this->db->where('touserid', get_staff_user_id());
         if ($type->user_type > 1) {
             $this->db->like('touserid', get_staff_user_id());
             $this->db->or_where('fromuserid', get_staff_user_id());
@@ -729,9 +737,12 @@ class Misc_model extends CRM_Model
         ));
     }
 
-    public function mark_all_notifications_as_read_inline()
+    public function mark_all_notifications_as_read_inline($not_type = "")
     {
         $this->db->where('touserid', get_staff_user_id());
+        if ($not_type != "") {
+            $this->db->where('not_type', $not_type);
+        }
         $this->db->update('tblnotifications', array(
             'isread_inline' => 1,
             'isread' => 1
@@ -740,8 +751,8 @@ class Misc_model extends CRM_Model
 
     /**
      * Dismiss announcement
-     * @param  array $data announcement data
-     * @param  boolean $staff is staff or client
+     * @param array $data announcement data
+     * @param boolean $staff is staff or client
      * @return boolean
      */
     public function dismiss_announcement($id, $staff = true)
@@ -762,9 +773,9 @@ class Misc_model extends CRM_Model
 
     /**
      * Perform search on top header
-     * @since  Version 1.0.1
-     * @param  string $q search
+     * @param string $q search
      * @return array    search results
+     * @since  Version 1.0.1
      */
     public function perform_search($q)
     {
@@ -1711,8 +1722,8 @@ class Misc_model extends CRM_Model
         // First we need to check if the email is the same
         $total_rows = 0;
         $addressbookid = $data['addressbookid'];
-        $addressbookemailid = isset($data['addressbookemailid'])?$data['addressbookemailid']:0;
-        $ispublic = isset($data['ispublic'])?$data['ispublic']:0;
+        $addressbookemailid = isset($data['addressbookemailid']) ? $data['addressbookemailid'] : 0;
+        $ispublic = isset($data['ispublic']) ? $data['ispublic'] : 0;
         if ($ispublic == 1) {
             $session_data = get_session_data();
             $staffid = $session_data['staff_user_id'];
@@ -1762,9 +1773,43 @@ class Misc_model extends CRM_Model
         }
         return $total_rows;
     }
-    function addservicetype($data){
+
+    function addservicetype($data)
+    {
         $this->db->insert('tblbrandtype', $data);
         $insert_id = $this->db->insert_id();
         return $insert_id;
+    }
+
+    /**
+     * Added By : Masud
+     * Dt : 27/05/2018
+     * to save extra form fields in db
+     */
+
+    public function files_new_created_notification($file_id, $assigned, $integration = false)
+    {
+        //die('<--here lead_new_created_notification');
+        $name = $this->db->select('file_name as name')->from('tblfiles')->where('id', $file_id)->get()->row()->name;
+        if ($assigned == "") {
+            $assigned = 0;
+        }
+        $notification_data = array(
+            'description' => ($integration == false) ? 'not_new_file_created' : 'not_new_file_created',
+            'touserid' => $assigned,
+            'eid' => $file_id,
+            'brandid' => get_user_session(),
+            'not_type' => 'files',
+            'link' => 'files/' . $file_id,
+            'additional_data' => ($integration == false ? serialize(array(
+                $name
+            )) : serialize(array()))
+        );
+        if ($integration != false) {
+            $notification_data['fromcompany'] = 1;
+        }
+        if (add_notification($notification_data)) {
+            pusher_trigger_notification(array($assigned));
+        }
     }
 }

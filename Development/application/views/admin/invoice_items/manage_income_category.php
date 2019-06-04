@@ -15,7 +15,7 @@
           <div class="panel_s btmbrd">
           <div class="panel-body">
             <div class="_buttons">
-              <?php if (has_permission('lists','','create')) { ?>
+              <?php if (has_permission('items','','create')) { ?>
                 <a href="#" class="btn btn-info pull-left" data-toggle="modal" data-target="#income_category_modal"><?php echo _l('add_income_category_title'); ?></a>
               <?php } ?>
             </div>

@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Remove <br /> html tags from string to show in textarea with new linke
- * @param  string $text
+ * @param string $text
  * @return string formatted text
  */
 function clear_textarea_breaks($text)
@@ -21,7 +21,7 @@ function clear_textarea_breaks($text)
 
 /**
  * Equivalent function to nl2br php function but keeps the html if found and do not ruin the formatting
- * @param  string $string
+ * @param string $string
  * @return string
  */
 function nl2br_save_html($string)
@@ -45,7 +45,7 @@ function nl2br_save_html($string)
 
 /**
  * Coma separated tags for input
- * @param  array $tag_names
+ * @param array $tag_names
  * @return string
  */
 function prep_tags_input($tag_names)
@@ -58,7 +58,7 @@ function prep_tags_input($tag_names)
 
 /**
  * Function will render tags as html version to show to the user
- * @param  string $tags
+ * @param string $tags
  * @return string
  */
 function render_tags($tags)
@@ -96,7 +96,7 @@ function render_tags($tags)
 
 /**
  * Function will render tags as html version to show to the user
- * @param  string $tags
+ * @param string $tags
  * @return string
  */
 function render_venue_tags($tags)
@@ -140,8 +140,8 @@ function render_venue_tags($tags)
  * If in options is set to load minified files and the filename that is passed do not contain minified version the
  * original file will be used.
  *
- * @param  string $path
- * @param  string $filename
+ * @param string $path
+ * @param string $filename
  * @return string
  */
 function app_stylesheet($path, $filename)
@@ -191,8 +191,8 @@ function app_stylesheet($path, $filename)
  * If in options is set to load minified files and the filename that is passed do not contain minified version the
  * original file will be used.
  *
- * @param  string $path
- * @param  string $filename
+ * @param string $path
+ * @param string $filename
  * @return string
  */
 function app_script($path, $filename)
@@ -241,9 +241,9 @@ function get_app_version()
 
 /**
  * For more readable code created this function to render only yes or not values for settings
- * @param  string $option_value option from database to compare
- * @param  string $label input label
- * @param  string $tooltip tooltip
+ * @param string $option_value option from database to compare
+ * @param string $label input label
+ * @param string $tooltip tooltip
  */
 function render_yes_no_option($option_value, $label, $tooltip = '')
 {
@@ -302,7 +302,7 @@ function render_yes_no_option($option_value, $label, $tooltip = '')
 /**
  * Tasks html table used all over the application for relation tasks
  * This table is not used for the main tasks table
- * @param  array $table_attributes
+ * @param array $table_attributes
  * @return string
  */
 function init_relation_tasks_table($table_attributes = array())
@@ -442,9 +442,9 @@ function init_relation_tasks_table($table_attributes = array())
 /**
  * Function used to render <option> for relation
  * This function will do all the necessary checking and return the options
- * @param  mixed $data
- * @param  string $type rel_type
- * @param  string $rel_id rel_id
+ * @param mixed $data
+ * @param string $type rel_type
+ * @param string $rel_id rel_id
  * @return string
  */
 function init_relation_options($data, $type, $rel_id = '')
@@ -516,7 +516,7 @@ function init_relation_options($data, $type, $rel_id = '')
 /**
  * Function to translate ticket priority
  * The apps offers ability to translate ticket priority no matter if they are stored in database
- * @param  mixed $id
+ * @param mixed $id
  * @return string
  */
 function ticket_priority_translate($id)
@@ -543,7 +543,7 @@ function ticket_priority_translate($id)
 /**
  * Function to translate ticket status
  * The apps offers ability to translate ticket status no matter if they are stored in database
- * @param  mixed $id
+ * @param mixed $id
  * @return string
  */
 function ticket_status_translate($id)
@@ -566,7 +566,7 @@ function ticket_status_translate($id)
 
 /**
  * Format task priority based on passed priority id
- * @param  mixed $id
+ * @param mixed $id
  * @return string
  */
 function task_priority($id)
@@ -587,7 +587,7 @@ function task_priority($id)
 
 /**
  * Return class based on task priority id
- * @param  mixed $id
+ * @param mixed $id
  * @return string
  */
 function get_task_priority_class($id)
@@ -631,10 +631,10 @@ function get_project_status_by_id($id)
 }
 
 /**
- * @deprecated
- * @param  mixed $id
- * @param  boolean $replace_default_by_muted
+ * @param mixed $id
+ * @param boolean $replace_default_by_muted
  * @return string
+ * @deprecated
  */
 function get_project_label($id, $replace_default_by_muted = false)
 {
@@ -642,10 +642,10 @@ function get_project_label($id, $replace_default_by_muted = false)
 }
 
 /**
- * @deprecated
- * @param  mixed $id
- * @param  boolean $replace_default_by_muted
+ * @param mixed $id
+ * @param boolean $replace_default_by_muted
  * @return string
+ * @deprecated
  */
 function project_status_color_class($id, $replace_default_by_muted = false)
 {
@@ -674,10 +674,10 @@ function project_status_color_class($id, $replace_default_by_muted = false)
 }
 
 /**
+ * @param mixed $id
+ * @return string
  * @deprecated
  * Project status translate
- * @param  mixed $id
- * @return string
  */
 function project_status_by_id($id)
 {
@@ -689,14 +689,14 @@ function project_status_by_id($id)
 
 /**
  * Function that renders input for admin area based on passed arguments
- * @param  string $name input name
- * @param  string $label label name
- * @param  string $value default value
- * @param  string $type input type eq text,number
- * @param  array $input_attrs attributes on <input
- * @param  array $form_group_attr <div class="form-group"> html attributes
- * @param  string $form_group_class additional form group class
- * @param  string $input_class additional class on input
+ * @param string $name input name
+ * @param string $label label name
+ * @param string $value default value
+ * @param string $type input type eq text,number
+ * @param array $input_attrs attributes on <input
+ * @param array $form_group_attr <div class="form-group"> html attributes
+ * @param string $form_group_class additional form group class
+ * @param string $input_class additional class on input
  * @return string
  */
 function render_input($name, $label = '', $value = '', $type = 'text', $input_attrs = array(), $form_group_attr = array(), $form_group_class = '', $input_class = '')
@@ -741,10 +741,10 @@ function render_input($name, $label = '', $value = '', $type = 'text', $input_at
 
 /**
  * Render color picker input
- * @param  string $name input name
- * @param  string $label field name
- * @param  string $value default value
- * @param  array $input_attrs <input sttributes
+ * @param string $name input name
+ * @param string $label field name
+ * @param string $value default value
+ * @param array $input_attrs <input sttributes
  * @return string
  */
 function render_color_picker($name, $label = '', $value = '', $input_attrs = array())
@@ -773,12 +773,12 @@ function render_color_picker($name, $label = '', $value = '', $input_attrs = arr
 /**
  * Render date picker input for admin area
  * @param  [type] $name             input name
- * @param  string $label input label
- * @param  string $value default value
- * @param  array $input_attrs input attributes
- * @param  array $form_group_attr <div class="form-group"> div wrapper html attributes
- * @param  string $form_group_class form group div wrapper additional class
- * @param  string $input_class <input> additional class
+ * @param string $label input label
+ * @param string $value default value
+ * @param array $input_attrs input attributes
+ * @param array $form_group_attr <div class="form-group"> div wrapper html attributes
+ * @param string $form_group_class form group div wrapper additional class
+ * @param string $input_class <input> additional class
  * @return string
  */
 function render_date_input($name, $label = '', $value = '', $input_attrs = array(), $form_group_attr = array(), $form_group_class = '', $input_class = '')
@@ -829,12 +829,12 @@ function render_date_input($name, $label = '', $value = '', $input_attrs = array
 /**
  * Render date time picker input for admin area
  * @param  [type] $name             input name
- * @param  string $label input label
- * @param  string $value default value
- * @param  array $input_attrs input attributes
- * @param  array $form_group_attr <div class="form-group"> div wrapper html attributes
- * @param  string $form_group_class form group div wrapper additional class
- * @param  string $input_class <input> additional class
+ * @param string $label input label
+ * @param string $value default value
+ * @param array $input_attrs input attributes
+ * @param array $form_group_attr <div class="form-group"> div wrapper html attributes
+ * @param string $form_group_class form group div wrapper additional class
+ * @param string $input_class <input> additional class
  * @return string
  */
 function render_datetime_input($name, $label = '', $value = '', $input_attrs = array(), $form_group_attr = array(), $form_group_class = '', $input_class = '')
@@ -847,12 +847,12 @@ function render_datetime_input($name, $label = '', $value = '', $input_attrs = a
 /**
  * Render textarea for admin area
  * @param  [type] $name             textarea name
- * @param  string $label textarea label
- * @param  string $value default value
- * @param  array $textarea_attrs textarea attributes
- * @param  array $form_group_attr <div class="form-group"> div wrapper html attributes
- * @param  string $form_group_class form group div wrapper additional class
- * @param  string $textarea_class <textarea> additional class
+ * @param string $label textarea label
+ * @param string $value default value
+ * @param array $textarea_attrs textarea attributes
+ * @param array $form_group_attr <div class="form-group"> div wrapper html attributes
+ * @param string $form_group_class form group div wrapper additional class
+ * @param string $textarea_class <textarea> additional class
  * @return string
  */
 function render_textarea($name, $label = '', $value = '', $textarea_attrs = array(), $form_group_attr = array(), $form_group_class = '', $textarea_class = '')
@@ -907,16 +907,16 @@ function render_textarea($name, $label = '', $value = '', $textarea_attrs = arra
 
 /**
  * Render <select> field optimized for admin area and bootstrap-select plugin
- * @param  string $name select name
- * @param  array $options option to include
- * @param  array $option_attrs additional options attributes to include, attributes accepted based on the bootstrap-selectp lugin
- * @param  string $label select label
- * @param  string $selected default selected value
- * @param  array $select_attrs <select> additional attributes
- * @param  array $form_group_attr <div class="form-group"> div wrapper html attributes
- * @param  string $form_group_class <div class="form-group"> additional class
- * @param  string $select_class additional <select> class
- * @param  boolean $include_blank do you want to include the first <option> to be empty
+ * @param string $name select name
+ * @param array $options option to include
+ * @param array $option_attrs additional options attributes to include, attributes accepted based on the bootstrap-selectp lugin
+ * @param string $label select label
+ * @param string $selected default selected value
+ * @param array $select_attrs <select> additional attributes
+ * @param array $form_group_attr <div class="form-group"> div wrapper html attributes
+ * @param string $form_group_class <div class="form-group"> additional class
+ * @param string $select_class additional <select> class
+ * @param boolean $include_blank do you want to include the first <option> to be empty
  * @return string
  */
 function render_select($name, $options, $option_attrs = array(), $label = '', $selected = '', $select_attrs = array(), $form_group_attr = array(), $form_group_class = '', $select_class = '', $include_blank = true)
@@ -1262,7 +1262,7 @@ function app_external_form_header($form)
 
 /**
  * Init admin head
- * @param  boolean $aside should include aside
+ * @param boolean $aside should include aside
  */
 function init_head($aside = true)
 {
@@ -1286,18 +1286,18 @@ function init_tail()
 
 /**
  * Render table used for datatables
- * @param  array $headings [description]
- * @param  string $class table class / added prefix table-$class
- * @param  array $additional_classes
+ * @param array $headings [description]
+ * @param string $class table class / added prefix table-$class
+ * @param array $additional_classes
  * @return string                     formatted table
  */
 /**
  * Render table used for datatables
- * @param  array $headings
- * @param  string $class table class / add prefix eq.table-$class
- * @param  array $additional_classes additional table classes
- * @param  array $table_attributes table attributes
- * @param  boolean $tfoot includes blank tfoot
+ * @param array $headings
+ * @param string $class table class / add prefix eq.table-$class
+ * @param array $additional_classes additional table classes
+ * @param array $table_attributes table attributes
+ * @param boolean $tfoot includes blank tfoot
  * @return string
  */
 function render_datatable($headings = array(), $class = '', $additional_classes = array(''), $table_attributes = array())
@@ -1343,8 +1343,8 @@ function render_datatable($headings = array(), $class = '', $additional_classes 
 
 /**
  * Get company logo from company uploads folder
- * @param  string $url href url of image
- * @param  string $href_class Additional classes on href
+ * @param string $url href url of image
+ * @param string $href_class Additional classes on href
  */
 function get_company_logo($uri = '', $href_class = '')
 {
@@ -1373,8 +1373,8 @@ function get_company_logo($uri = '', $href_class = '')
  */
 /**
  * Get brand logo from brands uploads folder
- * @param  string $url href url of image
- * @param  string $href_class Additional classes on href
+ * @param string $url href url of image
+ * @param string $href_class Additional classes on href
  */
 function get_brand_logo($uri = '', $href_class = '', $brandid)
 {
@@ -1387,17 +1387,23 @@ function get_brand_logo($uri = '', $href_class = '', $brandid)
         $logo_href = site_url($uri);
     }
 
+    $src = base_url('assets/images/sidologo.png');
     if ($company_logo != '') {
-        $clogoImagePath = FCPATH . 'uploads/brands/round_' . $company_logo;
-        $src = base_url('uploads/brands/' . $company_logo);
-        if(file_exists($clogoImagePath)){
-            $src = base_url('uploads/brands/round_' . $company_logo);
+        $clogoImagePath = FCPATH . 'uploads/brands/' . $company_logo;
+        if (file_exists($clogoImagePath)) {
+            $src = base_url('uploads/brands/' . $company_logo);
+            $clogoImagePath = FCPATH . 'uploads/brands/round_' . $company_logo;
+            if (file_exists($clogoImagePath)) {
+                $src = base_url('uploads/brands/round_' . $company_logo);
+            }
         }
-        echo '<a href="' . $logo_href . '" class="' . $href_class . ' logo img-responsive"><img src="' . $src. '" class="img-responsive" alt="' . $company_name . '"></a>';
+        echo '<a href="' . $logo_href . '" class="' . $href_class . ' logo img-responsive">
+        <img src="' . $src . '" class="img-responsive" alt="' . $company_name . '"></a>';
     } else if ($company_name != '') {
-        echo '<a href="' . $logo_href . '" class="' . $href_class . ' logo">' . $company_name . '</a>';
+        echo '<a href="' . $logo_href . '" class="' . $href_class . ' logo logo-text">' . $company_name . '</a>';
     } else {
-        echo '';
+        echo '<a href="' . $logo_href . '" class="' . $href_class . ' logo img-responsive">
+        <img src="' . $src . '" class="img-responsive" alt="Simply IDo"></a>';
     }
 }
 
@@ -1473,8 +1479,8 @@ return $contents;
 }
 /**
  * Return staff profile image url
- * @param  mixed $staff_id
- * @param  string $type
+ * @param mixed $staff_id
+ * @param string $type
  * @return string
  */
 function staff_profile_image_url($staff_id, $type = 'small')
@@ -1498,8 +1504,8 @@ function staff_profile_image_url($staff_id, $type = 'small')
 
 /**
  * Return contact profile image url
- * @param  mixed $contact_id
- * @param  string $type
+ * @param mixed $contact_id
+ * @param string $type
  * @return string
  */
 function contact_profile_image_url($contact_id, $type = 'small')
@@ -1523,10 +1529,10 @@ function contact_profile_image_url($contact_id, $type = 'small')
 
 /**
  * Staff profile image with href
- * @param  boolean $id staff id
- * @param  array $classes image classes
- * @param  string $type
- * @param  array $img_attrs additional <img /> attributes
+ * @param boolean $id staff id
+ * @param array $classes image classes
+ * @param string $type
+ * @param array $img_attrs additional <img /> attributes
  * @return string
  */
 function staff_profile_image($id = false, $classes = array('staff-profile-image'), $type = 'round', $img_attrs = array())
@@ -1618,10 +1624,10 @@ function staff_pdf_profile_image($id = false, $classes = array('signer_pic'), $t
 
 /**
  * Addressbook profile image with href
- * @param  boolean $id addressbook id
- * @param  array $classes image classes
- * @param  string $type
- * @param  array $img_attrs additional <img /> attributes
+ * @param boolean $id addressbook id
+ * @param array $classes image classes
+ * @param string $type
+ * @param array $img_attrs additional <img /> attributes
  * @return string
  */
 function addressbook_profile_image($id = false, $classes = array('addressbook-profile-image'), $type = 'round', $img_attrs = array())
@@ -1649,7 +1655,7 @@ function addressbook_profile_image($id = false, $classes = array('addressbook-pr
         if (file_exists($profileImagePath)) {
             $profile_image = '<img ' . $_attributes . ' src="' . base_url($profileImagePath) . '" class="' . implode(' ', $classes) . '" alt="' . $result->firstname . ' ' . $result->lastname . '" />';
         } else {
-            $profileImagePath = 'uploads/addressbook_profile_images/' . $id . '/'. $result->profile_image;
+            $profileImagePath = 'uploads/addressbook_profile_images/' . $id . '/' . $result->profile_image;
             if (file_exists($profileImagePath)) {
                 $profile_image = '<img ' . $_attributes . ' src="' . base_url($profileImagePath) . '" class="' . implode(' ', $classes) . '" alt="' . $result->firstname . ' ' . $result->lastname . '" />';
             } else {
@@ -1689,7 +1695,7 @@ function addressbook_pdf_profile_image($id = false, $classes = array('signer_pic
         if (file_exists($profileImagePath)) {
             $profile_image = '<img ' . $_attributes . ' src="' . base_url($profileImagePath) . '" class="' . implode(' ', $classes) . '" alt="' . $result->firstname . ' ' . $result->lastname . '" />';
         } else {
-            $profileImagePath = 'uploads/addressbook_profile_images/' . $id . '/'. $result->profile_image;
+            $profileImagePath = 'uploads/addressbook_profile_images/' . $id . '/' . $result->profile_image;
             if (file_exists($profileImagePath)) {
                 $profile_image = '<img ' . $_attributes . ' src="' . base_url($profileImagePath) . '" class="' . implode(' ', $classes) . '" alt="' . $result->firstname . ' ' . $result->lastname . '" />';
             } else {
@@ -1707,10 +1713,10 @@ function addressbook_pdf_profile_image($id = false, $classes = array('signer_pic
 
 /** Added by Avni on 10/11/2017
  * Staff profile image with href
- * @param  boolean $id address book id
- * @param  array $classes image classes
- * @param  string $type
- * @param  array $img_attrs additional <img /> attributes
+ * @param boolean $id address book id
+ * @param array $classes image classes
+ * @param string $type
+ * @param array $img_attrs additional <img /> attributes
  * @return string
  */
 function contact_profile_image($id = false, $classes = array('contact-profile-image'), $type = 'small', $img_attrs = array())
@@ -1751,10 +1757,10 @@ function contact_profile_image($id = false, $classes = array('contact-profile-im
  * Added By: Vaidehi
  * Dt: 02/14/2018
  * Venue logo image with href
- * @param  boolean $id addressbook id
- * @param  array $classes image classes
- * @param  string $type
- * @param  array $img_attrs additional <img /> attributes
+ * @param boolean $id addressbook id
+ * @param array $classes image classes
+ * @param string $type
+ * @param array $img_attrs additional <img /> attributes
  * @return string
  */
 function venue_logo_image($id = false, $classes = array('venue-logo-image'), $type = 'round', $img_attrs = array())
@@ -1800,10 +1806,10 @@ function venue_logo_image($id = false, $classes = array('venue-logo-image'), $ty
  * Added By: Vaidehi
  * Dt: 02/14/2018
  * Venue cover image image with href
- * @param  boolean $id addressbook id
- * @param  array $classes image classes
- * @param  string $type
- * @param  array $img_attrs additional <img /> attributes
+ * @param boolean $id addressbook id
+ * @param array $classes image classes
+ * @param string $type
+ * @param array $img_attrs additional <img /> attributes
  * @return string
  */
 function venue_cover_image($id = false, $classes = array('venue-cover-image'), $type = 'thumb', $img_attrs = array())
@@ -1879,10 +1885,10 @@ function proposaltemplate_banner($id = false, $classes = array('proposalbanner-i
 
 /**
  * Lead profile image with href
- * @param  boolean $id Lead id
- * @param  array $classes image classes
- * @param  string $type
- * @param  array $img_attrs additional <img /> attributes
+ * @param boolean $id Lead id
+ * @param array $classes image classes
+ * @param string $type
+ * @param array $img_attrs additional <img /> attributes
  * @return string
  */
 function lead_profile_image($id = false, $classes = array('lead-profile-image'), $type = 'round', $img_attrs = array())
@@ -1921,10 +1927,10 @@ function lead_profile_image($id = false, $classes = array('lead-profile-image'),
 
 /**
  * Project profile image with href
- * @param  boolean $id Lead id
- * @param  array $classes image classes
- * @param  string $type
- * @param  array $img_attrs additional <img /> attributes
+ * @param boolean $id Lead id
+ * @param array $classes image classes
+ * @param string $type
+ * @param array $img_attrs additional <img /> attributes
  * @return string
  */
 function project_profile_image($id = false, $classes = array('lead-profile-image'), $type = 'round', $img_attrs = array())
@@ -1953,7 +1959,7 @@ function project_profile_image($id = false, $classes = array('lead-profile-image
         if (file_exists($profileImagePath)) {
             $profile_image = '<img ' . $_attributes . ' src="' . base_url($profileImagePath) . '" class="' . implode(' ', $classes) . '" alt="' . $result->name . '" />';
         } else {
-            $profileImagePath = 'uploads/project_profile_images/' . $id . '/'. $result->project_profile_image;
+            $profileImagePath = 'uploads/project_profile_images/' . $id . '/' . $result->project_profile_image;
             if (file_exists($profileImagePath)) {
                 $profile_image = '<img ' . $_attributes . ' src="' . base_url($profileImagePath) . '" class="' . implode(' ', $classes) . '" alt="' . $result->name . '" />';
             }
@@ -1969,10 +1975,10 @@ function project_profile_image($id = false, $classes = array('lead-profile-image
  * Added By Masud Shaikh
  * Date: 02-28-2018
  * Project civer image with href
- * @param  boolean $id Lead id
- * @param  array $classes image classes
- * @param  string $type
- * @param  array $img_attrs additional <img /> attributes
+ * @param boolean $id Lead id
+ * @param array $classes image classes
+ * @param string $type
+ * @param array $img_attrs additional <img /> attributes
  * @return string
  */
 function project_cover_image($id = false, $classes = array('project-cover-image'), $type = '', $img_attrs = array())
@@ -2046,10 +2052,10 @@ function lead_files($id = false, $classes = array('lead-profile-image'), $type =
 /**
  * Added By Avni on 11/29/2017
  * Line Items image with href
- * @param  boolean $id Lead id
- * @param  array $classes image classes
- * @param  string $type
- * @param  array $img_attrs additional <img /> attributes
+ * @param boolean $id Lead id
+ * @param array $classes image classes
+ * @param string $type
+ * @param array $img_attrs additional <img /> attributes
  * @return string
  */
 function line_item_image($id = false, $classes = array('line-item-image'), $type = 'round', $img_attrs = array())
@@ -2078,11 +2084,11 @@ function line_item_image($id = false, $classes = array('line-item-image'), $type
         if (file_exists($profileImagePath)) {
             $profile_image = '<img ' . $_attributes . ' src="' . base_url($profileImagePath) . '" class="' . implode(' ', $classes) . '" alt="' . $result->description . '" />';
         } else {
-            $type="thumb";
+            $type = "thumb";
             $profileImagePath = 'uploads/line_item_images/' . $id . '/' . $type . '_' . $result->profile_image;
             if (file_exists($profileImagePath)) {
                 $profile_image = '<img ' . $_attributes . ' src="' . base_url($profileImagePath) . '" class="' . implode(' ', $classes) . '" alt="' . $result->description . '" />';
-            }else{
+            } else {
                 return $blankImageFormatted;
             }
 
@@ -2111,10 +2117,10 @@ function app_happy_text($text)
 
 /**
  * Generate small icon button / font awesome
- * @param  string $url href url
- * @param  string $type icon type
- * @param  string $class button class
- * @param  array $attributes additional attributes
+ * @param string $url href url
+ * @param string $type icon type
+ * @param string $class button class
+ * @param array $attributes additional attributes
  * @return string
  */
 function icon_btn($url = '', $type = '', $class = 'btn-orange', $attributes = array())
@@ -2382,9 +2388,9 @@ function get_lead_status_by_id($id)
 
 /**
  * Function that format task status for the final user
- * @param  string $id status id
- * @param  boolean $text
- * @param  boolean $clean
+ * @param string $id status id
+ * @param boolean $text
+ * @param boolean $clean
  * @return string
  */
 function format_task_status($status, $text = false, $clean = false)
@@ -2415,9 +2421,9 @@ function format_task_status($status, $text = false, $clean = false)
 if (!function_exists('get_table_items_and_taxes')) {
     /**
      * Pluggable function for all table items HTML and PDF
-     * @param  array $items all items
+     * @param array $items all items
      * @param  [type]  $type          where do items come form, eq invoice,estimate,proposal etc..
-     * @param  boolean $admin_preview in admin preview add additional sortable classes
+     * @param boolean $admin_preview in admin preview add additional sortable classes
      * @return array
      */
     function get_table_items_and_taxes($items, $type, $admin_preview = false)
@@ -2455,8 +2461,8 @@ if (!function_exists('get_table_items_and_taxes')) {
             // }
 
             $_item .= '</td>';
-            $_item .= '<td align="right">' . _format_number($item['rate']) . '</td>';
-            $_item .= '<td align="right">' . _format_number($item['markupdiscount']) . '</td>';
+            $_item .= '<td align="right">' . format_money($item['rate']) . '</td>';
+            $_item .= '<td align="right">' . format_money($item['markupdiscount']) . '</td>';
             if (get_option('show_tax_per_item') == 1) {
                 $_item .= '<td align="right">';
             }
@@ -2525,9 +2531,9 @@ if (!function_exists('get_table_items_and_taxes')) {
             ));
 
             if ($item['amount'] > 0) {
-                $item_amount_with_quantity = _format_number($item['amount']);
+                $item_amount_with_quantity = format_money($item['amount']);
             } else {
-                $item_amount_with_quantity = _format_number($hook_data['amount']);
+                $item_amount_with_quantity = format_money($hook_data['amount']);
             }
             $_item .= '<td class="amount" align="right">' . $item_amount_with_quantity . '</td>';
             $_item .= '</tr>';
@@ -2611,7 +2617,7 @@ function _make_email_clickable_cb($matches)
 
 /**
  * Check for links/emails/ftp in string to wrap in href
- * @param  string $ret
+ * @param string $ret
  * @return string      formatted string with href in any found
  */
 function check_for_links($ret)
@@ -2629,7 +2635,7 @@ function check_for_links($ret)
 
 /**
  * Strip tags
- * @param  string $html string to strip tags
+ * @param string $html string to strip tags
  * @return string
  */
 function _strip_tags($html)
@@ -2639,8 +2645,8 @@ function _strip_tags($html)
 
 /**
  * Adjust color brightness
- * @param  string $hex hex color to adjust from
- * @param  mixed $steps eq -20 or 20
+ * @param string $hex hex color to adjust from
+ * @param mixed $steps eq -20 or 20
  * @return string
  */
 function adjust_color_brightness($hex, $steps)
@@ -2665,7 +2671,7 @@ function adjust_color_brightness($hex, $steps)
 
 /**
  * Convert hex color to rgb
- * @param  string $color color hex code
+ * @param string $color color hex code
  * @return string
  */
 function hex2rgb($color)
@@ -2687,8 +2693,8 @@ function hex2rgb($color)
 
 /**
  * Function that strip all html tags from string/text/html
- * @param  string $str
- * @param  string $allowed prevent specific tags to be stripped
+ * @param string $str
+ * @param string $allowed prevent specific tags to be stripped
  * @return string
  */
 function strip_html_tags($str, $allowed = '')
@@ -2766,10 +2772,10 @@ function get_client_brand_logo($uri = '', $href_class = '', $brandid)
 /**
  * Added By Masud on 01/02/2018
  * Line Items image with href
- * @param  boolean $id Lead id
- * @param  array $classes image classes
- * @param  string $type
- * @param  array $img_attrs additional <img /> attributes
+ * @param boolean $id Lead id
+ * @param array $classes image classes
+ * @param string $type
+ * @param array $img_attrs additional <img /> attributes
  * @return string
  */
 function group_image($id = false, $classes = array('group-image'), $type = 'small', $img_attrs = array())
@@ -2809,10 +2815,10 @@ function group_image($id = false, $classes = array('group-image'), $type = 'smal
 /**
  * Added By Masud on 02/23/2018
  * Proposal gallery image with href
- * @param  boolean $id Lead id
- * @param  array $classes image classes
- * @param  string $type
- * @param  array $img_attrs additional <img /> attributes
+ * @param boolean $id Lead id
+ * @param array $classes image classes
+ * @param string $type
+ * @param array $img_attrs additional <img /> attributes
  * @return string
  */
 function gallery_proposal_image($id = false, $pid, $classes = array('gallery-image'), $type = 'round', $img_attrs = array())
@@ -2894,8 +2900,8 @@ return $contents;
  */
 /**
  * Get brand logo from brands uploads folder
- * @param  string $url href url of image
- * @param  string $href_class Additional classes on href
+ * @param string $url href url of image
+ * @param string $href_class Additional classes on href
  */
 function get_brand_logo_img($brandid)
 {
@@ -2904,16 +2910,30 @@ function get_brand_logo_img($brandid)
     if ($company_logo != '') {
         $clogoImagePath = FCPATH . 'uploads/brands/round_' . $company_logo;
         $src = base_url('uploads/brands/' . $company_logo);
-        if(file_exists($clogoImagePath)){
+        if (file_exists($clogoImagePath)) {
             $src = base_url('uploads/brands/round_' . $company_logo);
         }
-        echo '<img src="' . $src. '" class="img-responsive" alt="' . $company_name . '">';
+        echo '<img src="' . $src . '" class="img-responsive" alt="' . $company_name . '">';
     } else if ($company_name != '') {
-        echo $company_name ;
+        echo $company_name;
     } else {
         echo '';
     }
 }
-
+function get_brand_icon_img($brandid)
+{
+    $company_logo = get_client_brand_option('company_icon', $brandid);
+    $company_name = get_client_brand_option('companyname', $brandid);
+    if ($company_logo != '') {
+        $clogoImagePath = FCPATH . 'uploads/brands/round_' . $company_logo;
+        $src = base_url('uploads/brands/' . $company_logo);
+        if (file_exists($clogoImagePath)) {
+            $src = base_url('uploads/brands/round_' . $company_logo);
+        }
+    } else {
+        $src=base_url('assets/images/user.png');
+    }
+    echo '<img src="' . $src . '" class="img-responsive" alt="' . $company_name . '">';
+}
 
 ?>

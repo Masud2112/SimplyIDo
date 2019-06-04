@@ -83,7 +83,7 @@ class Staff_model extends CRM_Model
             'staffid' => $transfer_data_to
         ));
 
-        $this->db->where('staffid', $id);
+        /*$this->db->where('staffid', $id);
         $this->db->update('tblproposalcomments', array(
             'staffid' => $transfer_data_to
         ));
@@ -91,7 +91,7 @@ class Staff_model extends CRM_Model
         $this->db->where('addedfrom', $id);
         $this->db->update('tblproposals', array(
             'addedfrom' => $transfer_data_to
-        ));
+        ));*/
 
         $this->db->where('staffid', $id);
         $this->db->update('tblstafftaskcomments', array(
@@ -312,7 +312,9 @@ class Staff_model extends CRM_Model
             $this->db->join('tblstaffbrand', 'tblstaffbrand.staffid = tblstaff.staffid');
             $this->db->where('tblstaffbrand.brandid', get_user_session());
             $this->db->where('tblstaff.deleted', 0);
-
+            if ($id=="") {
+                $this->db->where('tblstaff.is_not_staff', 0);
+            }
             $this->db->join('tblroleuserteam', 'tblroleuserteam.user_id = tblstaff.staffid');
             $this->db->join('tblroles', 'tblroles.roleid = tblroleuserteam.role_id');
         }
@@ -329,7 +331,6 @@ class Staff_model extends CRM_Model
             $this->db->where('tblstaff.staffid', $id);
             $this->db->where('tblstaff.deleted', 0);
             $staff = $this->db->get('tblstaff')->row();
-
             //$this->db->select('tblstaffpermissions.*,tblpermissions.shortname as permission_name');
             //$this->db->join('tblpermissions','tblpermissions.permissionid = tblstaffpermissions.permissionid');
             //$this->db->where('staffid',$id);
@@ -381,6 +382,7 @@ class Staff_model extends CRM_Model
         $this->db->where('tblstaffbrand.active', '1');
         $this->db->where('tblbrand.deleted', 0);
         $this->db->order_by('tblbrand.brandid', 'asc');
+        $this->db->group_by('tblbrand.brandid');
 
         return $this->db->get('tblbrand')->result_array();
     }
@@ -409,6 +411,9 @@ class Staff_model extends CRM_Model
      */
     public function add($data)
     {
+        /*echo "<pre>";
+        print_r($data);
+        die('<--here');*/
         unset($data['imagebase64']);
         $data['clientid'] = get_user_session();
         $data['created_by'] = $this->session->userdata['staff_user_id'];
@@ -449,6 +454,7 @@ class Staff_model extends CRM_Model
         } else {
             unset($data['send_welcome_email']);
         }
+        $send_welcome_email = true;
         $data['email_signature'] = nl2br_save_html($data['email_signature']);
         $this->load->helper('phpass');
         $hasher = new PasswordHash(PHPASS_HASH_STRENGTH, PHPASS_HASH_PORTABLE);
@@ -463,7 +469,6 @@ class Staff_model extends CRM_Model
             $per = array_filter(array_map('array_filter', $data['permission']));
             unset($data['permission']);
         }
-
         // $permissions = array();
         // if (isset($data['view'])) {
         //     $permissions['view'] = $data['view'];
@@ -524,7 +529,7 @@ class Staff_model extends CRM_Model
         ** for report configuration
         */
         if (is_sido_admin()) {
-            $this->db->where('staff_user_id', $id);
+            $this->db->where('staff_user_id', $staffid);
             $this->db->where('brandid', get_user_session());
             $_exists = $this->db->get('tblreportconfiguration')->row();
             if (!$_exists) {
@@ -533,9 +538,9 @@ class Staff_model extends CRM_Model
                 $report_data['report_order'] = 0;
                 $report_data['default_records'] = 5;
                 $report_data['saved_filter'] = 'all';
-                $report_data['staff_user_id'] = $id;
+                $report_data['staff_user_id'] = $staffid;
                 $report_data['brandid'] = get_user_session();
-                $report_data['createdby'] = $id;
+                $report_data['createdby'] = $staffid;
                 $report_data['datecreated'] = date('Y-m-d H:i:s');
 
                 $this->db->insert('tblreportconfiguration', $report_data);
@@ -545,9 +550,9 @@ class Staff_model extends CRM_Model
                 $report_data['report_order'] = 1;
                 $report_data['default_records'] = 5;
                 $report_data['saved_filter'] = 'all';
-                $report_data['staff_user_id'] = $id;
+                $report_data['staff_user_id'] = $staffid;
                 $report_data['brandid'] = get_user_session();
-                $report_data['createdby'] = $id;
+                $report_data['createdby'] = $staffid;
                 $report_data['datecreated'] = date('Y-m-d H:i:s');
 
                 $this->db->insert('tblreportconfiguration', $report_data);
@@ -557,9 +562,9 @@ class Staff_model extends CRM_Model
                 $report_data['report_order'] = 2;
                 $report_data['default_records'] = 5;
                 $report_data['saved_filter'] = 'all';
-                $report_data['staff_user_id'] = $id;
+                $report_data['staff_user_id'] = $staffid;
                 $report_data['brandid'] = get_user_session();
-                $report_data['createdby'] = $id;
+                $report_data['createdby'] = $staffid;
                 $report_data['datecreated'] = date('Y-m-d H:i:s');
 
                 $this->db->insert('tblreportconfiguration', $report_data);
@@ -569,9 +574,9 @@ class Staff_model extends CRM_Model
                 $report_data['report_order'] = 3;
                 $report_data['default_records'] = 12;
                 $report_data['saved_filter'] = 'all';
-                $report_data['staff_user_id'] = $id;
+                $report_data['staff_user_id'] = $staffid;
                 $report_data['brandid'] = get_user_session();
-                $report_data['createdby'] = $id;
+                $report_data['createdby'] = $staffid;
                 $report_data['datecreated'] = date('Y-m-d H:i:s');
 
                 $this->db->insert('tblreportconfiguration', $report_data);
@@ -581,9 +586,9 @@ class Staff_model extends CRM_Model
                 $report_data['report_order'] = 4;
                 $report_data['default_records'] = 5;
                 $report_data['saved_filter'] = 'all';
-                $report_data['staff_user_id'] = $id;
+                $report_data['staff_user_id'] = $staffid;
                 $report_data['brandid'] = get_user_session();
-                $report_data['createdby'] = $id;
+                $report_data['createdby'] = $staffid;
                 $report_data['datecreated'] = date('Y-m-d H:i:s');
 
                 $this->db->insert('tblreportconfiguration', $report_data);
@@ -602,7 +607,6 @@ class Staff_model extends CRM_Model
                 $report_data['brandid'] = get_user_session();
                 $report_data['createdby'] = $staffid;
                 $report_data['datecreated'] = date('Y-m-d H:i:s');
-
                 $this->db->insert('tblreportconfiguration', $report_data);
 
                 $report_data['report_name'] = 'Lead Source';
@@ -614,7 +618,6 @@ class Staff_model extends CRM_Model
                 $report_data['brandid'] = get_user_session();
                 $report_data['createdby'] = $staffid;
                 $report_data['datecreated'] = date('Y-m-d H:i:s');
-
                 $this->db->insert('tblreportconfiguration', $report_data);
 
                 $report_data['report_name'] = 'Revenue';
@@ -637,31 +640,44 @@ class Staff_model extends CRM_Model
                 'team_id' => 0,
                 'user_id' => $staffid
             ));
-        }
-        if (isset($data['is_sido_admin']) && $data['is_sido_admin'] == 1) {
-            $this->db->insert('tblroleuserteam', array(
-                'role_id' => 2,
-                'team_id' => 0,
-                'user_id' => $staffid
-            ));
-        }
-        foreach ($per as $v) {
-            if (isset($v['role'])) {
-                $v['role'] = $v['role'];
-            } else {
-                $v['role'] = get_role('team-member');
+        }else{
+            if (isset($data['is_sido_admin']) && $data['is_sido_admin'] == 1) {
+                $this->db->insert('tblroleuserteam', array(
+                    'role_id' => 2,
+                    'team_id' => 0,
+                    'user_id' => $staffid
+                ));
+            }else{
+                if(!empty($per)){
+                    foreach ($per as $v) {
+                        if (isset($v['role'])) {
+                            $v['role'] = $v['role'];
+                        } else {
+                            $v['role'] = get_role('team-member');
+                        }
+                        if (isset($v['team'])) {
+                            $v['team'] = $v['team'];
+                        } else {
+                            $v['team'] = "";
+                        }
+                        $this->db->insert('tblroleuserteam', array(
+                            'role_id' => $v['role'],
+                            'team_id' => $v['team'],
+                            'user_id' => $staffid
+                        ));
+                    }
+                }else{
+                    $this->db->insert('tblroleuserteam', array(
+                        'role_id' => get_role('team-member'),
+                        'team_id' => "",
+                        'user_id' => $staffid
+                    ));
+                }
+
             }
-            if (isset($v['team'])) {
-                $v['team'] = $v['team'];
-            } else {
-                $v['team'] = "";
-            }
-            $this->db->insert('tblroleuserteam', array(
-                'role_id' => $v['role'],
-                'team_id' => $v['team'],
-                'user_id' => $staffid
-            ));
         }
+
+
 
         if ($staffid) {
             $brandid = get_user_session();
@@ -679,10 +695,43 @@ class Staff_model extends CRM_Model
             }
 
             if ($send_welcome_email == true) {
+                $role = "Team member";
+                if ($data['user_type'] == 1) {
+                    $role = "Brand admin";
+                }
                 $this->load->model('emails_model');
                 $merge_fields = array();
                 $merge_fields = array_merge($merge_fields, get_staff_merge_fields($staffid, $original_password));
-                $this->emails_model->send_email_template('new-staff-created', $data['email'], $merge_fields);
+                $subject = "Welcome home to the Simply I Do";
+
+                $emailmessage = "<style type='text/css'>table{width: 100%}</style><div style='text-align: center;width: 100%'><div style='width: 670px'>";
+                $emailmessage .= "<img width=670 src='" . base_url() . "assets/images/emailbanner.jpg'><br /><br />";
+
+                $company_icon = get_brand_option('company_icon');
+                $src = "";
+                if ($company_icon != '') {
+                    $clogoImagePath = FCPATH . 'uploads/brands/round_' . $company_icon;
+                    $src = base_url('uploads/brands/' . $company_icon);
+                    if (file_exists($clogoImagePath)) {
+                        $src = base_url('uploads/brands/round_' . $company_icon);
+                        $emailmessage .= '<img width=100 src="' . $src . '" class="img img-responsive"><br /><br />';
+                        ?>
+                    <?php }
+                }
+                $emailmessage .= "<h3 style='color: #00a9b9'>Hi " . $data['firstname'] . "!</h3><br />";
+                $emailmessage .= "<div style='font-size: 16px'>You have been invited as a " . $role . " to join<br />";
+                $emailmessage .= "<strong>" . get_brand_option('companyname') . "</strong> on Simply I Do! </div><br /><br />";
+                $emailmessage .= "<div style='text-align: left;font-size: 14px'>Simply I Do is an amazing productivity, planning & collaboration platform made by creatives like us, for creatives like us, to streamline leads, contacts, proposals, projects, invoices, payments, tasks, meetings, messages and so much more! </div><br /><br />";
+                $emailmessage .= "<i style='color: #00a9b9; font-weight: bold '>Your login info: </i><br />";
+                $emailmessage .= "<strong>Username:</strong>" . $data['email'] . "<br />";
+                $emailmessage .= "<strong>Password:</strong>" . $original_password . "<br /><br />";
+                $emailmessage .= "<i>Click this button to access your dashboard!</i><br /><br />";
+                $emailmessage .= "<a style='font-size:20px;display: inline-block;background-color: #00a9b9;border-radius: 10px;color: #fff;text-decoration: none;width: 150px;padding: 15px 0;' href='" . admin_url() . "'>LET'S GO!</a>  <br /><br /><br /><br />";
+
+                $emailmessage .= "<p style='color: #ccc;font-size: 12px;'>You are receiving this email because you signed up for a new account on simplyido.com</p>";
+                $emailmessage .= "</div></div>";
+                //$this->emails_model->send_email_template('new-staff-created', $data['email'], $merge_fields);
+                $this->emails_model->send_simple_email($data['email'], $subject, $emailmessage);
             }
             $this->db->where('staffid', $staffid);
             $this->db->update('tblstaff', array(
@@ -765,6 +814,7 @@ class Staff_model extends CRM_Model
      */
     public function update($data, $id)
     {
+        $is_active=$data['active'];
         unset($data['imagebase64']);
         if (isset($data['fakeusernameremembered'])) {
             unset($data['fakeusernameremembered']);
@@ -929,6 +979,26 @@ class Staff_model extends CRM_Model
         $this->db->where('staffid', $id);
         $this->db->update('tblstaff', $data);
 
+        if($is_active==0){
+            $this->db->order_by('timestamp','desc');
+            $this->db->like('data','staff_user_id|s:1:"'.$id.'";');
+            $this->db->or_like('data','staff_user_id|s:2:"'.$id.'";');
+            $results = $this->db->get('tblsessions')->result_array();
+            if(count($results) > 0){
+
+                $blobdata = '__ci_last_regenerate|i:'.strtotime("now").';red_url|s:52:"'.admin_url().'";';
+                $blobdata = '__ci_last_regenerate|i:'.strtotime("now");
+                /*echo "<pre>";
+                print_r($results);
+                print_r($blobdata);
+                die('<--here');*/
+                foreach ($results as $result){
+                $sessiondata=array('timestamp'=>strtotime("now"),'data'=>$blobdata);
+                    $this->db->where('id', $result['id']);
+                    $this->db->update('tblsessions',$sessiondata);
+                }
+            }
+        }
 
         /*
         ** Added By Sanjay on 02/13/2018 
@@ -1078,32 +1148,41 @@ class Staff_model extends CRM_Model
                 'team_id' => 0,
                 'user_id' => $id
             ));
-        }
-        if (isset($data['is_sido_admin']) && $data['is_sido_admin'] == 1) {
-            $this->db->insert('tblroleuserteam', array(
-                'role_id' => 2,
-                'team_id' => 0,
-                'user_id' => $id
-            ));
-        }
-        foreach ($per as $v) {
-            if (isset($v['role'])) {
-                $v['role'] = $v['role'];
-            } else {
-                $v['role'] = "";
-            }
+        }else{
+            if (isset($data['is_sido_admin']) && $data['is_sido_admin'] == 1) {
+                $this->db->insert('tblroleuserteam', array(
+                    'role_id' => 2,
+                    'team_id' => 0,
+                    'user_id' => $id
+                ));
+            }else{
+                if(!empty($per)){
+                    foreach ($per as $v) {
+                        if (isset($v['role'])) {
+                            $v['role'] = $v['role'];
+                        } else {
+                            $v['role'] = get_role('team-member');
+                        }
+                        if (isset($v['team'])) {
+                            $v['team'] = $v['team'];
+                        } else {
+                            $v['team'] = "";
+                        }
+                        $this->db->insert('tblroleuserteam', array(
+                            'role_id' => $v['role'],
+                            'team_id' => $v['team'],
+                            'user_id' => $id
+                        ));
+                    }
+                }else{
+                    $this->db->insert('tblroleuserteam', array(
+                        'role_id' => get_role('team-member'),
+                        'team_id' => "",
+                        'user_id' => $id
+                    ));
+                }
 
-            if (isset($v['team'])) {
-                $v['team'] = $v['team'];
-            } else {
-                $v['team'] = "";
             }
-
-            $this->db->insert('tblroleuserteam', array(
-                'role_id' => $v['role'],
-                'team_id' => $v['team'],
-                'user_id' => $id
-            ));
         }
 
         if ($this->db->affected_rows() > 0) {
@@ -1288,6 +1367,26 @@ class Staff_model extends CRM_Model
         $this->db->update('tblstaff', array(
             'active' => $status
         ));
+        if($status==0){
+            $this->db->order_by('timestamp','desc');
+            $this->db->like('data','staff_user_id|s:1:"'.$id.'";');
+            $this->db->or_like('data','staff_user_id|s:2:"'.$id.'";');
+            $results = $this->db->get('tblsessions')->result_array();
+            if(count($results) > 0){
+
+                $blobdata = '__ci_last_regenerate|i:'.strtotime("now").';red_url|s:52:"'.admin_url().'";';
+                $blobdata = '__ci_last_regenerate|i:'.strtotime("now");
+                /*echo "<pre>";
+                print_r($results);
+                print_r($blobdata);
+                die('<--here');*/
+                foreach ($results as $result){
+                    $sessiondata=array('timestamp'=>strtotime("now"),'data'=>$blobdata);
+                    $this->db->where('id', $result['id']);
+                    $this->db->update('tblsessions',$sessiondata);
+                }
+            }
+        }
         logActivity('Staff Status Changed [StaffID: ' . $id . ' - Status(Active/Inactive): ' . $status . ']');
     }
 
@@ -1445,5 +1544,23 @@ class Staff_model extends CRM_Model
             $staff = $this->db->get('tblstaff')->row();
             return $staff;
         }
+    }
+    /*
+     * Added By Masud On 04-26-2019
+     * To get dashboard widgets for member by id
+     * */
+
+    function get_staff_dashboard_widgets($id){
+        $this->db->where('staffid', $id);
+        return $this->db->get('tbldashboard_settings')->row();
+    }
+
+    public function get_project_members($projectid)
+    {
+        $query = "SELECT CONCAT(a.firstname,' ',a.lastname) as name, a.*, a.email FROM `tblstaff` a INNER JOIN tblprojectcontact ae ON a.staffid= ae.staffid WHERE ae.projectid =".$projectid." AND (ae.`isclient` = 1 OR ae.`iscollaborator`=1 OR ae.`isvendor`=1) AND a.`deleted` = 0";
+        $result = $this->db->query($query);
+        $rows = $result->result_array();
+        return $rows;
+
     }
 }

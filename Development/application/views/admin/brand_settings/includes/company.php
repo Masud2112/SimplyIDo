@@ -24,7 +24,7 @@
         </div>
         <div class="bsBody">
             <div class="row">
-                <?php echo render_input('settings[invoice_company_phone]', 'settings_sales_company_phone', get_brand_option('invoice_company_phone'), '', array(), array(), 'col-xs-9 col-sm-10', 'companyphone'); ?>
+                <?php echo render_input('settings[invoice_company_phonenumber]', 'settings_sales_company_phone', get_brand_option('invoice_company_phonenumber'), '', array(), array(), 'col-xs-9 col-sm-10', 'companyphone'); ?>
 
                 <?php echo render_input('settings[invoice_company_phone_ext]', 'settings_sales_company_phone_ext', get_brand_option('invoice_company_phone_ext'), '', array(), array(), 'col-xs-3 col-sm-2', 'companyphoneext'); ?>
 
@@ -33,6 +33,12 @@
     </div>
 
     <div class="col-md-6">
+        <div class="bshead">
+            <h4 class="pull-left">Email</h4>
+        </div>
+        <div class="bsBody">
+        <?php echo render_input('settings[invoice_company_email]', 'email', get_brand_option('invoice_company_email'), 'email', array(), array(), '', 'companyemail'); ?>
+        </div>
         <div class="bshead">
             <h4 class="pull-left">Address</h4>
         </div>
@@ -91,12 +97,10 @@
         <div class="bshead">
             <h4 class="pull-left"><?php echo _l('service_types') ?></h4>
             <div class="pull-right">
-                <?php if (has_permission('account_setup', '', 'create')) { ?>
                 <a href="#" class="btn btn-info" data-toggle="modal" data-target="#new_brand_type" id="add_new_brand">
                     <i class="fa fa-plus-square mright5"></i>
                     <?php echo _l('new') ?>
                 </a>
-                <?php } ?>
             </div>
         </div>
         <div class="bsBody">

@@ -309,14 +309,8 @@ class Tasks extends Admin_controller
             $data['description'] = $this->input->post('description', false);
             if ($id == '') {
                 if (!has_permission('tasks', '', 'create', true)) {
-                    header('HTTP/1.0 400 Bad error');
-                    echo json_encode(array(
-                        'success' => false,
-                        'message' => _l('access_denied')
-                    ));
-                    die;
+                    access_denied('Tasks');
                 }
-
                 $id = $this->tasks_model->add($data);
                 if ($id) {
                     $uploadedFiles = handle_task_attachments_array($id);
@@ -345,12 +339,7 @@ class Tasks extends Admin_controller
 
             } else {
                 if (!has_permission('tasks', '', 'edit', true)) {
-                    header('HTTP/1.0 400 Bad error');
-                    echo json_encode(array(
-                        'success' => false,
-                        'message' => _l('access_denied')
-                    ));
-                    die;
+                    access_denied('Tasks');
                 }
                 $success = $this->tasks_model->update($data, $id);
                 $message = '';
@@ -1200,5 +1189,11 @@ class Tasks extends Admin_controller
         $manaual = $this->tasks_model->progressmanaual($taskid, $this->input->post());
         echo $manaual;
         die;
+    }
+    function task_name_exists(){
+        $name = $this->input->post('name');
+        $result = $this->tasks_model->task_name_exists($name);
+        echo $result;
+        die();
     }
 }

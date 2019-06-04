@@ -135,17 +135,28 @@ $brandid = get_user_session();
                      */
                     if (isset($brands) && $brands != "") { ?>
                         <!--<li class="dropdown-header">Brands</li>-->
-                        <?php foreach ($brands as $brand) { ?>
-                            <li class="brand <?php echo($brand['brandid'] == $brandid ? 'active' : ''); ?>"><a
-                                        data-id="<?php echo $brand['brandid']; ?>" href="javascript: void(0);"
-                                        onclick="changeBrand(this);"><?php echo $brand['name']; ?></a></li>
+                        <?php foreach ($brands as $brand) {
+                            $default = "";
+                            if ($brand['isdefault'] == 1) {
+                                $default = "isdefault";
+                            }
+                            ?>
+                            <li class="brand <?php echo($brand['brandid'] == $brandid ? 'active' : ''); ?>">
+                                <a data-id="<?php echo $brand['brandid']; ?>" href="javascript: void(0);"
+                                   onclick="changeBrand(this);"><?php echo $brand['name']; ?>
+                                </a>
+                                <a class="defaultBrand <?php echo $default; ?>"
+                                   data-id="<?php echo $brand['brandid']; ?>" href="javascript: void(0);">
+                                    <i class="fa fa-home" aria-hidden="true"></i>
+                                </a>
+                            </li>
                         <?php } ?>
                         <li class="divider"></li>
-                        <?php if (has_permission('account_setup', '', 'v')==true) { ?>
+                        <?php if (has_permission('account_setup', '', 'view') == true) { ?>
                             <li class="header-edit-profile"><a href="<?php echo admin_url('brand_settings'); ?>"><i
                                             class="fa fa-gear"></i><?php echo _l('brand_settings'); ?></a></li>
                         <?php } ?>
-                        <?php if (has_permission('account_setup', '', 'edit')==true) { ?>
+                        <?php if (has_permission('account_setup', '', 'edit') == true) { ?>
                             <li class="header-edit-profile"><a href="<?php echo admin_url('brands/brand'); ?>"><i
                                             class="fa fa-plus"></i><?php echo _l('new_brand'); ?></a></li>
                         <?php } ?>
@@ -278,17 +289,28 @@ $brandid = get_user_session();
                      */
                     if (isset($brands) && $brands != "") { ?>
                         <!--<li class="dropdown-header">Brands</li>-->
-                        <?php foreach ($brands as $brand) { ?>
+                        <?php
+                        foreach ($brands as $brand) {
+                            $default = "";
+                            if ($brand['isdefault'] == 1) {
+                                $default = "isdefault";
+                            }
+                            ?>
                             <li class="brand <?php echo($brand['brandid'] == $brandid ? 'active' : ''); ?>"><a
                                         data-id="<?php echo $brand['brandid']; ?>" href="javascript: void(0);"
-                                        onclick="changeBrand(this);"><?php echo $brand['name']; ?></a></li>
+                                        onclick="changeBrand(this);"><?php echo $brand['name']; ?></a>
+                                <a class="defaultBrand <?php echo $default; ?>"
+                                   data-id="<?php echo $brand['brandid']; ?>" href="javascript: void(0);">
+                                    <i class="fa fa-home" aria-hidden="true"></i>
+                                </a>
+                            </li>
                         <?php } ?>
                         <li class="divider"></li>
-                        <?php if (has_permission('account_setup', '', 'edit')==true) { ?>
+                        <?php if (has_permission('account_setup', '', 'edit') == true) { ?>
                             <li class="header-edit-profile"><a href="<?php echo admin_url('brand_settings'); ?>"><i
                                             class="fa fa-gear"></i><?php echo _l('brand_settings'); ?></a></li>
                         <?php } ?>
-                        <?php if (has_permission('account_setup', '', 'edit')==true) { ?>
+                        <?php if (has_permission('account_setup', '', 'edit') == true) { ?>
                             <li class="header-edit-profile"><a href="<?php echo admin_url('brands/brand'); ?>"><i
                                             class="fa fa-plus"></i><?php echo _l('new_brand'); ?></a></li>
                         <?php } ?>
@@ -321,5 +343,34 @@ $brandid = get_user_session();
         </ul>
     </nav>
 </div>
+<?php
+if ($_SESSION['package_type_id'] == 1) {
+    $trial_period = $_SESSION['trial_period'];
+    $signupdate = $_SESSION['signupdate'];
+    $date1 = date_create($signupdate);
+    $date2 = date_create();
+    $diff = date_diff($date1, $date2);
+    $days_diff = $diff->days;
+    $remaining_days = $trial_period - $days_diff;
+    if ($remaining_days > 7) {
+        $fcolor = "#bc181f";
+        $bgcolor = "#f7e7e7";
+        $class = "";
+    } else {
+        $fcolor = "#ff9800";
+        $bgcolor = "#fdeed8";
+        $class = "danger";
+    }
+    ?>
+    <div id="wrapper" class="trial_messge_wrapper">
+        <div id="trial_messge" class="trialmessage <?php echo $class; ?>">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            <span><?php echo _l('trial_subscription', $remaining_days) ?></span>
+            <a href="<?php echo admin_url('subscription') ?>" class="subscribe_now btn btn-info">
+                <?php echo _l('subscribe_now') ?>
+            </a>
+        </div>
+    </div>
 
+<?php } ?>
 

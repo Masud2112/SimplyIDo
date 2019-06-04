@@ -2,16 +2,18 @@
 <div id="wrapper">
     <div class="content paymentmodes-manage-page">
         <div class="row">
-            <div class="col-md-12">                
-                
-                    <div class="breadcrumb">
+            <div class="col-md-12">
+                <h1 class="pageTitleH1"><i class="fa fa-money"></i><?php echo $title; ?></h1>
+                <div class="pull-right">
+                    <div class="breadcrumb mb0">
                         <a href="<?php echo admin_url(); ?>"><i class="fa fa-home"></i></a>
                         <i class="fa fa-angle-right breadcrumb-arrow"></i>
                         <a href="<?php echo admin_url('setup'); ?>">Settings</a>
                         <i class="fa fa-angle-right breadcrumb-arrow"></i>
-                        <span>Offline Payment Modes</span>
+                        <span>Offline Payment Modes
+</span>
                     </div>
-					<h1 class="pageTitleH1"><i class="fa fa-money"></i><?php echo $title; ?></h1>                
+                </div>
                 <div class="clearfix"></div>
                 <div class="panel_s btmbrd">
                     <div class="panel-body">
@@ -19,7 +21,6 @@
                             <a href="#" class="btn btn-info pull-left" data-toggle="modal" data-target="#payment_mode_modal"><?php echo _l('new_payment_mode'); ?></a>
                             <p class="text-warning pull-left"><?php echo _l('payment_modes_add_edit_announcement', admin_url('brand_settings?group=online_payment_modes')); ?></p>
                         </div>
-						<?php if(is_mobile()) { echo '<a class="btn btn-primary  filter_btn_search"><i class="glyphicon glyphicon-search"></i></a>'; } ?>
                         <div class="clearfix"></div>
 
                         <div class="clearfix"></div>
@@ -164,7 +165,6 @@
             $('#payment_mode_modal textarea[name="description"]').val(description);
         }
     });
-	
     /* END PAYMENT MODES MANAGE FUNCTIONS */
 </script>
 </body>

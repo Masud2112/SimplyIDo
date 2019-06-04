@@ -604,7 +604,7 @@ if (count($invoices_to_merge) > 0) { ?>
                                 </div>
                             <?php } ?>
                         <?php } ?>
-                        <?php if (has_permission('account_setup', '', 'create') && $invoice->total > 0 && ($invoice->status != 2 && $invoice->status != 5)) { ?>
+                        <?php if (has_permission('payments', '', 'create') && $invoice->total > 0 && ($invoice->status != 2 && $invoice->status != 5)) { ?>
                             <?php if (isset($lid) && $lid > 0) { ?>
                                 <a href="#"
                                    onclick="record_payment(<?php echo $invoice->id; ?>, <?php echo isset($lid) ? $lid : "" ?>, 'lid'); return false;"

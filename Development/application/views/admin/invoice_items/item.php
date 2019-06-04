@@ -43,7 +43,7 @@
                         </h4>
                         <div class="clearfix"></div>
 
-                        <?php if ($profile_allow == 1) { ?>
+                        <?php /*if ($profile_allow == 1) { */?>
 
                             <?php if ((isset($item) && $item->profile_image == NULL) || !isset($item)) { ?>
                                 <div class="col-md-6">
@@ -125,9 +125,9 @@
                                     </div>
                                 </div>
                             <?php } ?>
-                        <?php } else { ?>
+                        <?php /*} else { */?><!--
                             <input type="hidden" name="profile_image" value="">
-                        <?php } ?>
+                        --><?php /*} */?>
                         <div class="col-md-6">
                             <?php $name = (isset($item) ? $item->description : ''); ?>
                             <?php echo render_input('description', 'invoice_item_add_edit_description', $name, 'text'); ?>

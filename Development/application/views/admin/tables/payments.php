@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-$hasPermissionDelete = has_permission('account_setup', '', 'delete');
+$hasPermissionDelete = has_permission('payments', '', 'delete');
 
 $aColumns = array(
     'tblinvoicepaymentrecords.id as id',
@@ -25,7 +25,7 @@ if (is_numeric($clientid)) {
     array_push($where, 'AND tblclients.userid='.$clientid);
 }
 
-if (!has_permission('account_setup', '', 'view')) {
+if (!has_permission('payments', '', 'view')) {
     array_push($where, 'AND invoiceid IN (SELECT id FROM tblinvoices WHERE addedfrom='.get_staff_user_id().')');
 }
 

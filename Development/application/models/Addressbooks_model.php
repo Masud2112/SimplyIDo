@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -58,8 +57,8 @@ class Addressbooks_model extends CRM_Model
 
     /**
      * Get address book
-     * @param  mixed $id Optional - addressbook id
-     * @param  integer $active Optional get all active or inactive
+     * @param mixed $id Optional - addressbook id
+     * @param integer $active Optional get all active or inactive
      * @return mixed if id is passed return object else array
      */
     public function get($id = '', $where = array())
@@ -187,10 +186,10 @@ class Addressbooks_model extends CRM_Model
     public function add($data)
     {
 
-        if(isset($data['isclient'])){
-            $isclient=1;
-        }else{
-            $isclient=0;
+        if (isset($data['isclient'])) {
+            $isclient = 1;
+        } else {
+            $isclient = 0;
         }
         if (isset($data['rel_type']) && $data['rel_type'] != "") {
             $rel_type = $data['rel_type'];
@@ -269,7 +268,7 @@ class Addressbooks_model extends CRM_Model
         $this->db->limit(1);
         $staffcolor = $this->db->get()->row();
         $data['profilecolor'] = $staffcolor->color;
-        $data['brandid']=get_user_session();
+        $data['brandid'] = get_user_session();
         $this->db->insert('tbladdressbook', $data);
         //$this->db->last_query();
         $insert_id = $this->db->insert_id();
@@ -281,7 +280,7 @@ class Addressbooks_model extends CRM_Model
              * Dt: 03/23/2018
              * to add addressbook for all existing brands
              */
-            if (isset($data['ispublic'])&& $data['ispublic'] == 1) {
+            if (isset($data['ispublic']) && $data['ispublic'] == 1) {
                 /**
                  * Added By: Masud
                  * Dt: 07/06/2018
@@ -295,7 +294,7 @@ class Addressbooks_model extends CRM_Model
                 $clientdata = $this->db->get('tblclients')->row();
                 $clientid = $clientdata->userid;
                 $this->db->where('userid', $clientid);
-            }else{
+            } else {
                 $this->db->where('brandid', get_user_session());
             }
             $this->db->where('deleted', 0);
@@ -461,7 +460,7 @@ class Addressbooks_model extends CRM_Model
             'brandid' => get_user_session(),
             'touserid' => 0,
             'eid' => $contact_id,
-            'not_type' => 'Contact',
+            'not_type' => 'addressbook',
             'ispublic' => $ispublic,
             'link' => 'addressbooks/addressbook/' . $contact_id,
             'additional_data' => ($integration == false ? serialize(array(
@@ -725,7 +724,7 @@ class Addressbooks_model extends CRM_Model
 
     /**
      * Get addressbookid id
-     * @param  mixed $id permission id
+     * @param mixed $id permission id
      * @return mixed if id passed return object else array
      */
     public function check_addressbook_name_exists($email, $id)
@@ -766,7 +765,7 @@ class Addressbooks_model extends CRM_Model
 
     /**
      *  Get customer billing details
-     * @param   mixed $id customer id
+     * @param mixed $id customer id
      * @return  array
      */
     public function get_customer_billing_and_shipping_details($id)
@@ -781,8 +780,8 @@ class Addressbooks_model extends CRM_Model
 
     /**
      * Get customers contacts
-     * @param  mixed $customer_id
-     * @param  array $where perform where in query
+     * @param mixed $customer_id
+     * @param array $where perform where in query
      * @return array
      */
     public function get_contacts($id = '', $where = array())
@@ -807,26 +806,16 @@ class Addressbooks_model extends CRM_Model
             $this->db->where('addressbookid', $id);
             $this->db->where('type', 'primary');
             $addressbookemail = $this->db->get('tbladdressbookemail')->row();
-
             $this->db->where('addressbookid', $id);
             $this->db->where('type', 'primary');
             $addressbookdetails = $this->db->get('tbladdressbookdetails')->row();
-            if(!empty($addressbook)){
-                if(isset($addressbook->tags_id)){
-                    $addressbook->tags_id = !empty($addressbooktags) ? $addressbooktags : "";
-                }
-                if(isset($addressbook->website)){
-                    $addressbook->website = !empty($addressbookweb) ? $addressbookweb : "";
-                }
-                if(isset($addressbook->phone)){
-                    $addressbook->phone = !empty($addressbookphone) ? $addressbookphone : "";
-                }
-                if(isset($addressbook->email)){
-                    $addressbook->email = !empty($addressbookemail) ? $addressbookemail : "";
-                }
-                if(isset($addressbook->address)){
-                    $addressbook->address = !empty($addressbookdetails) ? $addressbookdetails : "";
-                }
+
+            if (!empty($addressbook)) {
+                $addressbook->tags_id = !empty($addressbooktags) ? $addressbooktags : "";
+                $addressbook->website = !empty($addressbookweb) ? $addressbookweb : "";
+                $addressbook->phone = !empty($addressbookphone) ? $addressbookphone : "";
+                $addressbook->email = !empty($addressbookemail) ? $addressbookemail : "";
+                $addressbook->address = !empty($addressbookdetails) ? $addressbookdetails : "";
             }
 
             return $addressbook;
@@ -1009,6 +998,7 @@ class Addressbooks_model extends CRM_Model
 
     public function get_kanban_contacts($leadid = "", $projectid = "", $eventid = "", $limit = 9, $page = 1, $search = "", $is_kanban = false)
     {
+        $user_id = get_staff_user_id();
         if ($this->input->get('pid')) {
             $eventid = $projectid = $this->input->get('pid');
         }
@@ -1064,7 +1054,7 @@ class Addressbooks_model extends CRM_Model
             $this->db->join('tbladdressbook_client', 'tbladdressbook_client.addressbookid = tbladdressbook.addressbookid');
             $this->db->where('tbladdressbook_client.brandid', $brandid);
             $this->db->where('tbladdressbook_client.deleted', 0);
-            $this->db->where('(tbladdressbook.ispublic=1 OR tbladdressbook.brandid=' . get_user_session() . ')');
+            $this->db->where('(tbladdressbook.ispublic=1 OR tbladdressbook.brandid=' . get_user_session() . ' OR tbladdressbook.created_by= ' . $user_id . ')');
         }
         if ($is_kanban == true && $limit > 0) {
             $start = ($page - 1) * $limit;
@@ -1074,10 +1064,10 @@ class Addressbooks_model extends CRM_Model
             $this->db->where('(tbladdressbook.firstname LIKE "%' . $search . '%" OR tbladdressbook.lastname LIKE "%' . $search . '%")');
             //$this->db->or_like('tbladdressbook.lastname', $search);
         }
-        $user_id = get_staff_user_id();
+
         $this->db->group_by('tbladdressbook.addressbookid');
-        $this->db->where('tbladdressbook.deleted', 0);
-        $this->db->where('(tbladdressbook.ispublic=1 OR tbladdressbook.created_by=' . $user_id . ')');
+        /*$this->db->where('tbladdressbook.deleted', 0);
+        $this->db->where('(tbladdressbook.ispublic=1 OR tbladdressbook.created_by=' . $user_id . ')');*/
         $this->db->order_by("tbladdressbook.firstname", "ASC");
         $result = $this->db->get('tbladdressbook')->result_array();
         return $result;
@@ -1127,12 +1117,13 @@ class Addressbooks_model extends CRM_Model
     {
         $brandid = get_user_session();
         $current_user = get_staff_user_id();
-        $query = "SELECT  CONCAT(a.firstname,' ',a.lastname) as name, a.* ae.email FROM `tbladdressbook` a LEFT JOIN tbladdressbookemail ae ON a.addressbookid= ae.addressbookid WHERE a.addressbookid NOT IN(SELECT ac.addressbookid from tbladdressbook_client as ac WHERE ac.brandid = $brandid and ac.deleted = 0) AND a.`ispublic` = 1 AND a.`deleted` = 0";
+        /*$query = "SELECT  CONCAT(a.firstname,' ',a.lastname) as name, a.* ae.email FROM `tbladdressbook` a LEFT JOIN tbladdressbookemail ae ON a.addressbookid= ae.addressbookid WHERE a.addressbookid NOT IN(SELECT ac.addressbookid from tbladdressbook_client as ac WHERE ac.brandid = $brandid and ac.deleted = 0) AND a.`ispublic` = 1 AND a.`deleted` = 0";
         if (!empty($reltype) && $relid > 0) {
-            $query = "SELECT CONCAT(a.firstname,' ',a.lastname) as name, a.*, ae.email FROM `tbladdressbook` a LEFT JOIN tbladdressbookemail ae ON a.addressbookid= ae.addressbookid WHERE a.addressbookid IN(SELECT ac.addressbookid from tbladdressbook_client as ac WHERE ac.brandid = $brandid and ac.deleted = 0) AND a.addressbookid NOT IN(SELECT rc.contactid from $reltbl as rc WHERE rc.brandid = $brandid and rc.$reltype = $relid) AND (a.`ispublic` = 1 OR a.created_by=$current_user) AND a.`deleted` = 0 AND ae.`type`='primary' ";
+            $query = "SELECT CONCAT(a.firstname,' ',a.lastname) as name, a.*, ae.email FROM `tbladdressbook` a LEFT JOIN tbladdressbookemail ae ON a.addressbookid= ae.addressbookid WHERE a.addressbookid IN(SELECT ac.addressbookid from tbladdressbook_client as ac WHERE ac.brandid = $brandid and ac.deleted = 0) AND a.addressbookid NOT IN(SELECT rc.contactid from $reltbl as rc WHERE rc.$reltype = $relid) AND (a.`ispublic` = 1 OR a.brandid=$brandid) AND a.`deleted` = 0 AND ae.`type`='primary' ";
         } else {
-            $query = "SELECT CONCAT(a.firstname,' ',a.lastname) as name , a.*, ae.email FROM `tbladdressbook` a LEFT JOIN tbladdressbookemail ae ON a.addressbookid= ae.addressbookid WHERE a.addressbookid IN(SELECT ac.addressbookid from tbladdressbook_client as ac WHERE ac.brandid = $brandid and ac.deleted = 0) AND (a.`ispublic` = 1 OR a.created_by=$current_user) AND a.`deleted` = 0 AND ae.`type`='primary'";
-        }
+            $query = "SELECT CONCAT(a.firstname,' ',a.lastname) as name , a.*, ae.email FROM `tbladdressbook` a LEFT JOIN tbladdressbookemail ae ON a.addressbookid= ae.addressbookid WHERE a.addressbookid IN(SELECT ac.addressbookid from tbladdressbook_client as ac WHERE ac.brandid = $brandid and ac.deleted = 0) AND (a.`ispublic` = 1 OR a.brandid=$brandid) AND a.`deleted` = 0 AND ae.`type`='primary'";
+        }*/
+        $query = "SELECT CONCAT(a.firstname,' ',a.lastname) as name , a.*, ae.email FROM `tbladdressbook` a LEFT JOIN tbladdressbookemail ae ON a.addressbookid= ae.addressbookid WHERE a.addressbookid IN(SELECT ac.addressbookid from tbladdressbook_client as ac WHERE ac.brandid = $brandid and ac.deleted = 0) AND (a.`ispublic` = 1 OR a.brandid=$brandid) AND a.`deleted` = 0 AND ae.`type`='primary'";
         $result = $this->db->query($query);
         $rows = $result->result_array();
         return $rows;

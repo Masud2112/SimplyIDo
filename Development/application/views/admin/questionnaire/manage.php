@@ -14,9 +14,9 @@ if(isset($_GET['pid'])){
 				<div class="panel_s">
 					<div class="panel-body">
 						<div class="_buttons">
-							<?php if (has_permission('questionnaire','','create')) { ?>
+							<?php //if (has_permission('questionnaire','','create')) { ?>
 							<a href="<?php echo $url; ?>" class="btn btn-info pull-left display-block"><?php echo _l('new_questionnaire'); ?></a>
-							<?php } ?>
+							<?php// } ?>
 						</div>
 						<div class="clearfix"></div>
 						<hr class="hr-panel-heading" />

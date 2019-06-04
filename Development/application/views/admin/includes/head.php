@@ -34,12 +34,17 @@
     if ($is_sido_admin == 0 && $is_admin == 0) {
         if (get_brand_option('favicon') != '') {
             $favicon = get_brand_option('favicon');
-            $faviconImagePath = FCPATH . 'uploads/brands/round_' . $favicon;
-            $src = base_url('uploads/brands/' . $favicon);
+            $faviconImagePath = FCPATH . 'uploads/brands/' . $favicon;
+            $src = base_url('assets/images/favicon.png');
             if (file_exists($faviconImagePath)) {
-                $src = base_url('uploads/brands/round_' . $favicon);
-            } ?>
-            <link href="<?php echo $src ; ?>"
+                $src = base_url('uploads/brands/' . $favicon);
+                $faviconImagePath = FCPATH . 'uploads/brands/round_' . $favicon;
+                if (file_exists($faviconImagePath)) {
+                    $src = base_url('uploads/brands/round_' . $favicon);
+                }
+            }
+            ?>
+            <link href="<?php echo $src; ?>"
                   rel="shortcut icon">
             <?php
         } else {

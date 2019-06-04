@@ -69,7 +69,7 @@ foreach ($rResult as $aRow) {
             $_data = '<a href="' . admin_url('staff/profile/' . $aRow['staff_id']) . '"> ' . staff_profile_image($aRow['staff_id'], array(
                 'staff-profile-image-small mright5'
                 )) . '</a>';
-            if(has_permission('account_setup','','edit')){
+            if(has_permission('staff','','edit')){
                 $_data .= ' <a href="' . admin_url('staff/member/' . $aRow['staff_id']) . '"> ' . $aRow['staff'] . '</a>';
             } else {
                 $_data .= $aRow['staff'];

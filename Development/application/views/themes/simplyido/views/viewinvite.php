@@ -69,14 +69,14 @@
                             <?php } ?>
                           <?php } ?>
                           <?php if($invite_details->contacttype == 5) {?>
-                              <?php if($invite_details->invitee->status != 'approved' && $invite_details->status != 'declined') { ?>
+                              <?php if($invite_details->venueinvitee->status != 'approved' && $invite_details->status != 'declined') { ?>
                               <button class="btn btn-info" onclick="fnAccept(<?php echo $event['projectid']; ?>,<?php echo $event['inviteid']; ?>,<?php echo $invite_details->contacttype; ?>);">Accept</button>
                               <a onclick="decline_invite(<?php echo $event['projectid']; ?>,<?php echo $event['inviteid']; ?>,<?php echo $invite_details->contacttype; ?>); return false;" class="btn btn-default">Decline</a>
                             <?php } ?>
-                            <?php if($invite_details->invitee->status == 'approved') { ?>
+                            <?php if($invite_details->venueinvitee->status == 'approved') { ?>
                               <i class="fa fa-2x fa-check" aria-hidden="true" style="color: #84c529;"></i>
                             <?php } ?>
-                            <?php if($invite_details->invitee->status == 'declined') { ?>
+                            <?php if($invite_details->venueinvitee->status == 'declined') { ?>
                               <i class="fa fa-2x fa-times" aria-hidden="true" style="color: #fc2d42;"></i>
                             <?php } ?>
                           <?php } ?>

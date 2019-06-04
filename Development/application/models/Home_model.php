@@ -27,7 +27,7 @@ class Home_model extends CRM_Model
     }
 
     /**
-     * @param  integer (optional) Limit upcoming events
+     * @param integer (optional) Limit upcoming events
      * @return integer
      * Used in home dashboard page
      * Return total upcoming events next week
@@ -43,7 +43,7 @@ class Home_model extends CRM_Model
     }
 
     /**
-     * @param  mixed
+     * @param mixed
      * @return array
      * Used in home dashboard page, currency passed from javascript (undefined or integer)
      * Displays weekly payment statistics (chart)
@@ -491,7 +491,6 @@ class Home_model extends CRM_Model
         return $query;
     }
 
-
     /*for retrieve agreements search result*/
     public function get_agreements_search($search)
     {
@@ -506,7 +505,6 @@ class Home_model extends CRM_Model
         return $query;
     }
 
-
     /*for retrieve payment schedules search result*/
     public function get_paymentschedules_search($search)
     {
@@ -519,7 +517,6 @@ class Home_model extends CRM_Model
         $query = $this->db->get()->result();
         return $query;
     }
-
 
     /*
     ** Added By Sanjay on 02/13/2018 
@@ -963,9 +960,23 @@ class Home_model extends CRM_Model
         $lead_result = $this->db->query($lead_query);
         $lead_count = $lead_result->num_rows();
 
-        $project_query = "SELECT * FROM tblprojects WHERE deleted = 0 AND parent = 0 AND brandid = " . get_user_session();
-        $project_result = $this->db->query($project_query);
-        $project_count = $project_result->num_rows();
+        /*$project_query = "SELECT * FROM tblprojects WHERE deleted = 0 AND parent = 0 AND brandid = " . get_user_session();*/
+        $this->db->select('maintbl.id');
+        $this->db->join('tblprojectstatus', 'tblprojectstatus.id = maintbl.status', 'left');
+        $this->db->join('tblstaffprojectassignee', 'tblstaffprojectassignee.projectid = maintbl.id', 'left');
+        $this->db->join('tblstaff', 'tblstaff.staffid = tblstaffprojectassignee.assigned', 'left');
+        $this->db->join('tblleadssources', 'tblleadssources.id=maintbl.source', 'left');
+        $this->db->join('tbleventtype', 'tbleventtype.eventtypeid=maintbl.eventtypeid', 'left');
+        $this->db->where('maintbl.parent', 0);
+        if ($_SESSION['user_type'] == 2) {
+            $this->db->join('tblprojectcontact', 'tblprojectcontact.projectid = maintbl.id or tblprojectcontact.eventid = maintbl.id', 'left');
+            $this->db->where('tblprojectcontact.contactid', get_staff_user_id());
+        } else {
+            $this->db->where('maintbl.brandid', get_user_session());
+        }
+        $project_result = $this->db->get('tblprojects  as maintbl')->result_array();
+        $project_count = count($project_result);
+
 
         $message_query = "SELECT * FROM tblmessages JOIN `tblmessagesallusers` ON `tblmessagesallusers`.`messageid` = `tblmessages`.`id` WHERE isread = 0 AND deleted = 0 AND brandid = " . get_user_session() . " AND userid = " . get_staff_user_id();
         $message_result = $this->db->query($message_query);
@@ -1259,6 +1270,38 @@ class Home_model extends CRM_Model
         } else {
             return false;
         }
+    }
+
+    function defaultBrand($brandid)
+    {
+        $this->db->where('staffid', get_staff_user_id());
+        $this->db->update('tblstaffbrand', array('isdefault' => 0));
+
+        $this->db->where('brandid', $brandid);
+        $this->db->where('staffid', get_staff_user_id());
+        $this->db->update('tblstaffbrand', array('isdefault' => 1));
+        if ($this->db->affected_rows() > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+    }
+    function updatenotification($page,$brandid)
+    {
+        $this->db->where('touserid', get_staff_user_id());
+        $this->db->where('not_type', $page);
+        $this->db->like('description', 'not_new','after');
+        $this->db->update('tblnotifications', array(
+            'isread' => 1,
+            'isread_inline' => 1
+        ));
+        if ($this->db->affected_rows() > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+
     }
 
 }

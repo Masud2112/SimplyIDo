@@ -10,8 +10,10 @@
     <div class="content">
         <div class="row">
             <?php echo form_open($this->uri->uri_string(),array('class'=>'package-form')); ?>
-            <div class="col-md-12">                                
-                    <div class="breadcrumb">
+            <div class="col-md-12">
+                <h1 class="pageTitleH1"><i class="fa fa-usd"></i><?php echo $title; ?></h1>
+                <div class="pull-right">
+                    <div class="breadcrumb mb0">
                         <a href="<?php echo admin_url(); ?>"><i class="fa fa-home"></i></a>
                         <i class="fa fa-angle-right breadcrumb-arrow"></i>
                         <a href="<?php echo admin_url('setup'); ?>">Settings</a>
@@ -19,8 +21,8 @@
                         <a href="<?php echo admin_url('packages'); ?>">Packages</a>
                         <i class="fa fa-angle-right breadcrumb-arrow"></i>
                         <span><?php echo isset($package)?$package->name:"New Package"; ?></span>
-                    </div>                
-				<h1 class="pageTitleH1"><i class="fa fa-usd"></i><?php echo $title; ?></h1>
+                    </div>
+                </div>
                 <div class="clearfix"></div>
                 <div class="panel_s btmbrd">
                     <div class="panel-body">

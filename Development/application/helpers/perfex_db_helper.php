@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
  * Check if client have transactions recorded
- * @param  mixed $id clientid
+ * @param mixed $id clientid
  * @return boolean
  */
 function client_have_transactions($id)
@@ -33,7 +33,7 @@ function client_have_transactions($id)
 /**
  * Check if contact id passed is primary contact
  * If you dont pass $contact_id the current logged in contact will be checked
- * @param  string $contact_id
+ * @param string $contact_id
  * @return boolean
  */
 function is_primary_contact($contact_id = '')
@@ -55,7 +55,7 @@ function is_primary_contact($contact_id = '')
 /**
  * Function used to check if is really empty customer company
  * Can happen user to have selected that the company field is not required and the primary contact name is auto added in the company field
- * @param  mixed $id
+ * @param mixed $id
  * @return boolean
  */
 function is_empty_customer_company($id)
@@ -100,7 +100,7 @@ function get_user_pinned_projects()
 
 /**
  * Get project name by passed id
- * @param  mixed $id
+ * @param mixed $id
  * @return string
  */
 function get_project_name_by_id($id)
@@ -157,7 +157,7 @@ function get_client_id_by_project_id($id)
 
 /**
  * Get ids to check what files with contacts are shared
- * @param  array $where
+ * @param array $where
  * @return array
  */
 function get_customer_profile_file_sharing($where = array())
@@ -170,9 +170,9 @@ function get_customer_profile_file_sharing($where = array())
 
 /**
  * Check if field is used in table
- * @param  string $field column
- * @param  string $table table name to check
- * @param  integer $id ID used
+ * @param string $field column
+ * @param string $table table name to check
+ * @param integer $id ID used
  * @return boolean
  */
 function is_reference_in_table($field, $table, $id)
@@ -292,8 +292,8 @@ function add_views_tracking($rel_type, $rel_id)
 
 /**
  * Get views tracking based on rel type and rel id
- * @param  string $rel_type
- * @param  mixed $rel_id
+ * @param string $rel_type
+ * @param mixed $rel_id
  * @return array
  */
 function get_views_tracking($rel_type, $rel_id)
@@ -308,7 +308,7 @@ function get_views_tracking($rel_type, $rel_id)
 
 /**
  * Get customer id by passed contact id
- * @param  mixed $id
+ * @param mixed $id
  * @return mixed
  */
 function get_user_id_by_contact_id($id)
@@ -326,9 +326,9 @@ function get_user_id_by_contact_id($id)
 
 /**
  * Add option in table
- * @since  Version 1.0.1
  * @param string $name option name
  * @param string $value option value
+ * @since  Version 1.0.1
  */
 function add_option($name, $value = '', $autoload = 1)
 {
@@ -363,7 +363,7 @@ function add_option($name, $value = '', $autoload = 1)
 
 /**
  * Get primary contact user id for specific customer
- * @param  mixed $userid
+ * @param mixed $userid
  * @return mixed
  */
 function get_primary_contact_user_id($userid)
@@ -382,7 +382,7 @@ function get_primary_contact_user_id($userid)
 
 /**
  * Get option value
- * @param  string $name Option name
+ * @param string $name Option name
  * @return mixed
  */
 function get_option($name)
@@ -402,7 +402,7 @@ function get_option($name)
  */
 /**
  * Get option value
- * @param  string $name Option name
+ * @param string $name Option name
  * @return mixed
  */
 function get_brand_option($name)
@@ -427,7 +427,7 @@ function get_client_brand_option($name, $brandid)
 
 /**
  * Get option value from database
- * @param  string $name Option name
+ * @param string $name Option name
  * @return mixed
  */
 function update_option($name, $value, $autoload = null)
@@ -455,7 +455,7 @@ function update_option($name, $value, $autoload = null)
  */
 /**
  * Get option value from database
- * @param  string $name Option name
+ * @param string $name Option name
  * @return mixed
  */
 function update_brand_option($name, $value, $autoload = null)
@@ -469,18 +469,18 @@ function update_brand_option($name, $value, $autoload = null)
     $data = array(
         'value' => $value
     );
-    if(!empty($brandoption)){
+    if (!empty($brandoption)) {
         $CI->db->where('name', $name);
         $CI->db->where('brandid', $session_data['brand_id']);
         $CI->db->update('tblbrandsettings', $data);
         if ($CI->db->affected_rows() > 0) {
             return true;
         }
-    }else{
+    } else {
         $data = array(
-            'name'=> $name,
+            'name' => $name,
             'value' => $value,
-            'brandid'=>$session_data['brand_id']
+            'brandid' => $session_data['brand_id']
         );
         $CI->db->insert('tblbrandsettings', $data);
         if ($CI->db->insert_id() > 0) {
@@ -493,9 +493,9 @@ function update_brand_option($name, $value, $autoload = null)
 
 /**
  * Delete option
- * @since  Version 1.0.4
- * @param  mixed $id option id
+ * @param mixed $id option id
  * @return boolean
+ * @since  Version 1.0.4
  */
 function delete_option($id)
 {
@@ -512,7 +512,7 @@ function delete_option($id)
 
 /**
  * Get staff full name
- * @param  string $userid Optional
+ * @param string $userid Optional
  * @return string Firstname and Lastname
  */
 function get_staff_full_name($userid = '')
@@ -530,6 +530,17 @@ function get_staff_full_name($userid = '')
         return '';
     }
 }
+function get_venue_name($venueid)
+{
+    $CI =& get_instance();
+    $CI->db->where('venueid', $venueid);
+    $venue = $CI->db->select('venuename')->from('tblvenue')->get()->row();
+    if ($venue) {
+        return $venue->venuename;
+    } else {
+        return '';
+    }
+}
 
 function get_staff_first_name($userid = '')
 {
@@ -541,7 +552,7 @@ function get_staff_first_name($userid = '')
     $CI->db->where('staffid', $_userid);
     $staff = $CI->db->select('firstname')->from('tblstaff')->get()->row();
     if ($staff) {
-        return $staff->firstname ;
+        return $staff->firstname;
     } else {
         return '';
     }
@@ -557,14 +568,15 @@ function get_staff_randum_password($userid = '')
     $CI->db->where('staffid', $_userid);
     $staff = $CI->db->select('random_pass')->from('tblstaff')->get()->row();
     if ($staff) {
-        return $staff->random_pass ;
+        return $staff->random_pass;
     } else {
         return '';
     }
 }
+
 /**
  * Get staff Email
- * @param  string $userid Optional
+ * @param string $userid Optional
  * @return string Firstname and Lastname
  */
 function get_staff_email($userid = '')
@@ -602,7 +614,7 @@ function is_staff_active($userid = '')
 
 /**
  * Get staff Phonenumber
- * @param  string $userid Optional
+ * @param string $userid Optional
  * @return string Firstname and Lastname
  */
 function get_staff_phone($userid = '')
@@ -623,7 +635,7 @@ function get_staff_phone($userid = '')
 
 /**
  * Get client full name
- * @param  string $userid Optional
+ * @param string $userid Optional
  * @return string Firstname and Lastname
  */
 function get_contact_full_name($userid = '')
@@ -759,7 +771,7 @@ function get_company_name($userid, $prevent_empty_company = false)
 
 /**
  * Get client default language
- * @param  mixed $clientid
+ * @param mixed $clientid
  * @return mixed
  */
 function get_client_default_language($clientid = '')
@@ -781,7 +793,7 @@ function get_client_default_language($clientid = '')
 
 /**
  * Get staff default language
- * @param  mixed $staffid
+ * @param mixed $staffid
  * @return mixed
  */
 function get_staff_default_language($staffid = '')
@@ -808,8 +820,8 @@ function get_staff_default_language($staffid = '')
 
 /**
  * Log Activity for everything
- * @param  string $description Activity Description
- * @param  integer $staffid Who done this activity
+ * @param string $description Activity Description
+ * @param integer $staffid Who done this activity
  */
 function logActivity($description, $staffid = null)
 {
@@ -853,7 +865,7 @@ function logActivity($description, $staffid = null)
  * Added By : Vaidehi
  * Dt : 03/04/2018
  * Log Activity for CRON
- * @param  string $description Activity Description
+ * @param string $description Activity Description
  */
 function logCronActivity($description)
 {
@@ -1089,8 +1101,8 @@ function add_notification($values)
 
 /**
  * Count total rows on table based on params
- * @param  string $table Table from where to count
- * @param  array $where
+ * @param string $table Table from where to count
+ * @param array $where
  * @return mixed  Total rows
  */
 function total_rows($table, $where = array())
@@ -1109,8 +1121,8 @@ function total_rows($table, $where = array())
 
 /**
  * Sum total from table
- * @param  string $table table name
- * @param  array $attr attributes
+ * @param string $table table name
+ * @param array $attr attributes
  * @return mixed
  */
 function sum_from_table($table, $attr = array())
@@ -1140,13 +1152,13 @@ function sum_from_table($table, $attr = array())
 
 /**
  * General function for all datatables, performs search,additional select,join,where,orders
- * @param  array $aColumns table columns
- * @param  mixed $sIndexColumn main column in table for bettter performing
- * @param  string $sTable table name
- * @param  array $join join other tables
- * @param  array $where perform where in query
- * @param  array $additionalSelect select additional fields
- * @param  string $sGroupBy group results
+ * @param array $aColumns table columns
+ * @param mixed $sIndexColumn main column in table for bettter performing
+ * @param string $sTable table name
+ * @param array $join join other tables
+ * @param array $where perform where in query
+ * @param array $additionalSelect select additional fields
+ * @param string $sGroupBy group results
  * @return array
  */
 function data_tables_init($aColumns, $sIndexColumn, $sTable, $join = array(), $where = array(), $additionalSelect = array(), $sGroupBy = '', $limit = "", $start = "")
@@ -1407,9 +1419,9 @@ function get_sorting_due_date_columns()
 
 /**
  * Prefix field name with table ex. table.column
- * @param  string $table
- * @param  string $alias
- * @param  string $field field to check
+ * @param string $table
+ * @param string $alias
+ * @param string $field field to check
  * @return string
  */
 function prefixed_table_fields_wildcard($table, $alias, $field)
@@ -1433,8 +1445,8 @@ function prefixed_table_fields_wildcard($table, $alias, $field)
 /**
  * Prefix all columns from table with the table name
  * Used for select statements eq tblclients.company
- * @param  string $table table name
- * @param  array $exclude exclude fields from prefixing
+ * @param string $table table name
+ * @param array $exclude exclude fields from prefixing
  * @return array
  */
 function prefixed_table_fields_array($table, $string = false, $exclude = array())
@@ -1462,8 +1474,8 @@ function prefixed_table_fields_array($table, $string = false, $exclude = array()
 /**
  * Prefix all columns from table with the table name
  * Used for select statements eq tblclients.company
- * @param  string $table table name
- * @param  array $exclude exclude fields from prefixing
+ * @param string $table table name
+ * @param array $exclude exclude fields from prefixing
  * @return string
  */
 function prefixed_table_fields_string($table, $exclude = array())
@@ -1474,10 +1486,10 @@ function prefixed_table_fields_string($table, $exclude = array())
 /**
  * Function used to get related data based on rel_id and rel_type
  * Eq in the tasks section there is field where this task is related eq invoice with number INV-0005
- * @param  string $type
- * @param  string $rel_id
- * @param  string $connection_type
- * @param  string $connection_id
+ * @param string $type
+ * @param string $rel_id
+ * @param string $connection_type
+ * @param string $connection_id
  * @return mixed
  */
 function get_relation_data($type, $rel_id = '', $connection_type = '', $connection_id = '')
@@ -1616,8 +1628,8 @@ function get_relation_data($type, $rel_id = '', $connection_type = '', $connecti
  * Ger relation values eq invoice number or project name etc based on passed relation parsed results
  * from function get_relation_data
  * $relation can be object or array
- * @param  mixed $relation
- * @param  string $type
+ * @param mixed $relation
+ * @param string $type
  * @return mixed
  */
 function get_relation_values($relation, $type)
@@ -1803,8 +1815,8 @@ function get_relation_values($relation, $type)
 
 /**
  * Helper function to get all knowledge base groups in the parents groups
- * @param  boolean $only_customers prevent showing internal kb articles in customers area
- * @param  array $where
+ * @param boolean $only_customers prevent showing internal kb articles in customers area
+ * @param array $where
  * @return array
  */
 function get_all_knowledge_base_articles_grouped($only_customers = true, $where = array())
@@ -1838,7 +1850,7 @@ function get_all_knowledge_base_articles_grouped($only_customers = true, $where 
 
 /**
  * Helper function to get all announcements for user
- * @param  boolean $staff Is this client or staff
+ * @param boolean $staff Is this client or staff
  * @return array
  */
 function get_announcements_for_user($staff = true)
@@ -1874,8 +1886,8 @@ function get_announcements_for_user($staff = true)
 
 /**
  * Helper function to get text question answers
- * @param  integer $questionid
- * @param  itneger $surveyid
+ * @param integer $questionid
+ * @param itneger $surveyid
  * @return array
  */
 function get_text_question_answers($questionid, $surveyid)
@@ -1898,7 +1910,7 @@ function customer_has_projects($customer_id)
 
 /**
  * Get department email address
- * @param  mixed $id department id
+ * @param mixed $id department id
  * @return mixed
  */
 function get_department_email($id)
@@ -1933,7 +1945,7 @@ function get_all_countries()
 
 /**
  * Get country row from database based on passed country id
- * @param  mixed $id
+ * @param mixed $id
  * @return object
  */
 function get_country($id)
@@ -1946,7 +1958,7 @@ function get_country($id)
 
 /**
  * Get country short name by passed id
- * @param  mixed $id county id
+ * @param mixed $id county id
  * @return mixed
  */
 function get_country_short_name($id)
@@ -1963,9 +1975,9 @@ function get_country_short_name($id)
 
 /**
  * Function that add and edit tags based on passed arguments
- * @param  string $tags
- * @param  mixed $rel_id
- * @param  string $rel_type
+ * @param string $tags
+ * @param mixed $rel_id
+ * @param string $rel_type
  * @return boolean
  */
 function handle_tags_save($tags, $rel_id, $rel_type)
@@ -2046,7 +2058,7 @@ function handle_tags_save($tags, $rel_id, $rel_type)
 
 /**
  * Get tag from db by name
- * @param  string $name
+ * @param string $name
  * @return object
  */
 function get_tag_by_name($name)
@@ -2103,8 +2115,8 @@ function get_tags_ids()
 
 /**
  * Function that will parse all the tags and return array with the names
- * @param  string $rel_id
- * @param  string $rel_type
+ * @param string $rel_id
+ * @param string $rel_type
  * @return array
  */
 function get_tags_in($rel_id, $rel_type)
@@ -2402,6 +2414,7 @@ function get_lead_to_project_link($leadid)
     $total = $CI->db->get('tblprojects')->row();
     return "projects/dashboard/" . $total->id;
 }
+
 function get_line_item_sub_category_list($id)
 {
     $CI =& get_instance();
@@ -2418,46 +2431,51 @@ function get_line_item_sub_category_list($id)
     return $CI->db->get('tbllineitem_subcategory')->result_array();
 }
 
-function get_staff_details_by_email($email)
+function get_staff_details_by_email($email, $column = "firstname")
 {
     $CI =& get_instance();
     $CI->db->where('email', $email);
     $staff = $CI->db->select('*')->from('tblstaff')->get()->row();
     if ($staff) {
-        return $staff->firstname ;
+        return $staff->$column;
     } else {
         return '';
     }
 }
+
 function get_staffid_by_client($id)
 {
     $CI =& get_instance();
     $CI->db->where('userid', $id);
     $staff = $CI->db->select('primary_user_id')->from('tblclients')->get()->row();
     if ($staff) {
-        return $staff->primary_user_id ;
+        return $staff->primary_user_id;
     } else {
         return '';
     }
 }
+
 function get_staff_details_by_id($id)
 {
     $CI =& get_instance();
     $CI->db->where('staffid', $id);
     $staff = $CI->db->select('*')->from('tblstaff')->get()->row();
     if ($staff) {
-        return $staff ;
+        return $staff;
     } else {
         return '';
     }
 }
-function add_brand_type($type){
+
+function add_brand_type($type)
+{
     $CI =& get_instance();
-    $staff = $CI->db->insert('tblbrandtype', array('name'=>$type,'datecreated'=>date('Y-m-d H:i:s')));
+    $staff = $CI->db->insert('tblbrandtype', array('name' => $type, 'datecreated' => date('Y-m-d H:i:s')));
     return $CI->db->insert_id();
 }
 
-function get_lead_assignee($leadid){
+function get_lead_assignee($leadid)
+{
     $CI = &get_instance();
     $CI->db->select('*');
     $CI->db->join('tblstaff', 'tblstaff.staffid=tblstaffleadassignee.assigned');
@@ -2465,7 +2483,8 @@ function get_lead_assignee($leadid){
     return $CI->db->get('tblstaffleadassignee')->result();
 }
 
-function get_project_assignee($id){
+function get_project_assignee($id)
+{
     $CI = &get_instance();
     $CI->db->select('*');
     $CI->db->join('tblstaff', 'tblstaff.staffid=tblstaffprojectassignee.assigned');
@@ -2473,13 +2492,15 @@ function get_project_assignee($id){
     return $CI->db->get('tblstaffprojectassignee')->result();
 }
 
-function get_custom_brand_option($key,$brandid){
+function get_custom_brand_option($key, $brandid)
+{
     $CI = &get_instance();
     $CI->db->select('value');
     $CI->db->where('brandid', $brandid);
     $CI->db->where('name', $key);
     return $CI->db->get('tblbrandsettings')->row();
 }
+
 function get_addressbook_id_by_email($email)
 {
     $CI =& get_instance();
@@ -2487,30 +2508,32 @@ function get_addressbook_id_by_email($email)
     $CI->db->where('type', "primary");
     $staff = $CI->db->select('addressbookid')->from('tbladdressbookemail')->get()->row();
     if ($staff) {
-        return $staff->addressbookid ;
+        return $staff->addressbookid;
     } else {
         return '';
     }
 }
+
 function get_meeting_location($id)
 {
     $CI =& get_instance();
     $CI->db->where('locationid', $id);
     $staff = $CI->db->select('location_name')->from('tblmeetinglocations')->get()->row();
     if ($staff) {
-        return $staff->location_name ;
+        return $staff->location_name;
     } else {
         return '';
     }
 }
+
 function get_parent_category_name($id)
 {
     $CI =& get_instance();
     $CI->db->select('name');
     $CI->db->where('deleted', '0');
     $CI->db->where('id', $id);
-    $result= $CI->db->get('tbllineitem_subcategory')->row();
-    if(!empty($result)){
+    $result = $CI->db->get('tbllineitem_subcategory')->row();
+    if (!empty($result)) {
         return $CI->db->get('tbllineitem_subcategory')->row()->name;
     }
     return false;
@@ -2522,10 +2545,85 @@ function get_role($slug)
     $CI =& get_instance();
     $CI->db->select('roleid');
     $CI->db->where('slug', $slug);
-    $result= $CI->db->get('tblroles')->row();
-    if(!empty($result)){
-        return $CI->db->get('tblroles')->row()->roleid;
+    $result = $CI->db->get('tblroles')->row();
+    if (!empty($result)) {
+        return $result->roleid;
     }
     return "";
+
+}
+
+function get_invite_staffid($id)
+{
+    $CI =& get_instance();
+    $CI->db->select('staffid');
+    $CI->db->where('inviteid', $id);
+    $result = $CI->db->get('tblinvite')->row();
+    if (!empty($result)) {
+        return $result->staffid;
+    }
+    return 0;
+
+}
+
+function get_brand_details($brandid)
+{
+    $CI =& get_instance();
+    $CI->db->where('brandid', $brandid);
+    $result = $CI->db->get('tblbrand')->row();
+    if (!empty($result)) {
+        return $result;
+    }
+    return "";
+
+}
+
+function get_account_owner($brandid = "")
+{
+    if ($brandid == "") {
+        $brandid = get_user_session();
+    }
+    $CI =& get_instance();
+    $CI->db->select('tblclients.primary_user_id as accountowner');
+    $CI->db->where('brandid', $brandid);
+    $CI->db->join('tblclients', 'tblclients.userid=tblbrand.userid');
+    $result = $CI->db->get('tblbrand')->row();
+    return $result->accountowner;
+}
+
+function get_brand_notification($page, $brandid)
+{
+    $CI =& get_instance();
+    $CI->db->where('brandid', $brandid);
+    $CI->db->where('not_type', $page);
+    $CI->db->where('isread', 0);
+    $CI->db->where('touserid', get_staff_user_id());
+    $CI->db->like('description', 'not_new', 'after');
+    $result = $CI->db->get('tblnotifications')->result_array();
+    return count($result);
+}
+
+function get_brand_messages($brandid)
+{
+
+}
+
+function get_brand_meetings($brandid)
+{
+
+}
+
+function get_brand_invites($brandid)
+{
+
+}
+
+function get_brand_files($brandid)
+{
+
+}
+
+function get_brand_tasks($brandid)
+{
 
 }

@@ -78,7 +78,7 @@
                 <td colspan="3" align="center">No Vendors Invited</td>
               <?php } if($contacttype == 4) { ?>
                 <td colspan="3" align="center">No Collaborators Invited</td>
-              <?php } if($contacttype == 4) { ?>
+              <?php } if($contacttype == 5) { ?>
                 <td colspan="3" align="center">No Venues Invited</td>
               <?php } ?>
             <?php } else { ?>

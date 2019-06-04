@@ -1,14 +1,15 @@
 <?php init_head(); ?>
 <div id="wrapper">
-<div class="content email-templates">           
-                <div class="breadcrumb">
+<div class="content email-templates">
+<h1 class="pageTitleH1"><i class="fa fa-envelope-o "></i><?php echo _l('email_templates'); ?></h1>              
+            
+                <div class="breadcrumb pull-right">
                     <a href="<?php echo admin_url(); ?>"><i class="fa fa-home"></i></a>
                     <i class="fa fa-angle-right breadcrumb-arrow"></i>
                     <a href="<?php echo admin_url('setup'); ?>">Settings</a>
                     <i class="fa fa-angle-right breadcrumb-arrow"></i>
                     <span>Email Templates</span>
                 </div>
-				<h1 class="pageTitleH1"><i class="fa fa-envelope-o "></i><?php echo _l('email_templates'); ?></h1>              
             <div class="clearfix"></div>
 			<div class="row">
         <div class="col-md-12">            

@@ -29,7 +29,8 @@ $(function(){
 
 // New question
 function add_question(type, id) {
-    qdata = {'type':type,'id':id};
+    var qindex = $('li.question').length;
+    var qdata = {'type':type,'id':id,'qindex':qindex};
     $.ajax({
         type:'POST',
         url:admin_url + 'questionnaire/add_question',

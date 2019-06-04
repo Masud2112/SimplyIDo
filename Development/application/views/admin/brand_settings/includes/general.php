@@ -27,7 +27,7 @@
                         <div class="bshead">
                             <h4 class="pull-left">DASHBOARD COVER IMAGE</h4>
                             <?php if (isset($packagename) && $packagename == "Paid") { ?>
-                                <?php if (has_permission('brands', '', 'delete')) { ?>
+                                <?php if (has_permission('account_setup', '', 'delete')) { ?>
                                     <div class="pull-right">
                                         <a href="<?php echo admin_url('brand_settings/remove_banner'); ?>"
                                            data-toggle="tooltip"
@@ -133,7 +133,7 @@
                             <div class="bshead">
                                 <h4 class="pull-left">BRAND IMAGE</h4>
                                 <?php if (isset($packagename) && $packagename == "Paid") { ?>
-                                    <?php if (has_permission('brands', '', 'delete')) { ?>
+                                    <?php if (has_permission('account_setup', '', 'delete')) { ?>
                                         <div class="pull-right">
                                             <a href="<?php echo admin_url('brand_settings/remove_company_logo'); ?>"
                                                data-toggle="tooltip"
@@ -160,7 +160,7 @@
                                 <h4 class="pull-left">BRAND IMAGE</h4>
                             </div>
 
-                            <div class="company brandimage-pic banner-pic">
+                            <div class="company brandimage-pic">
 
                                 <div class="brandimage_imageview <?php echo empty($src) ? 'hidden' : ''; ?>">
                                     <img src="<?php echo $src; ?>"/>
@@ -231,7 +231,7 @@
                             <div class="bshead">
                                 <h4 class="pull-left">BRAND ICON</h4>
                                 <?php if (isset($packagename) && $packagename == "Paid") { ?>
-                                    <?php if (has_permission('brands', '', 'delete')) { ?>
+                                    <?php if (has_permission('account_setup', '', 'delete')) { ?>
                                         <div class="pull-right">
                                             <a href="<?php echo admin_url('brand_settings/remove_company_icon'); ?>"
                                                data-toggle="tooltip"
@@ -327,7 +327,7 @@
                             <div class="bshead">
                                 <h4 class="pull-left">FAVICON IMAGE</h4>
                                 <?php if (isset($packagename) && $packagename == "Paid") { ?>
-                                    <?php if (has_permission('brands', '', 'delete')) { ?>
+                                    <?php if (has_permission('account_setup', '', 'delete')) { ?>
                                         <div class="pull-right">
                                             <a href="<?php echo admin_url('brand_settings/remove_favicon'); ?>"
                                                class="_delete text-danger"><i class="fa fa-trash-o"></i></a>

@@ -4,7 +4,19 @@
  * Dt : 01/09/2018
  * Invite Detail Screen
  */
+
 init_head();
+
+if (is_serialized($invite_details->assigned_email)) {
+    $invite_details->assigned_email = unserialize($invite_details->assigned_email);
+    $invite_details->assigned_email = $invite_details->assigned_email[0]['email'];
+}
+if (is_serialized($invite_details->assigned_phone)) {
+    $invite_details->assigned_phone = unserialize($invite_details->assigned_phone);
+    $invite_details->assigned_phone = $invite_details->assigned_phone[0]['phone'];
+}
+
+
 ?>
 <div id="wrapper">
     <div class="content edit-invite-page">
@@ -190,9 +202,10 @@ init_head();
                                                                 $tselected = "";
                                                             }
                                                             ?>
-                                                            <div class="editinvite-check"><input type="checkbox"
-                                                                                                 name="permissions[]" <?php echo $tselected; ?>
-                                                                                                 value="<?php echo $permission['permissionid']; ?>"/> <?php echo str_replace($remove, "", $permission['name']); ?>
+                                                            <div class="editinvite-check">
+                                                                <input type="checkbox"
+                                                                       name="permissions[]" <?php echo $tselected; ?>
+                                                                       value="<?php echo $permission['permissionid']; ?>"/> <?php echo str_replace($remove, "", $permission['name']); ?>
                                                             </div>
                                                             <?php
                                                         }

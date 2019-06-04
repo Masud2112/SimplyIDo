@@ -200,7 +200,7 @@ class Download extends CI_Controller
         * Dt : 02/21/2018
         * to download venue attachment
         */ 
-        elseif ($folder_indicator == 'venueattachment' || $folder_indicator == 'venuelocfile'  ) {
+        elseif ($folder_indicator == 'venueattachment') {
             if (!is_staff_logged_in() && !is_client_logged_in()) {
                 die();
             }
@@ -210,11 +210,7 @@ class Download extends CI_Controller
             if (!$attachment) {
                 die('No attachment found in database');
             }
-
             $path = get_upload_path_by_type('venue_attachments') . $attachment->rel_id . '/' . $attachment->file_name;
-            if ($folder_indicator == 'venuelocfile'  ) {
-                $path = get_upload_path_by_type('venue_attachments') ."locations/". $attachment->rel_id . '/' . $attachment->file_name;
-            }
         } else {
             die('folder not specified');
         }

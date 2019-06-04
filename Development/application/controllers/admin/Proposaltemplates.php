@@ -235,8 +235,16 @@ class Proposaltemplates extends Admin_controller
         }
         $created_by = get_staff_user_id();
         if ($id == '') {
+            if (!has_permission('proposals', '', 'create', true)) {
+                access_denied('proposals');
+            }
+
             $title = _l('new_proposaltemplate');
         } else {
+            if (!has_permission('proposals', '', 'edit', true)) {
+                access_denied('proposals');
+            }
+
             $proposaltemplate = $this->proposaltemplates_model->getproposaltemplates($id);
             $data['proposal'] = $proposaltemplate;
             if (isset($data['proposal']->ps_template) && $data['proposal']->ps_template > 0) {
@@ -1010,7 +1018,7 @@ class Proposaltemplates extends Admin_controller
             'touserid' => $id,
             'eid' => $data['proposal_id'],
             'brandid' => get_user_session(),
-            'not_type' => 'proposal',
+            'not_type' => 'proposals',
             'link' => 'proposaltemplates/viewproposal/' . $data['proposal_id'],
             'additional_data' => ($integration == false ? serialize(array(
                 $data['name']

@@ -94,7 +94,7 @@ $filter = false;
 
 array_push($where, ' AND tblprojects.deleted = 0');
 array_push($where, ' AND tblprojects.parent = 0');
-//array_push($where, ' AND tblprojects.brandid =' . $brandid);
+array_push($where, ' AND tblprojects.brandid =' . $brandid);
 
 if ($this->_instance->input->post('project_custom_view')) {
     $filter = $this->_instance->input->post('project_custom_view');

@@ -26,7 +26,7 @@ $buttons[]= array('type'=>'custom_block','name'=>'Custom Block','icon'=>'fa-cube
 $btn_width = 100/9;
 ?>
 <div class="questionnaire_buttons">
-    <div class="hrow text-center pright15"><i class="fa fa-plus-square"><span style="font-family: sans-serif;font-weight: bold"> ADD QUESTION</span></i><i class="pull-right fa fa-caret-up"></i></div>
+    <div class="hrow text-center pright15"><i class="fa fa-plus-square"><span style="font-family: sans-serif;font-weight: bold"> ADD QUESTION</span></i><i class="pull-right fa fa-caret-down"></i></div>
     <div class="buttons_container rowWrap" style="display: none">
         <?php foreach ($buttons as $button){ ?>
             <div class="que_button text-center <?php echo $button['type'];?>" style="width:<?php echo $btn_width ?>%" onclick="add_question('<?php echo $button['type'];?>',<?php echo (isset($questionnaire) ? $questionnaire->id : '0'); ?>);return false;" draggable="true">

@@ -992,7 +992,7 @@ class Invoice_items extends Admin_controller
             $data['order'] = $option->order;
             $success = $this->invoice_items_model->update_options_order($data);
         }
-        die('<--here');
+        die();
     }
 
     public function ajax_choice_order_update()
@@ -1005,7 +1005,7 @@ class Invoice_items extends Admin_controller
             $data['order'] = $option->order;
             $success = $this->invoice_items_model->update_choices_order($data);
         }
-        die('<--here');
+        die();
     }
 
     /*
@@ -1114,26 +1114,25 @@ class Invoice_items extends Admin_controller
 
     public function groups()
     {
-        if (has_permission('items', '', 'view', true)) {
-
-            if ($this->input->is_ajax_request()) {
-                $this->perfex_base->get_table_data('groups');
-            }
-            //$data['items_groups'] = $this->invoice_items_model->get_groups();
-            $cols = $this->invoice_items_model->get_group_col('', 'package_list');
-            $data['vcols'] = $cols;
-            $data['title'] = "Packages";
-            $this->load->view('admin/invoice_items/groups', $data);
+        if (!has_permission('items', '', 'view', true)) {
+            access_denied('items');
         }
+        if ($this->input->is_ajax_request()) {
+            $this->perfex_base->get_table_data('groups');
+        }
+        //$data['items_groups'] = $this->invoice_items_model->get_groups();
+        $cols = $this->invoice_items_model->get_group_col('', 'package_list');
+        $data['vcols'] = $cols;
+        $data['title'] = "Packages";
+        $this->load->view('admin/invoice_items/groups', $data);
     }
 
     public function add_group($id = '')
     {
-        if (!has_permission('items', '', 'view', true)) {
+        if (!has_permission('items', '', 'create', true)) {
             access_denied('items');
         }
         if ($this->input->post()) {
-
             $data = $this->input->post();
             $data['group_items'] = json_encode($data['item']);
             $data['group_price'] = $data['package_total'];
@@ -1153,7 +1152,6 @@ class Invoice_items extends Admin_controller
                 if (!has_permission('items', '', 'create', true)) {
                     access_denied('items');
                 }
-
                 $id = $this->invoice_items_model->add_group($data);
                 if ($id) {
                     handle_group_image_upload($id);
@@ -1164,12 +1162,10 @@ class Invoice_items extends Admin_controller
                     redirect(admin_url('invoice_items/package/' . $id));
                 }
             } else {
-
                 if (!has_permission('items', '', 'edit', true)) {
                     access_denied('items');
                 }
                 handle_group_image_upload($id);
-
                 unset($data['itemid']);
                 $success = $this->invoice_items_model->edit_group($data, $id);
                 if ($success) {
@@ -1181,7 +1177,6 @@ class Invoice_items extends Admin_controller
                 }
             }
         }
-
         if ($id == '') {
             $title = _l('new_package');
         } else {

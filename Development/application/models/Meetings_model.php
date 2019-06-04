@@ -235,7 +235,7 @@ class Meetings_model extends CRM_Model
             'tocontactid' => $tocontacts,
             'eid' => $meeting_id,
             'brandid' => get_user_session(),
-            'not_type' => $rel_type,
+            'not_type' => 'meetings',
             'link' => 'meetings/meeting/' . $meeting_id,
             'additional_data' => ($integration == false ? serialize(array(
                 $name
@@ -274,7 +274,7 @@ class Meetings_model extends CRM_Model
             'isread' => 0,
             'isread_inline' => 0,
             'brandid' => get_user_session(),
-            'not_type' => $rel_type,
+            'not_type' => 'meetings',
             'link' => 'meetings/meeting/' . $meeting_id,
             'additional_data' => ($integration == false ? serialize(array(
                 $name, $staus

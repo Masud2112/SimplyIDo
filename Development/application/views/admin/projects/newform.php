@@ -225,7 +225,7 @@
                 <h5>Email</h5>
                 <div id="contactemails-<?php echo $index; ?>" class="contactemails">
                     <div class="row contactemail" id="email-0">
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="contact[<?php echo $index; ?>][email][0][type]"
                                        class="control-label">Type</label>
@@ -255,7 +255,7 @@
                 <h5>Phone</h5>
                 <div id="contactphones-<?php echo $index; ?>" class="contactphones">
                     <div class="row contactphone" id="phone-0">
-                        <div class="col-sm-3">
+                        <div class="col-sm-2 col-xs-12">
                             <div class="form-group">
                                 <label for="contact[<?php echo $index; ?>][phone][0][type]"
                                        class="control-label">Type</label>
@@ -269,12 +269,12 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-4 col-md-5 multiphone">
+                        <div class="col-md-5 col-sm-4 col-xs-12 multiphone">
                             <div class="form-group">
                                 <?php echo render_input('contact[' . $index . '][phone][0][phone]', 'client_phonenumber', ''); ?>
                             </div>
                         </div>
-                        <div class="col-sm-1 col-xs-10 multiext">
+                        <div class="col-md-2 col-sm-2 col-xs-12 multiext">
                             <?php $phone = ''; ?>
                             <?php echo render_input('contact[' . $index . '][phone][0][ext]', 'Ext', $phone, 'tel', array('autocomplete' => 'off', 'maxlength' => 5)); ?>
                         </div>
@@ -289,7 +289,7 @@
                 <h5>Social</h5>
                 <div id="contactwebsites-<?php echo $index; ?>" class="contactwebsites">
                     <div class="row contactwebsite" id="website-0">
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="contact[<?php echo $index; ?>][website][0][type]"
                                        class="control-label">Type</label>
@@ -323,7 +323,7 @@
                 <div class="contactaddresses" id="contactaddresses-<?php echo $index ?>">
                     <div class="contactaddress" id="address-0">
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <label for="contact[<?php echo $index; ?>][address][0][type]"
                                            class="control-label">Type</label>
@@ -337,30 +337,32 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6 col-xs-12">
+                                <div class="col-sm-8 col-md-9 col-lg-9">
 
-                                <div id="locationField" class="form-group">
-                                    <label class="control-label" for="address">Address</label>
-                                    <input id="contact_<?php echo $index; ?>_autocomplete0"
-                                           class="form-control searchmap"
-                                           data-addmap="0"
-                                           data-index="<?php echo $index; ?>"
-                                           placeholder="Search Google Maps..." onFocus="geolocate()"
-                                           type="text">
+                                    <div id="locationField" class="form-group">
+                                        <label class="control-label" for="address">Address</label>
+                                        <input id="contact_<?php echo $index; ?>_autocomplete0"
+                                            class="form-control searchmap"
+                                            data-addmap="0"
+                                            data-index="<?php echo $index; ?>"
+                                            placeholder="Search Google Maps..." onFocus="geolocate()"
+                                            type="text">
+                                    </div>
+
                                 </div>
-
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <button type="button"
-                                            class="btn btn-info custom_address customadd-0"
-                                            data-addressid="0">Custom
-                                    </button>
-                                    <button type="button"
-                                            class="btn btn-default remove_address removeadd-0"
-                                            style="display:none" data-addressid="0">Remove &
-                                        Search Again
-                                    </button>
+                                <div class="col-sm-4 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <button type="button"
+                                                class="btn btn-info custom_address customadd-0"
+                                                data-addressid="0">Custom
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-default remove_address removeadd-0"
+                                                style="display:none" data-addressid="0">Remove &
+                                            Search Again
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -415,7 +417,7 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <button id="address-add-more" name="address-add-more"
+                    <button id="address-add-more"
                             class=" address-add-more btn btn-primary"
                             data-index=<?php echo $index; ?>>
                         <i class="fa fa-plus"></i><span class="mleft5">Address</span>

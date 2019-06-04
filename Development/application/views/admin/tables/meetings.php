@@ -63,6 +63,17 @@ $result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, arr
 $output = $result['output'];
 $rResult = $result['rResult'];
 foreach ($rResult as $aRow) {
+
+    if (isset($lid)) {
+        $meetinglink = admin_url('meetings/meeting/' . $aRow['meetingid'] . "?lid=" . $lid);
+    } elseif (isset($pid)) {
+        $meetinglink= admin_url('meetings/meeting/' . $aRow['meetingid'] . "?pid=" . $pid);
+    } elseif (isset($eid)) {
+        $meetinglink= admin_url('meetings/meeting/' . $aRow['meetingid'] . "?eid=" . $eid);
+    } else {
+        $meetinglink= admin_url('meetings/meeting/' . $aRow['meetingid']);
+    }
+
     $this->_instance->db->select('*');
     $this->_instance->db->where('meeting_id', $aRow['meetingid']);
     $meeting_users = $this->_instance->db->get('tblmeetingusers')->result_array();
@@ -100,7 +111,7 @@ foreach ($rResult as $aRow) {
     } else {
         $row[] = '<i class="fa fa-fw fa-thumb-tack meeting-pin" title="Pin to dashboard" id="' . $aRow['meetingid'] . '" meeting_id="' . $aRow['meetingid'] . '"></i>';
     }
-    $meeting_details = "<strong class='meetingName'>" . $aRow['name'] . "</strong><b>" . _time($aRow['start_date']) . " - " . _time($aRow['end_date']) . "</b><br />" . $aRow['location'];
+    $meeting_details = "<strong class='meetingName'><a href='".$meetinglink."'>" . $aRow['name'] . "</strong></a><b>" . _time($aRow['start_date']) . " - " . _time($aRow['end_date']) . "</b><br />" . $aRow['location'];
     $meeting = '<div class="inviteeListDate_blk"><div class="ilDate card_date_blk">';
     $meeting .= '<div class="card_date" title=' . date('Y', strtotime($aRow['start_date'])) . '><div class="card_month">';
     $meeting .= '<small>' . strtoupper(date("M", strtotime($aRow['start_date']))) . '</small>';

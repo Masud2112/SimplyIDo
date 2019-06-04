@@ -34,6 +34,8 @@ if(!$detailed_report) {
                     }
                     $totalleadsource_title = $tot_leads . " <br/><small>LEADS</small>";
                     $Charttotalleadsource_title = $tot_leads . " LEADS";
+                }else {
+                    $Charttotalleadsource_title = '';
                 }
                 ?>
                 <!--Report in Chart-->

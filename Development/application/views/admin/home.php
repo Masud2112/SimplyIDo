@@ -1,4 +1,7 @@
-<?php init_head(); ?>
+<?php init_head();
+
+$sessiondata = get_session_data();
+?>
 <div id="wrapper">
     <div class="content dashboard-page">
         <div class="row">
@@ -99,6 +102,7 @@
                 ?>
                 <div class="row row15">
                     <div id="sortable1" class="col-md-6 sortable_config_item">
+
                         <?php foreach ($all_data as $json_order) {
                             if ($json_order['widget_name'] != "getting_started" || $json_order['widget_name'] != "lead_pipeline") {
                                 if ($json_order['order'] % 2 == 0) { ?>
@@ -178,6 +182,15 @@
                         } ?>
                     </div>
                     <div id="sortable2" class="col-md-6 sortable_config_item">
+                        <?php if (isset($sessiondata['client_id']) && $sessiondata['client_id'] > 0 && count($brands) > 1 ) { ?>
+                            <div id="mybrands_widget"
+                                 class="row col-sm-12 option" data-class='option'
+                                 data-id="mybrands"
+                                 data-order="9">
+                                <?php $this->load->view('admin/home/mybrands'); ?>
+
+                            </div>
+                        <?php } ?>
                         <?php foreach ($all_data as $json_order) {
                             if ($json_order['widget_name'] != "getting_started" || $json_order['widget_name'] != "lead_pipeline") {
                                 if ($json_order['order'] % 2 != 0) {

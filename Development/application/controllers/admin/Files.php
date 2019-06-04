@@ -11,6 +11,8 @@ class Files extends Admin_controller
     {
         parent::__construct();
         $this->load->model('files_model');
+        $this->load->model('projects_model');
+        $this->load->model('leads_model');
     }
    
     // Moved here from version 1.0.5
@@ -23,9 +25,6 @@ class Files extends Admin_controller
         $data['title']        = _l('media_files');
         if($this->input->get('lid')) {
             $leadid = $this->input->get('lid');
-
-            $this->load->model('leads_model');
-
             $data['lid'] = $leadid;
             $data['lname'] = '';
             $data['files']       = $this->leads_model->get_files($leadid);
@@ -35,9 +34,6 @@ class Files extends Admin_controller
         }
         if($this->input->get('pid')) {
             $projectid = $this->input->get('pid');
-
-            $this->load->model('projects_model');
-
             $data['pid'] = $projectid;
             $data['lname'] = '';
             $data['files']       = $this->projects_model->get_files($projectid);
@@ -48,8 +44,6 @@ class Files extends Admin_controller
         if($this->input->get('eid')) {
             $projectid = $this->input->get('eid');
             $parent_id = $this->projects_model->get($projectid)->parent;
-            $this->load->model('projects_model');
-
             $data['eid'] = $projectid;
             $data['parent_id'] = $parent_id;
             $data['lname'] = '';
@@ -63,6 +57,38 @@ class Files extends Admin_controller
 
             $data['files']       = $this->projects_model->get_event_files($projectid);
             $data['totalfiles']       = $this->projects_model->get_event_files($projectid);
+        }
+        if($this->input->get('lp')) {
+            $projectids = $this->projects_model->get();
+            $projectids = array_map('current',$projectids);
+            $projectids = array_unique($projectids);
+            $leadids = $this->leads_model->get();
+            $leadids = array_map('current',$leadids);
+            $files = array();
+            $efiles = $pfiles=array();
+            foreach ($projectids as $pid){
+                $efiles= $this->projects_model->get_event_files($pid);
+                $pfiles= $this->projects_model->get_files($pid);
+                $files= array_merge($files,$efiles);
+                $files= array_merge($files,$pfiles);
+            }
+            foreach ($leadids as $lid){
+                $lfiles= $this->leads_model->get_files($lid);
+                $files= array_merge($files,$lfiles);
+            }
+            $data['lp'] = $this->input->get('lp');
+            /*$data['parent_id'] = $parent_id;*/
+            $data['lname'] = '';
+            $data['pname'] = '';
+            /*if($parent_id != "") {
+                $data['pname'] = $this->projects_model->get($parent_id)->name;
+            }
+            if($projectid != "") {
+                $data['lname'] = $this->projects_model->get($projectid)->name;
+            }*/
+
+            $data['files']       = $files;
+            $data['totalfiles']       = count($files);
         }
 
         /**

@@ -1,12 +1,15 @@
 <?php init_head(); ?>
 <div id="wrapper" class="email-template-page">
   <div class="content">
-   <h1 class="pageTitleH1" id="page-title"><i class="fa fa-envelope-o"></i><?php echo $title; ?></h1>
-	<div class="clearfix"></div>
+   <h1 class="pageTitleH1" id="page-title"><i class="fa fa-envelope-o"></i><?php echo $title; ?>
+            </h1>
+			<div class="clearfix"></div>
     <div class="row">
       <div class="col-md-12">
         <div class="panel_s btmbrd">
-          <div class="panel-body">          
+          <div class="panel-body">
+           
+             
             <?php echo form_open($this->uri->uri_string(),array('class'=>'email-form')); ?>
               <div class="panel_s">
                 <div class="panel-body">

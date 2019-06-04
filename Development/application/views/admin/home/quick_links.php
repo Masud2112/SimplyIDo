@@ -38,7 +38,7 @@
 
                     <?php
                     if (in_array('project', $single_quick_link_list)) {
-                        if (has_permission('projects', '', 'create', true)) { ?>
+                        /*if (has_permission('projects', '', 'create', true)) {*/ ?>
                             <div class="col-lg-3 col-sm-4 col-xs-6 ">
                                 <div class="quickBlock project_section">
                                     <a href="<?php echo admin_url('projects/?pg=home') ?>">
@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <?php
-                        }
+                        /*}*/
                     }
                     ?>
 
@@ -118,7 +118,7 @@
 
                     <?php
                     if (in_array('invite', $single_quick_link_list)) {
-                        if (has_permission('projects', '', 'create', true)) { ?>
+                        /*if (has_permission('projects', '', 'create', true)) {*/ ?>
                             <div class="col-lg-3 col-sm-4 col-xs-6">
                                 <div class="quickBlock invites_section">
                                     <a href="<?php echo admin_url('projects/invites/?pg=home') ?>">
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                             <?php
-                        }
+                        /*}*/
                     }
                     ?>
                 </div>
@@ -146,7 +146,7 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <?php if (has_permission('items', '', 'create')) { ?>
+                <?php /*if (has_permission('items', '', 'create')) { */?>
                     <div class="row">
                         <form action="<?php echo admin_url()?>home/dashboard_widget_setting" novalidate="1" id="quick_links_setting_form" method="post"
                               accept-charset="utf-8">
@@ -172,7 +172,7 @@
                             </div>
                     </div>
 
-                <?php } ?>
+                <?php /*} */?>
 
             </div>
             <div class="modal-footer">

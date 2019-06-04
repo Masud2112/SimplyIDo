@@ -39,7 +39,7 @@
                                    title="<?php echo $staff_p->skype; ?>" target="_blank"
                                    class="btn btn-default btn-icon"><i class="fa fa-skype"></i></a>
                             <?php } ?>
-                            <?php if (has_permission('account_setup', '', 'edit')) { ?>
+                            <?php if (has_permission('staff', '', 'edit')) { ?>
                                 <a href="<?php echo admin_url('staff/member/' . $staff_p->staffid); ?>"
                                    class="btn btn-default btn-icon"><i class="fa fa-pencil-square"></i></a>
                             <?php } ?>

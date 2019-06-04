@@ -17,7 +17,7 @@ if ($question['required'] == 1) {
 }
 $x = 0;
 ?>
-<li id ="question_<?php echo $qindex; ?>" draggable="true">
+<li id ="question_<?php echo $qindex; ?>" draggable="true" class="question">
     <div class="form-group question">
         <input type="hidden" value="" name="order[]">
         <label for="<?php echo $question['questionid'] ?>" class="control-label question_type display-block">

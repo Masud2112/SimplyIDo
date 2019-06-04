@@ -716,7 +716,7 @@ class Invoices_model extends CRM_Model
             'tocontactid' => $tocontacts,
             'eid' => $invoice_id,
             'brandid' => get_user_session(),
-            'not_type' => "Invoice",
+            'not_type' => "Invoices",
             'link' => 'invoices/invoice/' . $invoice_id,
             'additional_data' => ($integration == false ? serialize(array(
                 $invoice_number
@@ -737,7 +737,7 @@ class Invoices_model extends CRM_Model
             'tocontactid' => $tocontacts,
             'eid' => $invoice_id,
             'brandid' => get_user_session(),
-            'not_type' => "Invoice",
+            'not_type' => "Invoices",
             'link' => 'invoices/list_invoices#' . $invoice_id,
             'additional_data' => ($integration == false ? serialize(array(
                 $invoice_number

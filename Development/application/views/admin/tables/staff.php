@@ -1,29 +1,30 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 $brandid = get_user_session();
-$session_data   = get_session_data();
-$is_sido_admin  = $session_data['is_sido_admin'];
-$is_admin       = $session_data['is_admin'];
+$session_data = get_session_data();
+$is_sido_admin = $session_data['is_sido_admin'];
+$is_admin = $session_data['is_admin'];
+$user_type = $session_data['user_type'];
 
 $custom_fields = get_custom_fields('staff', array(
     'show_on_table' => 1
 ));
-$aColumns      = array(
+$aColumns = array(
     'firstname',
     'email',
     'last_login',
     'tblstaff.active'
 );
-$sIndexColumn  = "staffid";
-$sTable        = 'tblstaff';
-$join          = array();
-$i             = 0;
+$sIndexColumn = "staffid";
+$sTable = 'tblstaff';
+$join = array();
+$i = 0;
 foreach ($custom_fields as $field) {
-    $select_as = 'cvalue_'.$i;
+    $select_as = 'cvalue_' . $i;
     if ($field['type'] == 'date_picker' || $field['type'] == 'date_picker_time') {
-        $select_as = 'date_picker_cvalue_'.$i;
+        $select_as = 'date_picker_cvalue_' . $i;
     }
-    array_push($aColumns, 'ctable_'.$i.'.value as '.$select_as);
+    array_push($aColumns, 'ctable_' . $i . '.value as ' . $select_as);
     array_push($join, 'LEFT JOIN tblcustomfieldsvalues as ctable_' . $i . ' ON tblstaff.staffid = ctable_' . $i . '.relid AND ctable_' . $i . '.fieldto="' . $field['fieldto'] . '" AND ctable_' . $i . '.fieldid=' . $field['id']);
     $i++;
 }
@@ -32,11 +33,12 @@ if (count($custom_fields) > 4) {
     @$this->_instance->db->query('SET SQL_BIG_SELECTS=1');
 }
 $where = do_action('staff_table_sql_where', array());
-if($is_admin == 0){
-    if($is_sido_admin == 0){
+if ($is_admin == 0) {
+    if ($is_sido_admin == 0) {
         array_push($join, 'JOIN tblstaffbrand as sb ON tblstaff.staffid = sb.staffid AND brandid=' . $brandid);
         array_push($join, 'JOIN tblroleuserteam as rt ON tblstaff.staffid = rt.user_id');
         array_push($join, 'JOIN tblroles as rl ON rt.role_id = rl.roleid');
+        array_push($join, 'LEFT JOIN tblclients ON tblstaff.staffid = tblclients.primary_user_id');
         array_push($where, 'AND (tblstaff.is_not_staff = 0)');
         /*array_push($where, 'AND (tblstaff.user_type = 1 OR tblstaff.user_type = 2)');*/
         /*$this->db->join('tblroleuserteam', 'tblroleuserteam.user_id = tblstaff.staffid');
@@ -47,22 +49,21 @@ if($is_admin == 0){
 
 //Added on 10/03 By Purvi
 array_push($where, ' AND tblstaff.deleted = 0');
-if($is_sido_admin == 1){
+if ($is_sido_admin == 1) {
     array_push($where, 'AND (is_sido_admin = 1)');
 }
 
-$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, array(
+$result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, array(
     'profile_image',
     'lastname',
     'tblstaff.staffid',
+    'tblstaff.user_type',
+    'tblclients.primary_user_id',
     'admin'
-),"GROUP BY tblstaff.staffid");
+), "GROUP BY tblstaff.staffid");
 
-$output  = $result['output'];
+$output = $result['output'];
 $rResult = $result['rResult'];
-/*echo "<pre>";
-print_r($rResult);
-die('<--here');*/
 foreach ($rResult as $aRow) {
     $row = array();
     for ($i = 0; $i < count($aColumns); $i++) {
@@ -79,18 +80,23 @@ foreach ($rResult as $aRow) {
                 $_data = 'Never';
             }
         } elseif ($aColumns[$i] == 'tblstaff.active') {
+            if ($aRow['staffid'] != get_staff_user_id() && get_account_owner(get_user_session())!= $aRow['staffid']) {
             $checked = '';
             if ($aRow['tblstaff.active'] == 1) {
                 $checked = 'checked';
             }
 
-            $_data = '<div class="onoffswitch">
-                <input type="checkbox" data-switch-url="'.admin_url().'staff/change_staff_status" name="onoffswitch" class="onoffswitch-checkbox" id="c_'.$aRow['staffid'].'" data-id="'.$aRow['staffid'].'" ' . $checked . '>
-                <label class="onoffswitch-label" for="c_'.$aRow['staffid'].'"></label>
+
+                $_data = '<div class="onoffswitch">
+                <input type="checkbox" data-switch-url="' . admin_url() . 'staff/change_staff_status" name="onoffswitch" class="onoffswitch-checkbox" id="c_' . $aRow['staffid'] . '" data-id="' . $aRow['staffid'] . '" ' . $checked . '>
+                <label class="onoffswitch-label" for="c_' . $aRow['staffid'] . '"></label>
             </div>';
 
-            // For exporting
-            $_data .= '<span class="hide">' . ($checked == 'checked' ? _l('is_active_export') : _l('is_not_active_export')) . '</span>';
+                // For exporting
+                $_data .= '<span class="hide">' . ($checked == 'checked' ? _l('is_active_export') : _l('is_not_active_export')) . '</span>';
+            }else{
+                $_data="";
+            }
         } elseif ($aColumns[$i] == 'firstname') {
             $_data = staff_profile_image($aRow['staffid'], array(
                 'staff-profile-image-small'
@@ -105,18 +111,34 @@ foreach ($rResult as $aRow) {
         }
         $row[] = $_data;
     }
-    $options = "<div class='text-right mright10'><a class='show_act' href='javascript:void(0)'><i class='fa fa-ellipsis-v' aria-hidden='true'></i></a></div><div class='table_actions'><ul>";
-    if (has_permission('account_setup', '', 'edit')){
-        $options .= icon_url('staff/member/' . $aRow['staffid'], 'pencil-square-o');
-    }else{
-        $options = "";
+    $class = "";
+    if ($aRow['primary_user_id'] == $aRow['staffid'] && $aRow['staffid'] != get_staff_user_id()) {
+        $class = "hidden";
     }
-    if (has_permission('account_setup', '', 'delete') && $output['iTotalRecords'] > 1 && $aRow['staffid'] != get_staff_user_id()) {
-        $options .= icon_url('#', 'remove', '', array(
-            'onclick'=>'delete_staff_member('.$aRow['staffid'].'); return false;',
-        ));
+    $options = "<div class='text-right mright10'><a class='show_act " . $class . "' href='javascript:void(0)'><i class='fa fa-ellipsis-v' aria-hidden='true'></i></a></div><div class='table_actions'><ul>";
+    if (has_permission('account_setup', '', 'edit')) {
+        if (($aRow['primary_user_id'] == $aRow['staffid'] && $aRow['staffid'] == get_staff_user_id()) || $aRow['staffid'] == get_staff_user_id()) {
+            $options .= icon_url('staff/edit_profile/', 'pencil-square-o');
+        } elseif ($aRow['primary_user_id'] == "") {
+            $options .= icon_url('staff/member/' . $aRow['staffid'], 'pencil-square-o');
+        } elseif ($aRow['primary_user_id'] == $aRow['staffid'] && $aRow['staffid'] != get_staff_user_id()) {
+            $options .= "";
+        } else {
+            $options .= "";
+        }
+
+    } else {
+        $options .= "";
     }
-    $options.="</ul></div>";
-    $row[]              = $options;
+    if ((has_permission('account_setup', '', 'delete') && $output['iTotalRecords'] > 1 && $aRow['staffid'] != get_staff_user_id())) {
+        if ($aRow['primary_user_id'] == "") {
+            $options .= icon_url('#', 'remove', '', array(
+                'onclick' => 'delete_staff_member(' . $aRow['staffid'] . '); return false;',
+            ));
+        }
+
+    }
+    $options .= "</ul></div>";
+    $row[] = $options;
     $output['aaData'][] = $row;
 }

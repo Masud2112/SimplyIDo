@@ -18,7 +18,7 @@
                                 <?php if(has_permission('estimates','','view') || has_permission('estimates','','view_own')){ ?>
                                 <option value="estimates"><?php echo _l('bulk_export_pdf_estimates'); ?></option>
                                 <?php } ?>
-                                <?php if(has_permission('account_setup','','view') || has_permission('invoices','','view_own')){ ?>
+                                <?php if(has_permission('payments','','view') || has_permission('invoices','','view_own')){ ?>
                                 <option value="payments"><?php echo _l('bulk_export_pdf_payments'); ?></option>
                                 <?php } ?>
                                 <?php if(has_permission('proposals','','view') || has_permission('proposals','','view_own')){ ?>

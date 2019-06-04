@@ -285,23 +285,25 @@ class Calendar_model extends CRM_Model
 
         if (get_brand_option('show_lead_on_calendar') == 1 && !$ff || $ff && array_key_exists('leads', $filters)) {
 
-            $this->db->select('name as title,id,status,CASE WHEN DATE(eventstartdatetime) IS NULL THEN DATE(eventenddatetime) ELSE DATE(eventstartdatetime) END as date',false);
+            $this->db->select('tblleads.name as title,tblleads.id,status,CASE WHEN DATE(tblleads.eventstartdatetime) IS NULL THEN DATE(tblleads.eventenddatetime) ELSE DATE(tblleads.eventstartdatetime) END as date',false);
             $this->db->from('tblleads');
             //$this->db->where('status !=', 5);
             
             //for sido admin
             if(!empty(get_user_session())) {
-                $this->db->where('brandid', get_user_session());
+                $this->db->where('tblleads.brandid', get_user_session());
             }
 
-            $this->db->where('deleted', 0);
+            $this->db->where('tblleads.deleted', 0);
             
             $this->db->where("CASE WHEN DATE(eventstartdatetime) IS NULL THEN (DATE(eventenddatetime) BETWEEN '$start' AND '$end') ELSE (DATE(eventstartdatetime) BETWEEN '$start' AND '$end') END",null,false);
 
             if (is_sido_admin() == 0 && $session_data['user_type'] != 1) {
-                $this->db->where('assigned', get_staff_user_id());
+                $this->db->join('tblstaffleadassignee', 'tblstaffleadassignee.leadid = tblleads.id', 'left');
+                $this->db->join('tblstaff', 'tblstaff.staffid = tblstaffleadassignee.assigned', 'left');
+                $this->db->where('(tblstaffleadassignee.assigned = ' . get_staff_user_id() . ' OR addedfrom=' . get_staff_user_id() . ' OR is_public=1)');
             }
-            $this->db->where('brandid', get_user_session());
+            $this->db->group_by('tblleads.id');
             $leads = $this->db->get()->result_array();
             
             foreach ($leads as $lead) {
@@ -468,7 +470,7 @@ class Calendar_model extends CRM_Model
         if (get_brand_option('show_projects_on_calendar') == 1 && !$ff || $ff && array_key_exists('projects', $filters)) {
             $this->load->model('projects_model');
             //$this->db->select('name as title,id,clientid, CASE WHEN deadline IS NULL THEN start_date ELSE deadline END as date',false);
-            $this->db->select('name as title,id,DATE(eventstartdatetime) as date,DATE(eventenddatetime) as end_date',false);
+            $this->db->select('tblprojects.name as title,tblprojects.id,DATE(tblprojects.eventstartdatetime) as date,DATE(tblprojects.eventenddatetime) as end_date',false);
             $this->db->from('tblprojects');
 
             // Exclude cancelled and finished
@@ -477,7 +479,7 @@ class Calendar_model extends CRM_Model
 
             //$this->db->where("CASE WHEN deadline IS NULL THEN (start_date BETWEEN '$start' AND '$end') ELSE (deadline BETWEEN '$start' AND '$end') END",null,false);
 
-            $this->db->where("DATE(eventstartdatetime) BETWEEN '$start' AND '$end'",null,false);
+            $this->db->where("DATE(tblprojects.eventstartdatetime) BETWEEN '$start' AND '$end'",null,false);
 
 
             /*if ($client_data) {
@@ -485,14 +487,18 @@ class Calendar_model extends CRM_Model
             }*/
 
             if (is_sido_admin() == 0 && $session_data['user_type'] != 1) {
-                $this->db->where('assigned', get_staff_user_id());
+                $this->db->join('tblstaffprojectassignee', 'tblstaffprojectassignee.projectid = tblprojects.id', 'left');
+                $this->db->join('tblstaff', 'tblstaff.staffid = tblstaffprojectassignee.assigned', 'left');
+                $this->db->join('tblprojectcontact', 'tblprojectcontact.projectid = tblprojects.id AND tblprojectcontact.active=1', 'left');
+                $this->db->where('(tblstaffprojectassignee.assigned = ' . get_staff_user_id() . ' OR addedfrom =' . get_staff_user_id() . ' OR tblprojectcontact.contactid = ' . get_staff_user_id() . ')');
+                //$this->db->where('assigned', get_staff_user_id());
             }
 
             //for sido admin
             if(!empty(get_user_session())) {
-                $this->db->where('brandid', get_user_session());
+                $this->db->where('tblprojects.brandid', get_user_session());
             }
-            
+            $this->db->group_by('tblprojects.id');
             $projects = $this->db->get()->result_array();
             
             foreach ($projects as $project) {

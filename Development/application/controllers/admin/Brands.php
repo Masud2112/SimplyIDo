@@ -49,7 +49,7 @@ class Brands extends Admin_controller
                 }
 
                 $this->form_validation->set_rules('brandname', _l('brand_name_required'), 'trim|required');
-                $this->form_validation->set_rules('brandtype', _l('brand_type_required'), 'required');
+                $this->form_validation->set_rules('brandtype[]', _l('brand_type_required'), 'required');
                 $this->form_validation->set_rules('address1', _l('address_required'), 'trim|required');
                 $this->form_validation->set_rules('city', _l('city_required'), 'trim|required');
                 $this->form_validation->set_rules('state', _l('state_required'), 'trim|required');
@@ -58,14 +58,20 @@ class Brands extends Admin_controller
 
                 if ($this->input->post()) {
                     if ($this->form_validation->run() !== false) {
-
+                        $isdefault = 0;
+                        if($this->input->post('isdefault')){
+                            $isdefault=$this->input->post('isdefault');
+                        }
                         $data1['brandname']      = $this->input->post('brandname');
                         $data1['brandtype']      = $this->input->post('brandtype');
                         $data1['address']        = $this->input->post('address1') . " " . $this->input->post('address2');
                         $data1['city']           = $this->input->post('city');
                         $data1['state']          = $this->input->post('state');
                         $data1['zipcode']        = $this->input->post('zipcode');
-                        
+                        $data1['phone']        = $this->input->post('phone');
+                        $data1['email']        = $this->input->post('email');
+                        $data1['isdefault']      = $isdefault;
+
                         $id = $this->brands_model->add($data1);
                         
                         if ($id) {

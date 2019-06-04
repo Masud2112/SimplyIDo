@@ -15,6 +15,9 @@ class Leads extends Admin_controller
     /* List all leads canban and table */
     public function index($id = '')
     {
+        if (!has_permission('leads','','view')) {
+            access_denied('leads');
+        }
         $pg = $this->input->get('pg');
         if(!is_staff_member()){
            access_denied('Leads');

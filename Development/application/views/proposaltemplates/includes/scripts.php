@@ -203,4 +203,4 @@ if(get_option('pusher_realtime_notifications') == 1){ ?>
  */
 do_action('after_js_scripts_render');
 ?>
-<footer class="footer text-center clearfix"><span>SiDO - <?php echo get_app_version(); ?></span><br>2017 © Simply I Do, Inc. Events Planning. Streamlined!</footer>
+<footer class="footer text-center clearfix"><span>SiDO - <?php echo get_app_version(); ?></span><br><?php echo date('Y')?> © Simply I Do, Inc. Events Planning. Streamlined!</footer>

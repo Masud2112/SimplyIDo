@@ -445,6 +445,9 @@ class Addressbooks extends Admin_controller
         $this->db->update('tbladdressbook', array(
             'profile_image' => null
         ));
+        if ($this->input->is_ajax_request()) {
+            die();
+        }
         if (isset($lid)) {
             redirect(admin_url('addressbooks/addressbook/' . $addressbook_id . '?lid=' . $lid));
         } else {

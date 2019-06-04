@@ -49,7 +49,7 @@
                             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                             <input class="form-control" type="email" placeholder="Email" name="useremail" id="useremail"
                                 data-parsley-type="email" required
-                                data-parsley-required-message="Please enter valid email address" autocomplete="off">
+                                data-parsley-required-message="Please enter valid email address">
                             <span id="emailmsg" class="parsley-required"></span>
                         </div>
                     </div>

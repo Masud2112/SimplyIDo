@@ -584,8 +584,6 @@ class Invoices extends Admin_controller
         */
         $this->load->model('Addressbooks_model');
         $contact = $this->Addressbooks_model->get_contacts($invoice->clientid);
-        //echo '<pre>'; print_r($contact);
-
         if ($contact) {
             //$data->client->company = $contact->firstname . ' ' . $contact->lastname;
 

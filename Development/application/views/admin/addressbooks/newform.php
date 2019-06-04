@@ -10,7 +10,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-3">
-                        <?php if ($profile_allow == 1) { ?>
+                        <?php /*if ($profile_allow == 1) { */?>
                             <div class="mprofile-pic profile-pic<?php echo $index; ?>">
 
                                 <!--<div class="form-group uploadProfilepic">
@@ -81,9 +81,9 @@
                                     </div>
                                 </div>
                             </div>
-                        <?php } else { ?>
+                        <?php /*} else { */?><!--
                             <input type="hidden" name="profile_image" value="">
-                        <?php } ?>
+                        --><?php /*} */?>
                     </div>
                     <div class="col-sm-9">
                         <?php if (isset($lid) || isset($eid) || isset($pid)) { ?>
@@ -294,7 +294,7 @@
             </div>
         </div>
         <div class="row row-flex">
-            <div class="col-sm-6">
+            <div class="col-md-6 col-sm-12 col-xs-12">
                 <h5><strong>Email</strong></h5>
                 <div class="panel_s btmbrd">
                     <div class="panel-body">
@@ -328,7 +328,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-md-6 col-sm-12 col-xs-12">
                 <h5><strong>Online</strong></h5>
                 <div class="panel_s btmbrd">
                     <div class="panel-body">
@@ -367,7 +367,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md-6 col-sm-12 col-xs-12">
                 <h5><strong>Phone</strong></h5>
                 <div class="panel_s btmbrd">
                     <div class="panel-body">
@@ -406,7 +406,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-md-6 col-sm-12 col-xs-12">
                 <h5><strong>Address</strong></h5>
                 <div class="panel_s btmbrd">
                     <div class="panel-body">
@@ -428,27 +428,36 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-8 col-xs-11">
-                                        <div id="locationField" class="form-group">
-                                            <label class="control-label" for="address">Address</label>
-                                            <input id="contact_<?php echo $index;?>_autocomplete0" class="form-control searchmap"
-                                                   data-addmap="0"
-                                                   data-index="<?php echo $index;?>"
-                                                   placeholder="Search Google Maps..." onFocus="geolocate()"
-                                                   type="text">
-                                        </div>
-                                        <div class="customadd-btn">
-                                            <div class="form-group">
-                                                <button type="button"
-                                                        class="btn btn-info custom_address customadd-0"
-                                                        style="display:block" data-addressid="0" data-index=<?php echo $index; ?>>Custom
-                                                </button>
-                                                <!--<button type="button"
-                                                        class="btn btn-default remove_address removeadd-0"
-                                                        style="display:none" data-addressid="0">Remove & Search
-                                                    Again
-                                                </button>-->
+
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div id="locationField" class="form-group">
+                                                <label class="control-label" for="address">Address</label>
+                                                <input id="contact_<?php echo $index;?>_autocomplete0" class="form-control searchmap"
+                                                    data-addmap="0"
+                                                    data-index="<?php echo $index;?>"
+                                                    placeholder="Search Google Maps..." onFocus="geolocate()"
+                                                    type="text">
                                             </div>
                                         </div>
+                                        <div class="col-sm-4">
+                                            <div class="customadd-btn">
+                                                <div class="form-group">
+                                                    <button type="button"
+                                                            class="btn btn-info custom_address customadd-0"
+                                                            style="display:block" data-addressid="0" data-index=<?php echo $index; ?>>Custom
+                                                    </button>
+                                                    <!--<button type="button"
+                                                            class="btn btn-default remove_address removeadd-0"
+                                                            style="display:none" data-addressid="0">Remove & Search
+                                                        Again
+                                                    </button>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        
+                                      
                                     </div>
                                 </div>
                                 <?php
@@ -503,7 +512,7 @@
                             </div>
                         </div>
                         <div class="text-left col-sm-12">
-                            <button id="address-add-more" name="address-add-more"
+                            <button id="address-add-more"
                                     class=" address-add-more btn btn-primary"
                                     data-index=<?php echo $index; ?>>
                                 <i class="fa fa-plus"></i><span class="mleft5">Address</span>

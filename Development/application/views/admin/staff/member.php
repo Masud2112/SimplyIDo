@@ -105,12 +105,12 @@
                                     </div>
                                     <hr />
                                  </div> -->
-                                    <?php /*if ((isset($member) && $member->profile_image == NULL) || !isset($member)) { */?><!--
+                                    <?php /*if ((isset($member) && $member->profile_image == NULL) || !isset($member)) { */ ?><!--
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                     <label for="profile_image"
-                                                           class="profile-image"><?php /*echo _l('staff_edit_profile_image'); */?></label>
+                                                           class="profile-image"><?php /*echo _l('staff_edit_profile_image'); */ ?></label>
                                                     <div class="input-group">
                                              <span class="input-group-btn">
                                                <span class="btn btn-primary"
@@ -124,31 +124,31 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    --><?php /*} */?>
-                                    <?php /*if (isset($member) && $member->profile_image != NULL) { */?><!--
+                                    --><?php /*} */ ?>
+                                    <?php /*if (isset($member) && $member->profile_image != NULL) { */ ?><!--
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-9">
-                                                            <?php /*echo staff_profile_image($member->staffid, array('img', 'img-responsive', 'staff-profile-image-thumb'), 'thumb'); */?>
+                                                            <?php /*echo staff_profile_image($member->staffid, array('img', 'img-responsive', 'staff-profile-image-thumb'), 'thumb'); */ ?>
                                                         </div>
                                                         <div class="col-md-3 text-right">
-                                                            <a href="<?php /*echo admin_url('staff/remove_staff_profile_image/' . $member->staffid); */?>"><i
+                                                            <a href="<?php /*echo admin_url('staff/remove_staff_profile_image/' . $member->staffid); */ ?>"><i
                                                                         class="fa fa-remove"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    --><?php /*} */?>
+                                    --><?php /*} */ ?>
                                     <div class="row mbot20">
                                         <div class="col-sm-3">
                                             <div class="profile-pic">
                                                 <?php
                                                 $src = "";
                                                 if ((isset($member) && $member->profile_image != NULL)) {
-                                                    $profileImagePath = FCPATH.'uploads/staff_profile_images/' . $member->staffid . '/round_' . $member->profile_image;
+                                                    $profileImagePath = FCPATH . 'uploads/staff_profile_images/' . $member->staffid . '/round_' . $member->profile_image;
                                                     if (file_exists($profileImagePath)) {
                                                         $src = base_url() . 'uploads/staff_profile_images/' . $member->staffid . '/round_' . $member->profile_image;
                                                     }
@@ -164,16 +164,19 @@
                                                            onclick="reCropp('profile');">
                                                             <?php //echo _l('recrop')?></a> -->
                                                         <div class="actionToEdit">
-                                                            <a class="clicktoaddimage" href="javascript:void(0)" onclick="croppedDelete('profile');">
+                                                            <a class="clicktoaddimage" href="javascript:void(0)"
+                                                               onclick="croppedDelete('profile');">
                                                                 <span><i class="fa fa-trash"></i></span>
                                                             </a>
-                                                            <a class="recropIcon_blk" href="javascript:void(0)" onclick="reCropp('profile');">
-                                                                <span><i class="fa fa-crop" aria-hidden="true"></i></span>
+                                                            <a class="recropIcon_blk" href="javascript:void(0)"
+                                                               onclick="reCropp('profile');">
+                                                                <span><i class="fa fa-crop"
+                                                                         aria-hidden="true"></i></span>
                                                             </a>
                                                         </div>
                                                     <?php } else { ?>
                                                         <a class="_delete clicktoaddimage"
-                                                           href="<?php echo admin_url('staff/remove_staff_profile_image/'. $member->staffid); ?>">
+                                                           href="<?php echo admin_url('staff/remove_staff_profile_image/' . $member->staffid); ?>">
                                                             <span><i class="fa fa-trash"></i></span>
                                                         </a>
                                                     <?php } ?>
@@ -181,19 +184,24 @@
                                                 <div class="clicktoaddimage <?php echo !empty($src) ? 'hidden' : ''; ?>">
                                                     <div class="drag_drop_image">
                                                         <span class="icon"><i class="fa fa-image"></i></span>
-                                                        <span><?php echo _l('dd_upload');?></span>
+                                                        <span><?php echo _l('dd_upload'); ?></span>
                                                     </div>
-                                                    <input id="profile_image" type="file" class="" name="profile_image" onchange="readFile(this,'profile');"/ >
+                                                    <input id="profile_image" type="file" class="" name="profile_image"
+                                                           onchange="readFile(this,'profile');"/ >
                                                     <input type="hidden" id="imagebase64" name="imagebase64">
                                                 </div>
                                                 <div class="cropper" id="profile_croppie">
                                                     <div class="copper_container">
                                                         <div id="profile-cropper"></div>
                                                         <div class="cropper-footer">
-                                                            <button type="button" class="btn btn-info p9 actionDone" type="button" id="" onclick="croppedResullt('profile');">
+                                                            <button type="button" class="btn btn-info p9 actionDone"
+                                                                    type="button" id=""
+                                                                    onclick="croppedResullt('profile');">
                                                                 <?php echo _l('save'); ?>
                                                             </button>
-                                                            <button type="button" class="btn btn-default actionCancel" data-dismiss="modal" onclick="croppedCancel('profile');">
+                                                            <button type="button" class="btn btn-default actionCancel"
+                                                                    data-dismiss="modal"
+                                                                    onclick="croppedCancel('profile');">
                                                                 <?php echo _l('cancel'); ?>
                                                             </button>
                                                             <button type="button" class="btn btn-default actionChange"
@@ -225,7 +233,8 @@
                                                                class="control-label"><?php echo _l('staff_add_edit_lastname'); ?>
                                                             <small class="req text-danger">*</small>
                                                         </label>
-                                                        <input id="lastname" name="lastname" class="form-control" autofocus="1"
+                                                        <input id="lastname" name="lastname" class="form-control"
+                                                               autofocus="1"
                                                                value="<?php echo $value; ?>" type="text">
                                                     </div>
                                                 </div>
@@ -233,13 +242,15 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <?php $value = (isset($member) ? $member->email : ''); ?>
+                                                    <?php $readonly = ($value!="" ? "readonly" : ''); ?>
                                                     <div class="form-group">
                                                         <label for="email"
                                                                class="control-label"><?php echo _l('staff_add_edit_email'); ?>
                                                             <small class="req text-danger">*</small>
                                                         </label>
-                                                        <input id="email" name="email" class="form-control" autocomplete="off"
-                                                               value="<?php echo $value; ?>" type="email">
+                                                        <input id="email" name="email" class="form-control"
+                                                               autocomplete="off"  value="<?php echo $value; ?>"
+                                                               type="email" <?php echo $readonly; ?>>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -256,7 +267,8 @@
                                                             <small class="req text-danger">*</small>
                                                         </label>
                                                         <div class="input-group">
-                                                            <input type="password" class="form-control password" name="password"
+                                                            <input type="password" class="form-control password"
+                                                                   name="password"
                                                                    autocomplete="off">
                                                             <span class="input-group-addon">
                                        <a href="#password" class="show_password"
@@ -291,8 +303,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
 
 
                                     <!-- <div class="form-group">
@@ -417,6 +427,14 @@
 
                                     $link_data = (isset($quick_link_all_data) ? $quick_link_all_data : "");
                                     $quick_link_val = explode(',', $link_data);
+                                    if(isset($dashboard_widget) && !empty($dashboard_widget)){
+                                        if(!empty($dashboard_widget->widget_type)){
+                                            $exp_val = explode(',',$dashboard_widget->widget_type);
+                                        }
+                                        if(!empty($dashboard_widget->quick_link_type)){
+                                            $quick_link_val = explode(',',$dashboard_widget->quick_link_type);
+                                        }
+                                    }
                                     ?>
 
                                     <div class="form-group">
@@ -675,6 +693,9 @@
                                                     <option value=""></option>
                                                     <?php
                                                     foreach ($usertypes as $usertype) {
+                                                        if(strtolower($usertype['type'])=="admin"){
+                                                            $usertype['type']="Brand admin";
+                                                        }
                                                         $selected = '';
                                                         if (isset($member)) {
                                                             if ($member->user_type == $usertype['id']) {
@@ -736,11 +757,11 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 text-right" style="margin-top:10px">
-                                                            <button id="remove<?php echo $pi; ?>"
+                                                        <!--<div class="col-md-12 text-right" style="margin-top:10px">
+                                                            <button id="remove<?php /*echo $pi; */?>"
                                                                     class="btn btn-danger remove-me">Remove
                                                             </button>
-                                                        </div>
+                                                        </div>-->
                                                         <?php $pi++;
                                                     } ?>
                                                 <?php } else { ?>
@@ -768,7 +789,7 @@
                                                                     class="selectpicker" data-width="100%"
                                                                     data-none-selected-text="Select"
                                                                     data-live-search="true">
-                                                                <!--<option value=""></option>-->
+                                                                <option value=""></option>
                                                                 <?php
                                                                 foreach ($roles as $role) {
                                                                     echo '<option value="' . $role['roleid'] . '">' . $role['name'] . '</option>';
@@ -803,7 +824,7 @@
                                                                 class="selectpicker" data-width="100%"
                                                                 data-none-selected-text="Select"
                                                                 data-live-search="true">
-                                                            <!--<option value=""></option>-->
+                                                            <option value=""></option>
                                                             <?php
                                                             foreach ($roles as $role) {
                                                                 echo '<option value="' . $role['roleid'] . '">' . $role['name'] . '</option>';
@@ -813,10 +834,10 @@
                                                     </div>
                                                 </div>
                                             <?php } ?>
-                                            <div class="col-md-12 text-right" style="margin-top:10px">
+                                            <!--<div class="col-md-12 text-right" style="margin-top:10px">
                                                 <button id="add-more" name="add-more" class="btn btn-primary">Add More
                                                 </button>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
 

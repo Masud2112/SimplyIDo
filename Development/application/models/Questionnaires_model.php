@@ -262,6 +262,7 @@ class Questionnaires_model extends CRM_Model
      */
     public function add_question($data)
     {
+
         $questionid = $this->insert_question($data['id']);
         if ($questionid) {
             $boxid = $this->insert_question_type($data['type'], $questionid);
@@ -281,6 +282,7 @@ class Questionnaires_model extends CRM_Model
             }
             $questions=$this->get_question($questionid);
             $qdata['question'] = $questions;
+            $qdata['qindex'] = $data['qindex'];
             return $this->load->view('admin/questionnaire/question', $qdata);
         } else {
             return false;

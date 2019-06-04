@@ -22,7 +22,6 @@ class Leads_model extends CRM_Model
         $this->db->join('tblleadsstatus', 'tblleadsstatus.id=tblleads.status', 'left');
         $this->db->join('tblleadssources', 'tblleadssources.id=tblleads.source', 'left');
         $this->db->join('tbleventtype', 'tbleventtype.eventtypeid=tblleads.eventtypeid', 'left');
-
         //added by vaidehi on 03/08/2018 
         $this->db->where('converted', 0);
 
@@ -55,7 +54,8 @@ class Leads_model extends CRM_Model
         $this->db->select('tblleads.name as lead_name,tblleads.profile_image as lead_image,tblleadssources.name as source_name,tblleads.id as id,tblleads.assigned,tblleads.email,tblleads.phonenumber,tblleads.company,tblleads.eventstartdatetime, tblleads.eventenddatetime ,tblleads.status,tblleads.lastcontact, tbleventtype.eventtypename  as eventtypename, tblleads.eventinquireon');
         $this->db->from('tblleads');
         $this->db->join('tblleadssources', 'tblleadssources.id=tblleads.source', 'left');
-        $this->db->join('tblstaff', 'tblstaff.staffid=tblleads.assigned', 'left');
+        $this->db->join('tblstaffleadassignee', 'tblstaffleadassignee.leadid = tblleads.id', 'left');
+        $this->db->join('tblstaff', 'tblstaff.staffid = tblstaffleadassignee.assigned', 'left');
         $this->db->join('tbleventtype', 'tbleventtype.eventtypeid=tblleads.eventtypeid', 'left');
         $this->db->where('status', $status);
         $this->db->where('tblleads.deleted = ', 0);
@@ -63,7 +63,7 @@ class Leads_model extends CRM_Model
         $this->db->where('tblleads.brandid = ', get_user_session());
 
         if (!$this->is_admin) {
-            $this->db->where('(assigned = ' . get_staff_user_id() . ' OR addedfrom=' . get_staff_user_id() . ' OR is_public=1)');
+            $this->db->where('(tblstaffleadassignee.assigned = ' . get_staff_user_id() . ' OR addedfrom=' . get_staff_user_id() . ' OR is_public=1)');
         }
         if ($search != '') {
             if (!_startsWith($search, '#')) {
@@ -287,8 +287,8 @@ class Leads_model extends CRM_Model
                     $assignData['leadid'] = $insert_id;
                     $assignData['assigned'] = $assignee;
                     $this->db->insert('tblstaffleadassignee', $assignData);
-                    $this->lead_assigned_member_notification($insert_id, $assignee);
                     $this->lead_new_created_notification($insert_id, $assignee);
+                    $this->lead_assigned_member_notification($insert_id, $assignee);
                 }
             }
             //$this->lead_assigned_member_notification($insert_id, $data['assigned']);
@@ -362,7 +362,7 @@ class Leads_model extends CRM_Model
                 'description' => ($integration == false) ? 'not_assigned_lead_to_you' : 'not_lead_assigned_from_form',
                 'touserid' => $assigned,
                 'eid' => $lead_id,
-                'not_type' => 'lead',
+                'not_type' => 'leads',
                 'brandid' => get_user_session(),
                 'link' => 'leads/dashboard/' . $lead_id,
                 'additional_data' => ($integration == false ? serialize(array(
@@ -428,7 +428,7 @@ class Leads_model extends CRM_Model
             'touserid' => $assigned,
             'eid' => $lead_id,
             'brandid' => get_user_session(),
-            'not_type' => 'lead',
+            'not_type' => 'leads',
             'link' => 'leads/dashboard/' . $lead_id,
             'additional_data' => ($integration == false ? serialize(array(
                 $name
@@ -493,7 +493,7 @@ class Leads_model extends CRM_Model
             'touserid' => $assigned,
             'eid' => $lead_id,
             'brandid' => get_user_session(),
-            'not_type' => 'lead',
+            'not_type' => 'leads',
             'link' => 'leads/dashboard/' . $lead_id,
             'additional_data' => ($integration == false ? serialize(array(
                 $name, $status
@@ -992,7 +992,7 @@ class Leads_model extends CRM_Model
                     'touserid' => $uid,
                     'brandid' => get_user_session(),
                     'eid' => $lead_id,
-                    'not_type' => 'lead',
+                    'not_type' => 'leads',
                     'link' => '#leadid=' . $lead_id,
                     'additional_data' => serialize(array(
                         $lead->name
@@ -2285,6 +2285,13 @@ class Leads_model extends CRM_Model
             }
         }
 
+        $this->db->where('eid', $lead_id);
+        $this->db->where('not_type', 'leads');
+        $this->db->update('tblnotifications', array(
+            'isread' => 1,
+            'isread_inline' => 1
+        ));
+
         if (!empty($clients)) {
             $this->load->model('projects_model');
             $this->load->model('register_model');
@@ -2337,7 +2344,7 @@ class Leads_model extends CRM_Model
                     $staffdata['is_not_staff'] = 1;
                     $staffdata['user_type'] = 2;
                     $staffdata['packagetype'] = (isset($package->packageid) ? $package->packageid : 2);
-                    $this->register_model->saveclient($staffdata, 'invite');
+                    $this->register_model->saveclient($staffdata, 'invite','client');
                     logActivity('New User Created [Email Address:' . $client_email . ' for invitation: ' . $insert_id . 'staffdata IP:' . $this->input->ip_address() . ']');
                     $where = array('email' => $client_email, 'deleted' => 0);
                     $staff_det = $this->db->where($where)->get('tblstaff')->row();
@@ -2367,6 +2374,23 @@ class Leads_model extends CRM_Model
                 $staff_brand['brandid'] = get_user_session();
                 $this->db->insert('tblstaffbrand', $staff_brand);
                 $this->db->where('staffid', $staff_det->staffid);
+
+                /**
+                 * Added By : Masud
+                 * Dt : 03/24/2018
+                 * prefill dashboard values
+                 */
+                $dashboard_data = array();
+                $dashboard_data['staffid'] = $staff_det->staffid;
+                $dashboard_data['widget_type'] = 'upcoming_project,pinned_item,calendar,weather,favourite,quick_link,message,getting_started,task_list,contacts,messages';
+                $dashboard_data['quick_link_type'] = 'project,message,task_due,meeting,invite';
+                $dashboard_data['order'] = '[{"widget_name":"getting_started","order":0},{"widget_name":"lead_pipeline","order":1},{"widget_name":"calendar","order":2},{"widget_name":"pinned_item","order":3},{"widget_name":"quick_link","order":4},{"widget_name":"upcoming_project","order":5},{"widget_name":"contacts","order":6},{"widget_name":"messages","order":7},{"widget_name":"task_list","order":8}]';
+                $dashboard_data['is_visible'] = 1;
+                $dashboard_data['brandid'] = get_user_session();
+                $dashboard_data['dateadded'] = date('Y-m-d H:i:s');
+                $dashboard_data['addedby'] = $staff_det->staffid;
+                $this->db->insert('  tbldashboard_settings', $dashboard_data);
+
                 $this->db->update('tblstaff', array('active' => 1));
 
                 $event = 'Event: ' . $pdet->name . '<br/><br/>';

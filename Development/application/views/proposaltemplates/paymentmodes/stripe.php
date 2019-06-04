@@ -205,7 +205,7 @@ $twentp = round((($proposal->feedback->proposal_total * 20) / 100), 2);
                                             </li>
                                             <li>
                                                 <button id="processpay" type="submit"
-                                                        class="btn btn-primary" <?php echo $authtype=="member"?"disabled":"" ?>>$<?php echo $amount ?></button>
+                                                        class="btn btn-primary">$<?php echo $amount ?></button>
                                             </li>
                                         </ul>
                                     </div>

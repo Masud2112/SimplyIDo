@@ -21,7 +21,7 @@ a, a:focus, a:hover {
 [dir=rtl] div.dataTables_wrapper, body.rtl div[class^=toolbar-container] {
     direction: rtl
 }
- 
+
 .p10 {
     padding: 10px
 }
@@ -143,7 +143,7 @@ em {
     color: #fff;
     background-color: #a84900
 }
- 
+
 .btn-warning.disabled, .btn-warning.disabled.active, .btn-warning.disabled.focus, .btn-warning.disabled:active, .btn-warning.disabled:focus, .btn-warning.disabled:hover, .btn-warning[disabled], .btn-warning[disabled].active, .btn-warning[disabled].focus, .btn-warning[disabled]:active, .btn-warning[disabled]:focus, .btn-warning[disabled]:hover, fieldset[disabled] .btn-warning, fieldset[disabled] .btn-warning.active, fieldset[disabled] .btn-warning.focus, fieldset[disabled] .btn-warning:active, fieldset[disabled] .btn-warning:focus, fieldset[disabled] .btn-warning:hover {
     background-color: #ff6f00
 }
@@ -8781,9 +8781,11 @@ table tbody tr .checkbox {
 .card-user-info-widget .thumb-lg:hover .removelink {
     visibility: visible
 }
+
 .croppie-container p#-error {
     display: none !important;
 }
+
 .coverImg, .imageview {
     min-height: 180px;
     width: 100%;
@@ -9074,7 +9076,7 @@ table tbody tr .checkbox {
 }
 
 .manage-task-page #kan-ban .tasks-status {
-    
+
     overflow: hidden
 }
 
@@ -9105,7 +9107,7 @@ table tbody tr .checkbox {
 .manage-task-page .staffTask_blk > ul > li {
     display: inline-block;
     padding: 0 5px;
-    margin-bottom:0 !important;
+    margin-bottom: 0 !important;
     vertical-align: middle;
 }
 
@@ -9124,6 +9126,7 @@ table tbody tr .checkbox {
 .manage-task-page .staffTask_blk > ul > li a {
     display: block;
 }
+
 .manage-addressbook-page .leadlistrow {
     height: auto;
     margin-top: -40px;
@@ -12633,6 +12636,7 @@ ul.payment-head li {
 #kan-ban .panel-body .card-name .inline-block, #kan-ban .panel-body .task-name .inline-block {
     margin: 0
 }
+
 .event_iamge img.lead-profile-image {
     min-width: 50px
 }
@@ -14218,13 +14222,16 @@ img {
     padding: 0;
     clear: both
 }
+
 .token {
     display: inline;
 }
+
 .quote_item {
     padding: 8px 15px;
     border-bottom: 1px solid #ebebeb
 }
+
 .page-proposaltemplates-admin .quote_item {
     padding: 8px 0px;
     border-bottom: 1px solid #ebebeb
@@ -14885,9 +14892,11 @@ img {
     border: 1px solid #dce1ef;
     margin-bottom: 15px
 }
+
 .agreement-page-inner {
     padding: 0 15px;
 }
+
 .editPro-block #add_group {
     margin: 25px 0 0
 }
@@ -15416,15 +15425,23 @@ span.no-img.signerPic {
     font-size: 35px;
     line-height: 80px;
 }
+
 img.signerPic {
     vertical-align: inherit;
 }
+
+span.signPic .profImgDiv {
+    width: auto;
+    height: auto;
+}
+
 .single_signature .row {
     /*border: 1px solid #ccc;
     margin: 0 10px 15px;
     padding: 10px;
     background: #fff*/
 }
+
 .page-proposaltemplates-admin .single_signature .row {
     border: 1px solid #ccc;
     margin: 0 10px 15px;
@@ -15462,6 +15479,7 @@ img.signerPic {
     border: 1px solid #efefef;*/
     margin: 0
 }
+
 .page-proposaltemplates-admin .signatures_list {
     background: #f4f4f4;
     border: 1px solid #efefef;
@@ -16350,7 +16368,8 @@ div.clicktoaddimage {
     height: 150px;
     border: 1px dashed #ccc;
     text-align: center;
-    position: relative
+    position: relative;
+    z-index: 1
 }
 
 .drag_drop_image {
@@ -16672,6 +16691,90 @@ input#calender_list:checked ~ label > a {
 
 .welcomeUser a:hover {
     color: #00a9b9
+}
+
+.dropdown-menu > li.brand {
+    position: relative;
+}
+
+.dropdown-menu > li > a.defaultBrand {
+    position: absolute;
+    background: transparent !important;
+    padding: 10px !important;
+    right: 0 !important;
+    display: inline-block !important;
+    z-index: 1;
+    width: auto !important;
+    top: 0;
+}
+
+#side-menutop li.active > a.defaultBrand, #side-menutop li > a.defaultBrand {
+    color: #8a8a8a !important;
+}
+
+#side-menutop li.active > a.defaultBrand.isdefault, #side-menutop li > a.defaultBrand.isdefault {
+    color: #00a9b9 !important;
+
+}
+
+.brandfooter {
+    color: #ccc;
+    padding: 10px 0;
+}
+
+.currentbrand .brandfooter {
+    color: #fff;
+    background-color: #00a9b9;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.brandname {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 5px 0;
+}
+
+.brandinner {
+    border: 2px solid #ccc;
+    background-color: #fafafa;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.brandinner.currentbrand {
+    border-color: #00a9b9;
+}
+
+.brandfooter a {
+    color: #ccc;
+    padding: 5px 10px;
+    font-size: 18px;
+}
+
+.brandbody {
+    padding: 5px;
+}
+
+a.summary {
+    position: relative;
+}
+
+a.summary span.count {
+    background-color: #00a9b9;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 100%;
+    top: 0;
+    right: 0;
+    color: #fff;
+    font-size: 14px;
+    line-height: 18px;
+}
+.brandimage {
+    max-width: 100px;
+    margin: 5px auto;
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -19262,9 +19365,11 @@ span.mdiscoun_suffix {
     /*padding-left: 5vw;
     padding-right: 5vw*/
 }
+
 .proposal_actions {
     margin-top: 25px;
 }
+
 .preview .proposal-template h4 i {
     display: none
 }
@@ -19400,11 +19505,13 @@ span.mdiscoun_suffix {
     background: #f9f9f9;
     border: 1px solid #c4c4c4;
     margin-bottom: 15px;
-    padding:15px;
+    padding: 15px;
 }
+
 h5.itemTitle {
     font-size: 16px;
 }
+
 .preview .paymentschedule h5, .preview .selected_services .quote_items > h5, .preview .selected_services > h5 {
     margin-top: 0
 }
@@ -19607,11 +19714,13 @@ h5.itemTitle {
     border-color: #FF9800 !important;
     color: #fff;
 }
+
 .proposal_status .label.decline {
     background-color: #ff0000 !important;
     border-color: #ff0000 !important;
     color: #fff;
 }
+
 .proposal_status .label.closed {
     background-color: #000000 !important;
     border-color: #000000 !important;
@@ -20568,10 +20677,10 @@ div.contactheader {
     position: relative;
     border-radius: 50%;
     overflow: hidden;
-    /*height: 34px;
-    width: 34px;*/
+    height: 34px;
+    width: 34px;
     background: transparent;
-   /* margin-right: 10px;*/
+    /* margin-right: 10px;*/
 }
 
 .profImgDiv > img {
@@ -21636,7 +21745,7 @@ a.remaining_amount {
 .leads-status li .lp_assigned_users .staff-profile-image-small, .projects-status li .lp_assigned_users .staff-profile-image-small {
     margin-top: 0;
     margin-right: 0;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
 }
 
 .leads-status li .card-footer {
@@ -21790,10 +21899,12 @@ div#banner_croppie .copper_container {
     text-align: center;
     position: relative;
 }
+
 .banner-pic {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
 .favicon_imageview img {
     max-width: 64px;
 }
@@ -21811,6 +21922,7 @@ div#banner_croppie .copper_container {
     max-width: 320px;
     margin: 30px 0;
 }
+
 /* .recropIcon_blk {
     position: absolute;
     top: 30px;
@@ -21823,9 +21935,11 @@ div#banner_croppie .copper_container {
 .company.brandimage-pic .copper_container {
     max-width: 100%;
 }
+
 ._buttons {
     min-height: 38px;
 }
+
 .actionToEdit {
     position: absolute;
     right: 0;
@@ -21849,16 +21963,77 @@ div#banner_croppie .copper_container {
     padding: 4px;
     background: rgba(255, 255, 255, .8);
     border-radius: 50%;
-    margin: 0 !important ;
+    margin: 0 !important;
 }
+
 .actionToEdit a:hover {
     color: #ffffff;
     border-color: #ffffff;
     background: rgba(0, 169, 185, 0.8);
 }
+
 .brandimage_imageview, .oloc_imageview {
     position: relative;
 }
+
+div#wrapper.trial_messge_wrapper {
+    min-height: unset !important;
+    z-index: 1;
+}
+
+div.trialmessage {
+    text-align: center;
+    line-height: 48px;
+    background-color: #fdeed8;
+    color: #ff9800;
+    font-size: 15px;
+    overflow: hidden;
+    width: 100%;
+}
+
+div.trialmessage.danger {
+    background-color: #f7e7e7;
+    color: #bc181f;
+}
+
+a.subscribe_now.btn.btn-info {
+    font-size: 16px;
+    padding: 0 15px;
+    line-height: 40px;
+    margin-right: 30px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    float: right;
+}
+
+div#trial_messge i.fa.fa-exclamation-triangle {
+    font-size: 24px;
+    position: relative;
+    top: 4px;
+    margin-right: 5px;
+}
+
+.ht38 {
+    height: 38px;
+}
+
+a.logo.logo-text {
+    font-size: 28px;
+    font-style: italic;
+    text-transform: uppercase;
+    margin-top: 8px;
+    display: inline-block;
+    font-family: inherit;
+}
+
+.elfinder-cwd-icon.elfinder-cwd-icon-image.elfinder-cwd-icon-png.ui-corner-all.elfinder-cwd-bgurl.elfinder-cwd-bgurl-crop:before {
+    content: "";
+}
+
+.newbrandtypeList_blk .checkbox {
+    margin-top: 0;
+}
+
 @media (max-width: 1366px) {
     .venue_cover_img img {
         width: 100%
@@ -21953,6 +22128,10 @@ div#banner_croppie .copper_container {
 
     .contactaddress .custom_address, .contactaddress .address-remove-me {
         margin-top: 33px;
+    }
+
+    a.subscribe_now.btn.btn-info {
+        float: none;
     }
 }
 
@@ -22222,7 +22401,8 @@ div#banner_croppie .copper_container {
     .leads-status .kanban-card-block .card-body .checkbox {
         margin-top: 10px;
     }
-    .projects-page #address-add-more, .projects-page #email-add-more, .projects-page #phone-add-more, .projects-page #website-add-more{
+
+    .projects-page #address-add-more, .projects-page #email-add-more, .projects-page #phone-add-more, .projects-page #website-add-more {
         margin-top: 0px;
     }
 }
@@ -23369,6 +23549,7 @@ div#banner_croppie .copper_container {
     .manage-task-page #kan-ban .tasks-status {
         height: auto
     }
+
     .manage-task-page #kan-ban li .card-body {
         height: 160px;
     }
