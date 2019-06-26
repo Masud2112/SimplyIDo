@@ -1,4 +1,4 @@
-<?php init_head(); ?>
+    <?php init_head(); ?>
 <div id="wrapper">
     <div class="content staff-member-page">
         <div class="breadcrumb">

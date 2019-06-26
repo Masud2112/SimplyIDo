@@ -39,7 +39,8 @@ init_head();
                         <div class="panel-body">
                             <div class="warningbox">
                                 <h4><?php echo _l('package_limit_restriction_line1', _l('project_lowercase')); ?></h4>
-                                <span><?php echo _l('package_limit_restriction_line2', _l('project_lowercase')); ?></span>
+                                <div class="clearfix"></div>
+                                <p><?php echo _l('package_limit_restriction_line2', _l('project_lowercase')); ?></p>
                             </div>
                         </div>
                     </div>

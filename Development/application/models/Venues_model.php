@@ -830,17 +830,17 @@ class Venues_model extends CRM_Model
 
         if ($is_sido_admin == 0 && $is_admin == 0) {
             $brandid = get_user_session();
-            $this->db->join('tblbrandvenue', 'tblbrandvenue.venueid = tblvenue.venueid', 'left');
+            $this->db->join('tblbrandvenue', 'tblbrandvenue.venueid = tblvenue.venueid', 'inner');
             $this->db->where('tblbrandvenue.deleted', 0);
             $this->db->where('tblbrandvenue.brandid', $brandid);
         }
 
         $this->db->where('tblvenue.deleted', 0);
         $this->db->where('tblvenue.isapproved', 1);
-
+        $this->db->where('(tblvenue.ispublic = 1 OR tblvenue.created_by=' . get_staff_user_id() . ')');
         $this->db->order_by('venuename', 'desc');
-
-        return $this->db->get('tblvenue')->result_array();
+        $result = $this->db->get('tblvenue')->result_array();
+        return $result;
     }
 
     /**

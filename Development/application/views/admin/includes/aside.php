@@ -268,14 +268,5 @@ $unreadcount = $this->messages_model->getunreadmessagecount();
                 </li>
             <?php } ?>
         <?php } ?>
-
-        <?php if (has_permission('questionnaire', '', 'view', true)) { ?>
-            <li class="menu-item-reports">
-                <a href="<?php echo admin_url('questionnaire')?>" aria-expanded="false">
-                    <!--<a href=""  aria-expanded="false">-->
-                    <i class="fa fa-question-circle-o menu-icon"></i>
-                    Questionnaire                                                </a>
-            </li>
-        <?php } ?>
     </ul>
 </aside>

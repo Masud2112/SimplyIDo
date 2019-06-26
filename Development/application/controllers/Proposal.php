@@ -143,13 +143,12 @@ class Proposal extends CRM_Controller
                     $rel_id = $data['rel_id'];
                     $data['rel_content'] = $this->projects_model->get($rel_id);
                     $this->db->select('contactid');
-                    $this->db->where('projectid', $rel_id);
+                    $this->db->where('(projectid ='.$rel_id.' OR eventid='.$rel_id.')');
                     $this->db->where('brandid', $brandid);
                     //$this->db->where('isvendor', 0);
                     //$this->db->where('iscollaborator', 0);
                     $contacts = $this->db->get('tblprojectcontact')->row();
                 }
-
                 $selected_items = json_decode($data['selected_items'], true);
                 $item_ids = array();
                 foreach ($selected_items as $key => $selected_item) {

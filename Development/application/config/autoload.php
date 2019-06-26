@@ -158,4 +158,4 @@ $autoload['language'] = array('english');
 |
 |   $autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array( 'misc_model' , 'roles_model' , 'clients_model' , 'tasks_model', 'teams_model', 'packages_model','tags_model', 'meetings_model', 'addressbooks_model','messages_model','leads_model','agreements_model','questionnaires_model','paymentschedules_model', 'venues_model' );
+$autoload['model'] = array( 'misc_model' , 'roles_model' , 'clients_model' , 'tasks_model', 'teams_model', 'packages_model','tags_model', 'meetings_model', 'addressbooks_model','messages_model','leads_model','agreements_model','leadcaptureforms_model','paymentschedules_model', 'venues_model' );

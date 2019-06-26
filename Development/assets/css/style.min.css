@@ -1534,7 +1534,7 @@ textarea.form-control {
     opacity: 0;
     z-index: 1;
     margin: 0 !important;
-    position: absolute;
+    position: absolute !important;
     left: 2px;
     top: 5px;
     max-width: 20px
@@ -4125,7 +4125,8 @@ table.items tr.main td {
 }
 
 #kan-ban li, #kan-ban ul {
-    list-style: none !important
+    list-style: none !important;
+    overflow: hidden;
 }
 
 #kan-ban .panel-heading-bg {
@@ -8228,7 +8229,6 @@ table tbody tr .checkbox {
     color: #868e96
 }
 
-,
 .small, small {
     font-size: 80%;
     font-weight: 400
@@ -11365,10 +11365,7 @@ table.mail-list.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child {
     color: #8a8a8a
 }
 
-.line-item-page h4, .proposal-template h4.page-title,
-
-;
-#page-title {
+.line-item-page h4, .proposal-template h4.page-title, #page-title {
     font-size: 16px;
     color: #00a9b9;
     font-weight: 700;
@@ -11431,10 +11428,7 @@ table.mail-list.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child {
     padding: 3px !important
 }
 
-.proposal-template h4.page-title,
-
-;
-#page-title {
+.proposal-template h4.page-title, #page-title {
     margin: 0;
     line-height: 28px;
     padding-bottom: 0
@@ -16308,7 +16302,10 @@ span.play_icon {
 }
 
 .buttons_container {
-    overflow: hidden
+    overflow: hidden;
+    background-color: #eee;
+    padding-bottom: 3px;
+    padding-left: 2px;
 }
 
 .questionnaire_buttons {
@@ -17019,7 +17016,12 @@ button.fc-viewFullCalendar-button:before {
 .panel_s.btmbrd {
     border-top: 3px solid #263238
 }
-
+input#formname {
+    border: none;
+    font-size: 25px;
+    padding: 0;
+    color: #00a9b9;
+}
 @media (min-width: 768px) and (max-width: 991px) {
     .address-remove-me, .email-remove-me, .phone-remove-me, .remove-me, .website-remove-me {
         font-size: 0;
@@ -17936,9 +17938,9 @@ button.fc-viewFullCalendar-button:before {
 }
 
 .manage-invoice-page .b1 {
-    display: block
+    display: block;
     font-size: 18px;
-    font-weight: 700
+    font-weight: 700;
 }
 
 .manage-invoice-page .b2 {
@@ -20280,7 +20282,7 @@ table.table-proposaltemplates .proposal_status .label {
     color: #fff;
 }
 
-.label.accepted {
+.label.accepted, .label.approved {
     background-color: #00A9B9 !important;
     border-color: #00A9B9 !important;
     color: #fff;
@@ -22029,11 +22031,123 @@ a.logo.logo-text {
 .elfinder-cwd-icon.elfinder-cwd-icon-image.elfinder-cwd-icon-png.ui-corner-all.elfinder-cwd-bgurl.elfinder-cwd-bgurl-crop:before {
     content: "";
 }
+.invite_user_status.inviteeStatus.approved .label {
+    background-color: #4caf50;
+    padding: 5px 20px;
+}
 
 .newbrandtypeList_blk .checkbox {
     margin-top: 0;
 }
 
+
+/* 
+#kan-ban ul.leadcaptureformss{
+    overflow: visible;
+} */
+#kan-ban li.form_card_blk, .page-leadcaptureforms-admin #kan-ban ul{
+    overflow: visible;
+}
+#kan-ban li.form_card_blk .panel-body{
+    padding: 10px;
+}
+
+#kan-ban li.form_card_blk .panel-body .row{
+    padding-top: 10px;
+}
+#kan-ban li.form_card_blk .panel-body .card-name .carddate-block{
+    height: 72px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 65px;
+    padding-top: 19px;
+    padding-left: 0;
+    color: #bdbdbd;
+    margin-right: 0;
+    margin-left: 10px;
+    background: #fff;
+}
+#kan-ban li.form_card_blk .panel-body .card-name .forminnerdetails {
+    float: left;
+    padding-left: 15px;
+}
+#kan-ban li.form_card_blk .panel-body .card-name .forminnerdetails .formTitle {
+    margin-bottom: 5px;
+}
+
+#kan-ban li.form_card_blk .panel-body .card-name .forminnerdetails .formTitle a {
+    color: #0BADBC;
+    font-weight: 700;
+}   
+#kan-ban li.form_card_blk .panel-body .card-name .forminnerdetails .ceratedupdated .user {
+    margin-right: 10px;
+    margin-top: 4px;
+}
+#kan-ban li.form_card_blk .panel-body .card-name .forminnerdetails .ceratedupdated b {
+    color: #454545;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+#kan-ban li.form_card_blk .panel-body .text-muted .checkbox{
+    margin-top: 50px;
+}
+
+#kan-ban li.form_card_blk .panel-body .row .card-footer {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 10px;
+    background: #F2F2F2;
+    border-top: 1px solid #ddd;
+}
+#kan-ban li.form_card_blk .panel-body .row .card-footer .fomdisplaymethods{
+    text-align: center;
+}
+#kan-ban li.form_card_blk .panel-body .row .card-footer .bootstrap-select .btn-default {
+    background: #ffffff !important;
+    border-radius: 5px;
+    color: #000 !important;
+}
+#kan-ban li.form_card_blk .panel-body .row .card-footer .bootstrap-select .bs-placeholder .filter-option{
+    color: #000 !important;
+}
+.que_button {
+    display: table;
+    border: 3px solid transparent;
+}
+
+.que_button .btn_inner {
+    display: table-cell;
+    vertical-align: middle;
+    height: 96px;
+    margin: 14px 7px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.formtools {
+    border-top: 3px solid #00a9b9;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.formtools .expand {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -12px;
+    background: #00a9b9;
+    width: 25px;
+    margin: auto;
+    text-align: center;
+    padding: 0;
+    color: #fff;
+    border-radius: 100%;
+    height: 25px;
+    line-height: 25px;
+    cursor: pointer;
+}
 @media (max-width: 1366px) {
     .venue_cover_img img {
         width: 100%

@@ -339,7 +339,7 @@ class Calendar_model extends CRM_Model
             $this->db->where("CASE WHEN start_date IS NULL THEN (end_date BETWEEN '$start' AND '$end') ELSE (start_date BETWEEN '$start' AND '$end') END",null,false);
 
             if (is_sido_admin() == 0 && $session_data['user_type'] != 1) {
-                $this->db->where('(meetingid IN (SELECT meeting_id FROM tblmeetingusers WHERE user_id = ' . get_staff_user_id() . '))');
+                $this->db->where('(meetingid IN (SELECT meeting_id FROM tblmeetingusers WHERE user_id = ' . get_staff_user_id() . ') OR created_by='.get_staff_user_id().')');
             }
 
             $meetings = $this->db->get()->result_array();

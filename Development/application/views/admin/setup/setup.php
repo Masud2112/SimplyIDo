@@ -171,12 +171,20 @@
                                         <span>Packages</span>
                                     </div>
                                 </li>
+                                <li>
+                                    <div class="setNav">
+                                        <a href="<?php echo admin_url('leadcaptureforms'); ?>">
+                                        </a>
+                                        <i class="fa fa-list-ul fa-fw"></i>
+                                        <span>Forms</span>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="box" id="Lists">
-                            <h2><i class="fa fa-list fa-fw"></i><?php echo _l('lists')?></h2>
+                            <h2><i class="fa fa-list fa-fw"></i><?php echo _l('lists') ?></h2>
                             <ul class="list-unstyled withIcons">
                                 <li>
                                     <div class="setNav">

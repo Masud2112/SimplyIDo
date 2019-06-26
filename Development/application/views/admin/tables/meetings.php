@@ -77,6 +77,7 @@ foreach ($rResult as $aRow) {
     $this->_instance->db->select('*');
     $this->_instance->db->where('meeting_id', $aRow['meetingid']);
     $meeting_users = $this->_instance->db->get('tblmeetingusers')->result_array();
+    $assignes="";
     if(count($meeting_users) > 0){
         $count = 1;
         $assignes="<div class='assined_users'>";

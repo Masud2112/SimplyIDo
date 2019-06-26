@@ -48,7 +48,7 @@
                     <strong><?php echo _l('cover_photo'); ?></strong>
                 </h4>
                 <?php if ((isset($venue) && $venue->venuecoverimage != NULL)) { ?>
-                    <a class="editicon"
+                    <a class="editicon _delete"
                        href="<?php echo admin_url('venues/remove_venue_cover_image/' . $venue->venueid); ?>"><i
                                 class="fa fa-remove"></i><span class="mleft5">Remove Photo</span></a>
                 <?php } ?>

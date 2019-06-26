@@ -1904,7 +1904,6 @@ class Projects extends Admin_controller
         $data['iscollaborator'] = $iscollaborator;
         $data['venueid'] = $venueid;
         $data['contacttype'] = $contacttype;
-
         $this->load->view('admin/projects/sub-events', $data);
     }
 

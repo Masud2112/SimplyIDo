@@ -4738,3 +4738,16 @@ $lang['team_members'] = 'Team Members';
 $lang['is_default'] = 'Is Default?';
 $lang['phone'] = 'Phone';
 $lang['current_brand'] = 'CURRENT BRAND';
+
+$lang['form_lastactionby'] = 'Last action by';
+$lang['form_displaymethod'] = 'Form Display Method';
+$lang['leadcaptureforms'] = 'Lead Capture Forms';
+$lang['choosemethods'] = 'Choose Display Methods';
+$lang['linktoform'] = 'Link to Form';
+$lang['linktodialogwindow'] = 'Link to Dialog Window';
+$lang['insertonwebpage'] = 'Insert on Web Page';
+$lang['facebooklink'] = 'Facebook Link';
+$lang['form'] = 'Form';
+$lang['forms'] = 'Forms';
+$lang['newleadcaptureform'] = 'New Lead Capture Form';
+$lang['choose_desired_element'] = 'Choose Desired Element';

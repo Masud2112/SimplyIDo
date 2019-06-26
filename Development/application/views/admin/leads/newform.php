@@ -31,7 +31,7 @@
                            style="margin-bottom:0px">New Contact</a>
                     <?php } ?>
                 <?php } ?>
-                <?php if ($profile_allow == 1) { ?>
+                <?php /*if ($profile_allow == 1) { */?>
                     <div class="mprofile-pic profile-pic<?php echo $index; ?>">
 
                         <!--<div class="form-group uploadProfilepic">
@@ -102,9 +102,9 @@
                             </div>
                         </div>
                     </div>
-                <?php } else { ?>
+                <?php /*} else { */?><!--
                     <input type="hidden" name="profile_image" value="">
-                <?php } ?>
+                --><?php /*} */?>
                 <div class="row">
                     <div class="col-sm-12">
 

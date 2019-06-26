@@ -25,24 +25,29 @@ $(function(){
     $('a.clicktoaddimage').click(function () {
         $(this).parent().siblings().children('input[type=file]').trigger('click');
     });
+
+    $('.que_button').click(function () {
+        var modal = $(this).data('target');
+        $(modal).modal('show');
+    });
 });
 
 // New question
-function add_question(type, id) {
-    var qindex = $('li.question').length;
+function add_field(type, id) {
+    var qindex = $('li.field').length;
     var qdata = {'type':type,'id':id,'qindex':qindex};
     $.ajax({
         type:'POST',
-        url:admin_url + 'questionnaire/add_question',
+        url:admin_url + 'leadcaptureforms/add_field',
         data:qdata,
         success:function(result){
-            $('#questionnaire_questions').append(result);
-            $("#questionnaire_questions").sortable('refresh');
+            $('#form_field').append(result);
+            $("#form_field").sortable('refresh');
             $('html,body').animate({
                     scrollTop: $(document).height()},
                 'slow');
             $(".selectpicker").selectpicker('refresh');
-            update_questions_order();
+            //update_questions_order();
         }
     });
 }

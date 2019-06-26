@@ -189,6 +189,10 @@ init_head();
                                                     <?php
                                                     foreach ($venues as $venue) {
                                                         if (!in_array($venue['venueid'], $invitedusers['venue'])) {
+                                                            if (is_serialized($venue['venueemail'])) {
+                                                                $venueemail = unserialize($venue['venueemail']);
+                                                                $venue['venueemail'] = $venueemail[0]['email'];
+                                                            }
                                                             ?>
                                                             <option value="<?php echo $venue['venueid']; ?>"
                                                                     data-venueemail='<?php echo $venue['venueemail']; ?>' <?php if ($project->venueid == $venue['venueid']) {

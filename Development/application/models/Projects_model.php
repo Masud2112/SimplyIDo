@@ -383,7 +383,6 @@ class Projects_model extends CRM_Model
         $this->db->join('tblstaff', 'tblstaff.staffid = tblstaffprojectassignee.assigned', 'left');
         $this->db->join('tblleadssources', 'tblleadssources.id=maintbl.source', 'left');
         $this->db->join('tbleventtype', 'tbleventtype.eventtypeid=maintbl.eventtypeid', 'left');
-
         if (isset($staffid) && $staffid > 0) {
             $this->db->join('tblprojectcontact', 'tblprojectcontact.projectid = maintbl.id or tblprojectcontact.eventid = maintbl.id', 'left');
             $this->db->where('tblprojectcontact.contactid', $staffid);
@@ -391,6 +390,7 @@ class Projects_model extends CRM_Model
             $this->db->join('tblprojectcontact', 'tblprojectcontact.projectid = maintbl.id or tblprojectcontact.eventid = maintbl.id', 'left');
             $this->db->where('tblprojectcontact.contactid', $contactid);
         } else if (isset($venueid) && $venueid > 0) {
+            $this->db->join('tblprojectcontact', 'tblprojectcontact.projectid = maintbl.id or tblprojectcontact.eventid = maintbl.id', 'left');
             $this->db->join('tblprojectvenue', 'tblprojectvenue.projectid = maintbl.id or tblprojectvenue.eventid = maintbl.id', 'left');
             $this->db->where('tblprojectvenue.venueid', $venueid);
         } else {
@@ -501,9 +501,9 @@ class Projects_model extends CRM_Model
 
         if (!$this->is_admin) {
             /*if (!is_brand_private()) {*/
-                $this->db->where('tblprojects.brandid =' . $brandid);
+            $this->db->where('tblprojects.brandid =' . $brandid);
             /*} else {*/
-                $this->db->where('(tblstaffprojectassignee.assigned = ' . get_staff_user_id() . ' OR addedfrom =' . get_staff_user_id() . ' OR tblprojectcontact.contactid = ' . get_staff_user_id() . ')');
+            $this->db->where('(tblstaffprojectassignee.assigned = ' . get_staff_user_id() . ' OR addedfrom =' . get_staff_user_id() . ' OR tblprojectcontact.contactid = ' . get_staff_user_id() . ')');
             /*}*/
         }
         if ($search != '') {
@@ -802,9 +802,6 @@ class Projects_model extends CRM_Model
             $project->collaborators = $this->get_project_invites($id, 4);
             $project->clients = $this->get_project_clients($id);
             $project->venues = $this->get_project_invites($id, 5);
-            /*echo "<pre>";
-            print_r($project->collaborators);
-            die('<--here');*/
             return $project;
         }
 
@@ -1777,6 +1774,7 @@ class Projects_model extends CRM_Model
         $data['project_profile_image'] = $_FILES['project_profile_image']['name'];
         unset($data['projectcontact']);
         unset($data['project_profile_image']);
+        unset($data['profile_image']);
         unset($data['country']);
         //save new project
         $this->db->insert('tblprojects', $data);
@@ -4772,9 +4770,13 @@ class Projects_model extends CRM_Model
         } else {
             $inv_type = "Venue";
         }
-
+        if(is_serialized($invitedetails->venue_email)){
+            $venueemail = unserialize($invitedetails->venue_email);
+            $invitedetails->venue_email = $venueemail[0]['email'];
+        }
         $clients = $invitedetails->clients;
         $invited_by_type = in_array($invitedetails->invitedby, $clients) ? "client" : "member";
+
         $this->db->where('inviteid', $data['inviteid']);
         if (is_staff_logged_in()) {
             $this->db->where('userid', $userid);
@@ -4800,7 +4802,7 @@ class Projects_model extends CRM_Model
             $currentuser = get_staff_user_id();
         } else {
             $currentuser = $invitedetails->staffid;
-            if($invitedetails->contacttype == 5){
+            if ($invitedetails->contacttype == 5) {
                 $currentuser = $invitedetails->venueid;
             }
         }
@@ -4819,6 +4821,7 @@ class Projects_model extends CRM_Model
                 } else {
                     $inviteuserid = $invitedetails->staffid;
                 }
+                //$inviteuserid = $inviteuser['userid'];
                 $firstname = get_staff_first_name($inviteuserid);
                 $client_email = get_staff_email($inviteuserid);
                 $eventname = $invitedetails->project_name;
@@ -4871,13 +4874,17 @@ class Projects_model extends CRM_Model
 
         } elseif ($newstatus == "approved") {
 
+            $this->db->where('inviteid', $data['inviteid']);
+            $this->db->update('tblinvite', array('status' => 'approved'));
+
             /*if ($currentuser == $invitedetails->staffid) {
                 $this->db->update('tblstaff',array('active'=>1,));
             }*/
             $approved_by = get_staff_full_name($currentuser);
-            if($invitedetails->contacttype == 5){
+            if ($invitedetails->contacttype == 5 && !is_staff_logged_in()) {
                 $approved_by = get_venue_name($currentuser);
             }
+
             foreach ($inviteusers as $inviteuser) {
                 if ($inviteuser['userid'] > 0) {
                     $inviteuserid = $inviteuser['userid'];
@@ -4890,13 +4897,14 @@ class Projects_model extends CRM_Model
                 $message = '<h2><span style="font-size: 14pt;">Hi ' . $firstname . '</span>,</h2><br/><br/>';
                 $message .= $inv_type . ' invitation for the event ' . $eventname . ' is approved by ' . $approved_by . '<br/><br/>';
                 if ($inviteuserid != $currentuser && $InviteesStatus->status != "declined") {
-                    if ($inviteuser['userid'] == 0) {
+                    if ($inviteuser['usertype'] == 'invitee') {
 
                         if ($invited_by_type == "client") {
                             $message = '<h2><span style="font-size: 14pt;">Hi ' . $firstname . '</span>,</h2><br/><br/>';
                             $message .= 'Your ' . $inv_type . ' invitation for the event <b>' . $eventname . '</b> is approved by ' . $approved_by . '<br/><br/>';
                             $this->emails_model->send_simple_email($client_email, $inv_type . " invitation approved", $message);
                         } else {
+
                             if (($invitedetails->status == "pending" || $InviteesStatus->status == "pending") && $invitedetails->invitetype == "new") {
 
                                 $merge_fields = array();
@@ -4915,10 +4923,17 @@ class Projects_model extends CRM_Model
                                     $send = $this->emails_model->send_email_template('invite-new-project-collaborator', $client_email, $merge_fields);
                                 }
                             } elseif (($invitedetails->status == "pending" || $InviteesStatus->status == "pending") && $invitedetails->invitetype == "existing") {
+
                                 $merge_fields = array();
                                 $merge_fields = array_merge($merge_fields, get_invite_merge_field($invitedetails->inviteid, $invitedetails->contacttype, 'sent-to-vendor'));
-                                $staffdetails['{name}'] = get_staff_first_name($invitedetails->staffid);
-                                $vendor_email = get_staff_email($invitedetails->staffid);
+                                if($invitedetails->staffid > 0){
+                                    $staffdetails['{name}'] = get_staff_first_name($invitedetails->staffid);
+                                    $vendor_email = get_staff_email($invitedetails->staffid);
+                                }elseif ($invitedetails->contactid > 0){
+                                    $staffdetails['{name}'] = get_addressbook_full_name($invitedetails->contactid);
+                                    $vendor_email = get_addressbook_email($invitedetails->contactid);
+                                }
+                                $merge_fields = array_merge($merge_fields, $staffdetails);
                                 //for vendor
                                 if ($invitedetails->contacttype == 3) {
                                     $send = $this->emails_model->send_email_template('invite-vendor', $vendor_email, $merge_fields);
@@ -4935,15 +4950,24 @@ class Projects_model extends CRM_Model
                                 $this->emails_model->send_simple_email($client_email, $inv_type . " invitation approved", $message);
                             }
                         }
-                    } else {
+                    } elseif ($inviteuser['usertype'] == 'venue'){
+                        if (is_staff_logged_in()) {
+                            $merge_fields = array();
+                            $merge_fields = array_merge($merge_fields, get_invite_merge_field($inviteid, $invitedetails->contacttype, 'sent-to-vendor'));
+                            $staffdetails['{name}'] = $invitedetails->venuename;
+                            $vendor_email = $invitedetails->venue_email;
+                            $merge_fields = array_merge($merge_fields, $staffdetails);
+                            $send = $this->emails_model->send_email_template('invite-venue', $vendor_email, $merge_fields);
+                        }
+                    }else {
                         $this->emails_model->send_simple_email($client_email, $inv_type . " invitation approved", $message);
                     }
                 }
             }
-
-            $this->db->where('inviteid', $inviteid);
-            $this->db->update('tblinvite', array('status' => 'approved'));
-
+            if (!is_staff_logged_in() || $invitedetails->staffid == $userid) {
+                $this->db->where('inviteid', $inviteid);
+                $this->db->update('tblinvite', array('status' => 'approved'));
+            }
             if ($invitedetails->invitetype == "new" && $invitedetails->staffid == $currentuser) {
                 $this->db->where('staffid', $invitedetails->staffid);
                 $this->db->update('tblstaff', array('active' => 1));
@@ -5777,7 +5801,7 @@ class Projects_model extends CRM_Model
 
                         $this->db->select('status');
                         $this->db->where('inviteid', $invite['inviteid']);
-                        $this->db->where('usertype="invitee" OR usertype="venue"');
+                        $this->db->where('(usertype="invitee" OR usertype="venue")');
                         $inviteestatus = $this->db->get('tblinvitestatus')->row();
                         $details['status'] = $inviteestatus->status;
                         $details['inviteid'] = $invite['inviteid'];
@@ -5838,7 +5862,7 @@ class Projects_model extends CRM_Model
                     foreach ($invite_vendor as $invite) {
                         $this->db->select('status');
                         $this->db->where('inviteid', $invite['inviteid']);
-                        $this->db->where('usertype="invitee" OR usertype="venue"');
+                        $this->db->where('(usertype="invitee" OR usertype="venue")');
                         $inviteestatus = $this->db->get('tblinvitestatus')->row();
                         if (!empty($inviteestatus)) {
                             $details['status'] = $inviteestatus->status;
@@ -6252,6 +6276,7 @@ class Projects_model extends CRM_Model
             $projectid = $project->parent;
         }
         $clients = $this->get_project_client($projectid);
+
         unset($data['project']);
         unset($data['invite']);
         unset($data['events']);
@@ -6299,7 +6324,7 @@ class Projects_model extends CRM_Model
                 //if account owner has send invite, send email to invited vendor
                 $merge_fields = array();
                 if (in_array($userid, $clients)) {
-                    $merge_fields = array_merge($merge_fields, get_invite_merge_field($insert_id, $data['contacttype']));
+                    $merge_fields = array_merge($merge_fields, get_invite_merge_field($insert_id, $data['contacttype'], 'sent-to-vendor'));
                 } else {
                     $merge_fields = array_merge($merge_fields, get_invite_merge_field($insert_id, $data['contacttype']));
                 }
@@ -6478,11 +6503,11 @@ class Projects_model extends CRM_Model
                                 $staffdetails['{name}'] = get_staff_first_name($client);
                                 $merge_fields = array_merge($merge_fields, $staffdetails);
                                 if ($data['contacttype'] == 3) {
-                                    $send = $this->emails_model->send_email_template('invite-new', $clientEmail, $merge_fields,'sent-to-vendor');
+                                    $send = $this->emails_model->send_email_template('invite-new', $clientEmail, $merge_fields, 'sent-to-vendor');
                                 }
                                 //for collaborator
                                 if ($data['contacttype'] == 4) {
-                                    $send = $this->emails_model->send_email_template('invite-new-collaborator', $clientEmail, $merge_fields,'sent-to-vendor');
+                                    $send = $this->emails_model->send_email_template('invite-new-collaborator', $clientEmail, $merge_fields, 'sent-to-vendor');
                                 }
                             }
                         }
@@ -6647,44 +6672,80 @@ class Projects_model extends CRM_Model
                                 foreach ($clients as $client) {
                                     $clientEmail = get_staff_email($client);
                                     $staffdetails['{name}'] = get_staff_first_name($client);
+                                    $staffdetails['{invite_link}'] = admin_url('projects/invitedetails/' . $insert_id);
                                     $merge_fields = array_merge($merge_fields, $staffdetails);
                                     if ($data['contacttype'] == 3) {
-                                        $send = $this->emails_model->send_email_template('invite-new', $clientEmail, $merge_fields,'sent-to-vendor');
+                                        $send = $this->emails_model->send_email_template('invite-new', $clientEmail, $merge_fields);
                                     }
                                     //for collaborator
                                     if ($data['contacttype'] == 4) {
-                                        $send = $this->emails_model->send_email_template('invite-new-collaborator', $clientEmail, $merge_fields,'sent-to-vendor');
+                                        $send = $this->emails_model->send_email_template('invite-new-collaborator', $clientEmail, $merge_fields);
                                     }
                                 }
                             }
                         }
                     }
                 }
-            } elseif ($data['contacttype'] == 5) {
-                foreach ($events as $key => $event) {
-                    $project_venue = [];
+            } else {
+                if ($data['contacttype'] == 5) {
+                    if (!in_array($userid, $clients)) {
+                        $merge_fields = array();
+                        $merge_fields = array_merge($merge_fields, get_invite_merge_field($insert_id, $data['contacttype']));
+                        foreach ($clients as $client) {
+                            $clientEmail = get_staff_email($client);
+                            $staffdetails['{name}'] = get_staff_first_name($client);
+                            $staffdetails['{invite_link}'] = admin_url('projects/invitedetails/' . $insert_id);
+                            $merge_fields = array_merge($merge_fields, $staffdetails);
 
-                    $pdet = $this->get($event);
-                    if ($pdet->parent == 0) {
-                        $project_venue['projectid'] = $event;
-                    } else {
-                        $project_venue['projectid'] = 0;
-                        $project_venue['eventid'] = $event;
+                            //for venue
+                            $send = $this->emails_model->send_email_template('invite-new-venue', $clientEmail, $merge_fields);
+
+                            if (!$send) {
+                                logActivity('Invitation email could not be sent to [Email Address:' . $clientEmail . ' for invitation: ' . $insert_id . ' IP:' . $this->input->ip_address() . ']');
+                            }
+                        }
+                    }else{
+                        $merge_fields = array();
+                        $merge_fields = array_merge($merge_fields, get_invite_merge_field($insert_id, $data['contacttype'], 'sent-to-vendor'));
+                        $account_user_query = $this->db->query('SELECT tblvenue.* FROM tblvenue WHERE venueid = ' . $data['venueid']);
+                        $results = $account_user_query->row();
+                        $venueEmail = $results->venueemail;
+                        $venuename = $results->venuename;
+
+                        $staffdetails['{name}'] = $venuename;
+                        $merge_fields = array_merge($merge_fields, $staffdetails);
+                        $send = $this->emails_model->send_email_template('invite-venue', $venueEmail, $merge_fields);
+                        if (!$send) {
+                            logActivity('Invitation email could not be sent to [Email Address:' . $venueEmail . ' for invitation: ' . $insert_id . ' IP:' . $this->input->ip_address() . ']');
+                        }
+
                     }
-                    $project_venue['venueid'] = $data['venueid'];
-                    $project_venue['brandid'] = get_user_session();
 
-                    $this->db->insert('tblprojectvenue', $project_venue);
+                    foreach ($events as $key => $event) {
+                        $project_venue = [];
+
+                        $pdet = $this->get($event);
+                        if ($pdet->parent == 0) {
+                            $project_venue['projectid'] = $event;
+                        } else {
+                            $project_venue['projectid'] = 0;
+                            $project_venue['eventid'] = $event;
+                        }
+                        $project_venue['venueid'] = $data['venueid'];
+                        $project_venue['brandid'] = get_user_session();
+
+                        $this->db->insert('tblprojectvenue', $project_venue);
+                    }
+                    $status_data = [];
+                    $status_data['status'] = "pending";
+                    $status_data['inviteid'] = $insert_id;
+                    $status_data['projectid'] = $event;
+                    $staff_brand['userid'] = $data['venueid'];
+                    $status_data['usertype'] = "venue";
+                    $status_data['created_by'] = $this->session->userdata['staff_user_id'];
+                    $status_data['datecreated'] = date('Y-m-d H:i:s');
+                    $this->db->insert('tblinvitestatus', $status_data);
                 }
-                $status_data = [];
-                $status_data['status'] = "pending";
-                $status_data['inviteid'] = $insert_id;
-                $status_data['projectid'] = $event;
-                $staff_brand['userid'] = $data['venueid'];
-                $status_data['usertype'] = "venue";
-                $status_data['created_by'] = $this->session->userdata['staff_user_id'];
-                $status_data['datecreated'] = date('Y-m-d H:i:s');
-                $this->db->insert('tblinvitestatus', $status_data);
             }
             /* Add invitee status for clients and inviter */
             if (!in_array($userid, $clients)) {

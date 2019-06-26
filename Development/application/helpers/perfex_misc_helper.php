@@ -180,7 +180,6 @@ function _parse_email_template_merge_fields($template, $merge_fields)
             $template->subject = str_ireplace($key, '', $template->subject);
         }
     }
-
     return $template;
 }
 

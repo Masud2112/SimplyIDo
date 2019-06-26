@@ -367,30 +367,30 @@ if (count($projectAssignees) > 0) {
                                                             $session_data = get_session_data();
                                                             $user_type = $session_data['user_type'];
                                                             /*if ($user_type == 1) {*/
-                                                                $staffid = (isset($collaborators['staffid']) ? $collaborators['staffid'] : 0);
-                                                                $addressbookid = (isset($collaborators['addressbookid']) ? $collaborators['addressbookid'] : 0);
-                                                                //die('<--here');
-                                                                ?>
-                                                                <td>
-                                                                    <div>
-                                                                        <?php if ($collaborators['status'] != "pending") { ?>
-                                                                            <a role="menuitem"
-                                                                               class="btn btn-success btn-icon"
-                                                                               tabindex="-1" href="javascript: void(0);"
-                                                                               onclick="fnViewInvite(<?php echo $projectid; ?>, <?php echo $staffid; ?>, <?php echo $addressbookid; ?>, 0 , 1);"><i
-                                                                                        class="fa fa-eye"></i></a>
-                                                                        <?php } else {
-                                                                            ?>
-                                                                            <div class="isDetails">
+                                                            $staffid = (isset($collaborators['staffid']) ? $collaborators['staffid'] : 0);
+                                                            $addressbookid = (isset($collaborators['addressbookid']) ? $collaborators['addressbookid'] : 0);
+                                                            //die('<--here');
+                                                            ?>
+                                                            <td>
+                                                                <div>
+                                                                    <?php if ($collaborators['status'] != "pending") { ?>
+                                                                        <a role="menuitem"
+                                                                           class="btn btn-success btn-icon"
+                                                                           tabindex="-1" href="javascript: void(0);"
+                                                                           onclick="fnViewInvite(<?php echo $projectid; ?>, <?php echo $staffid; ?>, <?php echo $addressbookid; ?>, 0 , 1);"><i
+                                                                                    class="fa fa-eye"></i></a>
+                                                                    <?php } else {
+                                                                        ?>
+                                                                        <div class="isDetails">
                                                                             <span class="invite_user_status inviteeStatus">
                                                                                 <span class="label">Pending</span>
                                                                             </span>
-                                                                            </div>
-                                                                        <?php } ?>
+                                                                        </div>
+                                                                    <?php } ?>
 
-                                                                    </div>
-                                                                </td>
-                                                            <?php /*} */?>
+                                                                </div>
+                                                            </td>
+                                                            <?php /*} */ ?>
                                                         </tr>
                                                     <?php } ?>
                                                 <?php }
@@ -451,7 +451,7 @@ if (count($projectAssignees) > 0) {
                                                         <?php
                                                         $session_data = get_session_data();
                                                         $user_type = $session_data['user_type'];
-                                                        if ($user_type == 1) {
+                                                        /*if ($user_type == 1) {*/
                                                             $staffid = (isset($vendors['staffid']) ? $vendors['staffid'] : 0);
                                                             $addressbookid = (isset($vendors['addressbookid']) ? $vendors['addressbookid'] : 0);
                                                             ?>
@@ -472,7 +472,7 @@ if (count($projectAssignees) > 0) {
                                                                     <?php } ?>
                                                                 </div>
                                                             </td>
-                                                        <?php } ?>
+                                                        <?php /*} */?>
                                                     </tr>
                                                 <?php } ?>
                                             <?php } else { ?>
@@ -539,27 +539,27 @@ if (count($projectAssignees) > 0) {
                                                         <?php
                                                         $session_data = get_session_data();
                                                         $user_type = $session_data['user_type'];
-                                                        if ($user_type == 1) {
-                                                            ?>
-                                                            <td>
-                                                                <div>
-                                                                    <?php if ($venues['status'] != "pending") { ?>
-                                                                        <a role="menuitem"
-                                                                           class="btn btn-success btn-icon"
-                                                                           tabindex="-1" href="javascript: void(0);"
-                                                                           onclick="fnViewVenueInvite(<?php echo $projectid; ?>, <?php echo $venues['venueid']; ?>);"><i
-                                                                                    class="fa fa-eye"></i></a>
-                                                                    <?php } else { ?>
-                                                                        <div class="isDetails">
+                                                        /*if ($user_type == 1) {*/
+                                                        ?>
+                                                        <td>
+                                                            <div>
+                                                                <?php if ($venues['status'] != "pending") { ?>
+                                                                    <a role="menuitem"
+                                                                       class="btn btn-success btn-icon"
+                                                                       tabindex="-1" href="javascript: void(0);"
+                                                                       onclick="fnViewVenueInvite(<?php echo $projectid; ?>, <?php echo $venues['venueid']; ?>);"><i
+                                                                                class="fa fa-eye"></i></a>
+                                                                <?php } else { ?>
+                                                                    <div class="isDetails">
                                                                             <span class="invite_user_status inviteeStatus">
                                                                                 <span class="label">pending</span>
                                                                             </span>
-                                                                        </div>
-                                                                    <?php } ?>
+                                                                    </div>
+                                                                <?php } ?>
 
-                                                                </div>
-                                                            </td>
-                                                        <?php } ?>
+                                                            </div>
+                                                        </td>
+                                                        <?php /*} */ ?>
                                                     </tr>
                                                 <?php } ?>
                                             <?php } else { ?>

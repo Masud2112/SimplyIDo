@@ -90,7 +90,7 @@ foreach ($custom_fields as $key => $field) {
 }
 
 $where = array();
-$filter = false;
+$filter = false;    
 
 array_push($where, ' AND tblprojects.deleted = 0');
 array_push($where, ' AND tblprojects.parent = 0');

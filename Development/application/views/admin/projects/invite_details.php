@@ -253,7 +253,7 @@ if ($invite_details->contacttype == 5) {
                                     <div class="row isLi">
                                         <div class="col-xs-4 isHeading"><span><?php echo "STATUS"; ?></span></div>
                                         <div class="col-xs-8 isDetails">
-                                            <div class="invite_user_status inviteeStatus">
+                                            <div class="invite_user_status inviteeStatus <?php echo strtolower($invitee->status); ?>">
                                                 <div class="label"><?php echo $invitee->status; ?></div>
                                             </div>
                                         </div>
