@@ -4751,3 +4751,5 @@ $lang['form'] = 'Form';
 $lang['forms'] = 'Forms';
 $lang['newleadcaptureform'] = 'New Lead Capture Form';
 $lang['choose_desired_element'] = 'Choose Desired Element';
+$lang['sample_text'] = 'This is the sample text to display in form';
+

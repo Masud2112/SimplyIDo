@@ -53,18 +53,19 @@ class LeadCaptureForms extends Admin_controller
             access_denied('questionnaire');
         }
         if ($this->input->post()) {
+            $formData = $this->input->post();
             if ($id == '') {
                 if (!has_permission('questionnaire', '', 'create', true)) {
                     access_denied('questionnaire');
                 }
 
-                $id = $this->leadcaptureforms_model->addform($this->input->post());
+                $id = $this->leadcaptureforms_model->addform($formData);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('questionnaire')));
-                    redirect(admin_url('questionnaire'));
+                    redirect(admin_url('leadcaptureforms/form/' . $id));
                 } else {
                     set_alert('danger', _l('problem_questionnaire_adding', _l('questionnaire_lowercase')));
-                    redirect(admin_url('leadcaptureforms/form/' . $id));
+                    redirect(admin_url('leadcaptureforms/form'));
                 }
 
             } else {
@@ -72,7 +73,7 @@ class LeadCaptureForms extends Admin_controller
                     access_denied('questionnaire');
                 }
 
-                $success = $this->leadcaptureforms_model->updateform($this->input->post(), $id);
+                $success = $this->leadcaptureforms_model->updateform($formData, $id);
                 if ($success) {
                     set_alert('success', _l('updated_successfully', _l('questionnaire')));
                     redirect(admin_url('questionnaire'));
@@ -115,7 +116,7 @@ class LeadCaptureForms extends Admin_controller
 
     // Ajax
     /* Remove questionnaire question */
-    public function remove_question($questionid)
+    public function remove_field($questionid)
     {
         if (!has_permission('questionnaire', '', 'edit', true)) {
             echo json_encode(array(
@@ -126,7 +127,7 @@ class LeadCaptureForms extends Admin_controller
         }
         if ($this->input->is_ajax_request()) {
             echo json_encode(array(
-                'success' => $this->leadcaptureforms_model->remove_question($questionid),
+                'success' => $this->leadcaptureforms_model->remove_field($questionid),
             ));
         }
     }
@@ -185,8 +186,8 @@ class LeadCaptureForms extends Admin_controller
                     'question_required' => _l('survey_question_required'),
                     'question_string' => _l('question_string')
                 ));*/
-                //return $question = $this->leadcaptureforms_model->add_question($this->input->post());
-                return $this->load->view('admin/leadcaptureforms/field', array('field'=>$fdata));
+                return $question = $this->leadcaptureforms_model->add_question($this->input->post());
+                //return $this->load->view('admin/leadcaptureforms/field', array('field'=>$fdata));
                 die();
             }
         }
@@ -291,7 +292,7 @@ class LeadCaptureForms extends Admin_controller
     {
         $data = $this->input->post();
         $image = $_FILES['file'];
-        $path = get_upload_path_by_type('questionnaire') . 'image/' . $data['questionid'] . '/';
+        $path = get_upload_path_by_type('leadcaptureform') . 'image/' . $data['questionid'] . '/';
         $tmpFilePath = $image['tmp_name'];
         if (!empty($tmpFilePath) && $tmpFilePath != '') {
             // Getting file extension

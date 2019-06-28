@@ -30,7 +30,7 @@ $btn_width = 100/9;
     <div class="buttons_container rowWrap" style="display: none">
         <div class="text-center mbot10 mtop20 bold text-uppercase"><?php echo _l('choose_desired_element')?></div>
         <?php foreach ($buttons as $button){ ?>
-            <div id = "<?php echo $button['type'];?>" class="que_button text-center" style="width:<?php echo $btn_width ?>%" onclick="add_field('<?php echo $button['type'];?>',<?php echo (isset($questionnaire) ? $questionnaire->id : '0'); ?>);return false;" draggable="true">
+            <div id = "<?php echo $button['type'];?>" class="que_button text-center" style="width:<?php echo $btn_width ?>%" onclick="add_field('<?php echo $button['type'];?>',<?php echo (isset($form) ? $form->id : '0'); ?>);return false;" draggable="true">
                 <div class="btn_inner">
                     <span class="icon"><i class="fa <?php echo $button['icon'];?>"></i></span>
                     <span class="btn_name"><?php echo $button['name'];?></span>

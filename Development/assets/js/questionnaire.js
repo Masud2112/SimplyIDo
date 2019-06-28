@@ -1,23 +1,23 @@
-$(function(){
+$(function () {
 
-    $('input[name="send_questionnaire_to[clients]"]').on('change',function(){
+    $('input[name="send_leadcaptureforms_to[clients]"]').on('change', function () {
         $('.customer-groups').slideToggle();
     });
-   
+
     // Init questions sortable
-    var questions_sortable = $("#questionnaire_questions").sortable({
+    var questions_sortable = $("#form_fields").sortable({
         placeholder: "ui-state-highlight-survey",
-        update: function() {
+        update: function () {
             // Update question order
             update_questions_order();
         }
     });
-    $("body").on('click', '.question_body_toggle', function(){
-        $('i',this).toggleClass('fa-caret-up fa-caret-down');
+    $("body").on('click', '.question_body_toggle', function () {
+        $('i', this).toggleClass('fa-caret-up fa-caret-down');
         $(this).parent().siblings('.question_body').slideToggle();
     });
-    $("body").on('change', '.que_file_upload input[type=file]', function(){
-        if (this.files[0].name!="") {
+    $("body").on('change', '.que_file_upload input[type=file]', function () {
+        if (this.files[0].name != "") {
             var file_name = this.files[0].name;
             $(this).siblings('.drag_drop_file').children('span.file_name').text(file_name);
         }
@@ -30,29 +30,39 @@ $(function(){
         var modal = $(this).data('target');
         $(modal).modal('show');
     });
+    if ($('#inlineEditor').length > 0) {
+        CKEDITOR.disableAutoInline = true;
+        CKEDITOR.inline('inlineEditor');
+        //CKEDITOR.replace('inlineEditor');
+    }
+
 });
 
 // New question
 function add_field(type, id) {
-    var qindex = $('li.field').length;
-    var qdata = {'type':type,'id':id,'qindex':qindex};
+    var qindex = $('.field').length;
+    var qdata = {'type': type, 'id': id, 'qindex': qindex};
+    var form = "#form_fields";
     $.ajax({
-        type:'POST',
-        url:admin_url + 'leadcaptureforms/add_field',
-        data:qdata,
-        success:function(result){
-            $('#form_field').append(result);
-            $("#form_field").sortable('refresh');
+
+        type: 'POST',
+        url: admin_url + 'leadcaptureforms/add_field',
+        data: qdata,
+        success: function (result) {
+            $(form).append(result);
+            $(form).sortable('refresh');
             $('html,body').animate({
-                    scrollTop: $(document).height()},
-                'slow');
+                scrollTop: $(document).height()
+            }, 'slow');
             $(".selectpicker").selectpicker('refresh');
-            //update_questions_order();
+            update_questions_order();
         }
-    });
+    })
+    ;
 }
+
 /*function add_question(type, id) {
-    $.post(admin_url + 'questionnaire/add_question', {
+    $.post(admin_url + 'leadcaptureforms/add_question', {
         type: type,
         id: id
     }).done(function(response) {
@@ -100,21 +110,22 @@ function add_field(type, id) {
         }
         question_area += '</div>';
         question_area += '</li>';
-        $('#questionnaire_questions').append(question_area);
-        $("#questionnaire_questions").sortable('refresh');
+        $('#leadcaptureforms_questions').append(question_area);
+        $("#leadcaptureforms_questions").sortable('refresh');
         $('html,body').animate({
-            scrollTop: $("#questionnaire_questions li:last-child").offset().top},
+            scrollTop: $("#leadcaptureforms_questions li:last-child").offset().top},
             'slow');
         update_questions_order();
     });
 }*/
+
 // Update question when user click on reload button
 function update_question(question, type, questionid) {
     $(question).parents('li').find('i.question_update').addClass('spinning');
     var data = {};
     var _question = $(question).parents('.question').find('input[data-questionid="' + questionid + '"]').val();
-    var _required="";
-    if (type !='heading') {
+    var _required = "";
+    if (type != 'heading') {
         _required = $(question).parents('.question').find('input[data-question_required="' + questionid + '"]').prop('checked');
     }
 
@@ -124,14 +135,14 @@ function update_question(question, type, questionid) {
     };
 
     data.questionid = questionid;
-    if (type == 'checkbox' || type == 'radio' || type=='select' || type=='heading') {
+    if (type == 'checkbox' || type == 'radio' || type == 'select' || type == 'heading') {
         var tempData = [];
         var boxes_area = $(question).parents('.question').find('.box_area');
 
-        $.each(boxes_area, function() {
+        $.each(boxes_area, function () {
             var boxdescriptionid = $(this).find('input.input_box_description').data('box-descriptionid');
             var boxdescription = $(this).find('input.input_box_description').val();
-            if(type=='heading'){
+            if (type == 'heading') {
                 boxdescriptionid = $(this).find('select.input_box_description').data('box-descriptionid');
                 boxdescription = $(this).find('select.input_box_description').val();
             }
@@ -142,8 +153,8 @@ function update_question(question, type, questionid) {
         data.boxes_description = tempData;
     }
 
-    setTimeout(function() {
-        $.post(admin_url + 'questionnaire/update_question', data).done(function(response) {
+    setTimeout(function () {
+        $.post(admin_url + 'leadcaptureforms/update_question', data).done(function (response) {
             $(question).parents('li').find('i.question_update').removeClass('spinning');
         });
     }, 10);
@@ -161,9 +172,10 @@ function add_more_boxes(question, boxdescriptionid) {
     update_questions_order();
 
 }
+
 // Remove question from database
 function remove_question_from_database(question, questionid) {
-    $.get(admin_url + 'questionnaire/remove_question/' + questionid, function(response) {
+    $.get(admin_url + 'leadcaptureforms/remove_field/' + questionid, function (response) {
         if (response.success == false) {
             alert_float('danger', response.message);
         } else {
@@ -172,9 +184,10 @@ function remove_question_from_database(question, questionid) {
         }
     }, 'json');
 }
+
 // Remove question box description  // checkbox // radio box
 function remove_box_description_from_database(question, questionboxdescriptionid) {
-    $.get(admin_url + 'questionnaire/remove_box_description/' + questionboxdescriptionid, function(response) {
+    $.get(admin_url + 'leadcaptureforms/remove_box_description/' + questionboxdescriptionid, function (response) {
         if (response.success == true) {
             $(question).parents('.box_area').remove();
         } else {
@@ -182,9 +195,10 @@ function remove_box_description_from_database(question, questionboxdescriptionid
         }
     }, 'json');
 }
+
 // Add question box description  // checkbox // radio box
 function add_box_description_to_database(question, questionid, boxid) {
-    $.get(admin_url + 'questionnaire/add_box_description/' + questionid + '/' + boxid, function(response) {
+    $.get(admin_url + 'leadcaptureforms/add_box_description/' + questionid + '/' + boxid, function (response) {
         if (response.boxdescriptionid !== false) {
             add_more_boxes(question, response.boxdescriptionid);
         } else {
@@ -192,31 +206,32 @@ function add_box_description_to_database(question, questionid, boxid) {
         }
     }, 'json');
 }
+
 // Updating question order // called when drop event called
 function update_questions_order() {
-    var questions = $('#questionnaire_questions').find('.question');
+    var questions = $('#form_fields').find('.field');
     var i = 1;
-    $.each(questions, function() {
+    $.each(questions, function () {
         $(this).find('input[name="order[]"]').val(i);
         i++;
     });
     var update = [];
-    $.each(questions, function() {
+    $.each(questions, function () {
         var questionid = $(this).find('input.questionid').data('questionid');
         var order = $(this).find('input[name="order[]"]').val();
         update.push([questionid, order])
     });
     data = {};
     data.data = update;
-    $.post(admin_url + 'questionnaire/update_questions_orders', data);
+    $.post(admin_url + 'leadcaptureforms/update_questions_orders', data);
 }
 
-function upload_image(input,type,id,desc_id,image) {
-    var extension = input.files[0].name.substr((input.files[0].name.lastIndexOf('.') +1));
+function upload_image(input, type, id, desc_id, image) {
+    var extension = input.files[0].name.substr((input.files[0].name.lastIndexOf('.') + 1));
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            if(extension=='jpg' || extension=='jpeg' || extension=='png' || extension=='gif'){
+            if (extension == 'jpg' || extension == 'jpeg' || extension == 'png' || extension == 'gif') {
                 $(input).parent().siblings('.imageview').children('img').attr('src', e.target.result);
                 $(input).parent('.clicktoaddimage').addClass('hidden');
                 $(input).parent().siblings('.imageview').removeClass('hidden');
@@ -229,22 +244,22 @@ function upload_image(input,type,id,desc_id,image) {
         form_data.append('desc_id', desc_id);
         form_data.append('image', image);
         $.ajax({
-            url: admin_url + 'questionnaire/upload_image', // point to server-side PHP script
+            url: admin_url + 'leadcaptureforms/upload_image', // point to server-side PHP script
             dataType: 'text',  // what to expect back from the PHP script, if anything
             cache: false,
             contentType: false,
             processData: false,
             data: form_data,
             type: 'post',
-            success: function(response){
+            success: function (response) {
                 response = response.split('#');
-                if(response[0]=='success'){
-                    $(input).attr('onchange',"upload_image(this,'image',"+id+","+desc_id+",'"+response[1]+"')");
-                    alert_float('success',"Image Uploaded");
-                }else if(response[0]=='ext'){
-                    alert_float('warning',"Extension is invalid");
-                }else {
-                    alert_float('warning',"Something went wrong");
+                if (response[0] == 'success') {
+                    $(input).attr('onchange', "upload_image(this,'image'," + id + "," + desc_id + ",'" + response[1] + "')");
+                    alert_float('success', "Image Uploaded");
+                } else if (response[0] == 'ext') {
+                    alert_float('warning', "Extension is invalid");
+                } else {
+                    alert_float('warning', "Something went wrong");
                 }
             }
         });
@@ -252,17 +267,18 @@ function upload_image(input,type,id,desc_id,image) {
     }
 }
 
-function duplicate_question(id,index){
-    qdata = {'id':id};
+function duplicate_question(id, index) {
+    qdata = {'id': id};
     $.ajax({
-        type:'POST',
-        url:admin_url + 'questionnaire/copy_question',
-        data:qdata,
-        success:function(result){
-            $('#question_'+index).after(result);
-            $("#questionnaire_questions").sortable('refresh');
+        type: 'POST',
+        url: admin_url + 'leadcaptureforms/copy_question',
+        data: qdata,
+        success: function (result) {
+            $('#question_' + index).after(result);
+            $("#leadcaptureforms_questions").sortable('refresh');
             $('html,body').animate({
-                    scrollTop: $(document).height()},
+                    scrollTop: $(document).height()
+                },
                 'slow');
             $(".selectpicker").selectpicker('refresh');
             update_questions_order();

@@ -2386,8 +2386,8 @@ function get_upload_path_by_type($type)
          * Dt : 03/21/2018
          * for Questionnaire image
          */
-        case 'questionnaire':
-            return QUESTIONNAIRE_FOLDER;
+        case 'leadcaptureform':
+            return LEADCAPTUREFORM_FOLDER;
             break;
 
         /**

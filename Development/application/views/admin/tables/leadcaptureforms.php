@@ -41,9 +41,9 @@ foreach ($rResult as $aRow) {
         $user = staff_profile_image($aRow['updatedby']);
         $date = strtoupper(date('D, M j, Y',strtotime($aRow['updateddate'])));
     }
-    $row[] = $aRow['name'];
+    $row[] = '<div class="leadcaptureName">'.$aRow['name'].'</div>';
 
-    $row[] = "<div class='ceratedupdated'><div style='vertical-align: top' class='user inline-block mright10'>".$user."</div><div class='inline-block'><b>".strtoupper($created)."</b><br />".$date."</div></div>";
+    $row[] = "<div class='ceratedupdated'><div class='user inline-block mright10'>".$user."</div><div class='inline-block userDet'><b>".strtoupper($created)."</b><br />".$date."</div></div>";
 
     $row[] = "<div class='fomdisplaymethods'><select id='formmethods' class='methods selectpicker'>
 <option value=''>"._l('choosemethods')."</option>

@@ -227,7 +227,7 @@ define('PROPOSALTEMPLATE_BANNER_FOLDER',FCPATH . 'uploads/proposals_images/banne
 
 define('PROPOSALTEMPLATE_SIGNATURE_FOLDER',FCPATH . 'uploads/proposals_images/signature' . '/');
 
-define('QUESTIONNAIRE_FOLDER',FCPATH . 'uploads/questionnaire/' . '/');
+define('LEADCAPTUREFORM_FOLDER',FCPATH . 'uploads/leadcaptureforms/' . '/');
 
 
 /**

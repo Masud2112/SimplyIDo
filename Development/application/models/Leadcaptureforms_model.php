@@ -26,8 +26,7 @@ class LeadCaptureForms_model extends CRM_Model
             return false;
         }
 
-        $this->db->where('rel_id', $form->id);
-        $this->db->where('rel_type', 'form');
+        $this->db->where('form_id', $form->id);
         $this->db->order_by('question_order', 'asc');
         $questions = $this->db->get('tblformquestions')->result_array();
         $i = 0;
@@ -60,13 +59,13 @@ class LeadCaptureForms_model extends CRM_Model
      */
     public function addform($data)
     {
-        $form = $this->forms_model->check_form_name_exists($data['name'], '');
+        $form = $this->check_form_name_exists($data['name'], '');
         if ($form->id <= 0 || empty($form)) {
             $data['brandid'] = get_user_session();
             $data['createdby'] = $this->session->userdata['staff_user_id'];
             $data['createddate'] = date('Y-m-d H:i:s');
 
-            $this->db->insert('tblformtemplate', $data);
+            $this->db->insert('tblleadcaptureforms', $data);
             $insert_id = $this->db->insert_id();
             if ($insert_id) {
 
@@ -86,7 +85,7 @@ class LeadCaptureForms_model extends CRM_Model
      */
     public function updateform($data, $id)
     {
-        $form = $this->forms_model->check_form_name_exists($data['name'], $id);
+        $form = $this->check_form_name_exists($data['name'], $id);
 
         if (empty($form)) {
             $affectedRows = 0;
@@ -151,7 +150,7 @@ class LeadCaptureForms_model extends CRM_Model
         } else {
             $where = array('name =' => $name, 'deleted =' => 0, 'brandid =' => $brandid);
         }
-        return $this->db->where($where)->get('tblformtemplate')->row();
+        return $this->db->where($where)->get('tblleadcaptureforms')->row();
     }
 
     /**
@@ -228,8 +227,7 @@ class LeadCaptureForms_model extends CRM_Model
     private function insert_question($id, $question = '')
     {
         $this->db->insert('tblformquestions', array(
-            'rel_id' => $id,
-            'rel_type' => 'form',
+            'form_id' => $id,
             'question' => $question
         ));
         $insert_id = $this->db->insert_id();
@@ -281,9 +279,9 @@ class LeadCaptureForms_model extends CRM_Model
                 ));
             }
             $questions = $this->get_question($questionid);
-            $qdata['question'] = $questions;
+            $qdata['field'] = $questions;
             $qdata['qindex'] = $data['qindex'];
-            return $this->load->view('admin/form/question', $qdata);
+            return $this->load->view('admin/leadcaptureforms/field', $qdata);
         } else {
             return false;
         }

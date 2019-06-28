@@ -57,29 +57,25 @@
                                 </div>
                             </div>
                         </div>
-
-                        <?php $this->load->view('admin/leadcaptureforms/formtools'); ?>
-                        <?php /*if (isset($form)) { */?><!--
-                            <?php /*if (has_permission('questionnaire', '', 'edit')) { */?>
-                                <?php /*$this->load->view('admin/leadcaptureforms/formtools'); */?>
-                            --><?php /*} */?>
-                            <div class="clearfix"></div>
-                            <hr/>
-                            <ul class="list-unstyled survey_question_callback" id="form_field">
+                        <?php if (isset($form)) { ?>
+                            <?php if (has_permission('questionnaire', '', 'edit')) { ?>
+                                <?php $this->load->view('admin/leadcaptureforms/formtools'); ?>
+                            <?php } ?>
+                            <div class="list-unstyled survey_question_callback" id="form_fields">
                                 <?php
                                 $question_area = '';
                                 if (isset($form->questions)) {
                                     if (count($form->questions) > 0) {
                                         foreach ($form->questions as $index => $question) {
-                                            $que_data['question'] = $question;
+                                            $que_data['field'] = $question;
                                             $que_data['qindex'] = $index;
                                             $this->load->view('admin/leadcaptureforms/field', $que_data);
                                         }
                                     }
                                 }
                                 ?>
-                            </ul>
-                        <?php /*}*/ /*else {
+                            </div>
+                        <?php } /*else {
                             $this->load->view('admin/leadcaptureforms/defaultformfields');
 
                         }*/ ?>
@@ -102,7 +98,6 @@
     $(document).ready(function () {
         _validate_form($('#questionnaire'), {name: 'required'});
     });
-
 </script>
 </body>
 </html>

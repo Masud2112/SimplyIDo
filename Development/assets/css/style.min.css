@@ -20742,9 +20742,8 @@ div.contactheader {
     font-weight: 500
 }
 
-#
 #signup-form fieldset #account-next.btn-block {
-    width: 100%
+    width: 100%;
 }
 
 .dropdown-backdrop, .moreassignee, a.banner_edit {
@@ -21118,7 +21117,7 @@ a.assigneemore:hover ~ .moreassignee.hide a {
     z-index: 2;
     border-radius: 5px;
     border: 1px solid #ccc;
-    margin-top: 5px
+    margin-top: 5px;
     z-index: 6;
 }
 
@@ -22148,6 +22147,41 @@ a.logo.logo-text {
     line-height: 25px;
     cursor: pointer;
 }
+
+.table-leadcaptureforms tbody td.actionlinks {
+    width: 30px;
+}
+.table-leadcaptureforms thead th:nth-last-of-type(2){
+    width: 200px;
+}
+.table-leadcaptureforms .leadcaptureName{
+    font-weight: 600;
+    color: #00A9B9;
+}
+.table-leadcaptureforms .ceratedupdated > div{
+    vertical-align: middle;
+}
+
+.table-leadcaptureforms .ceratedupdated .userDet{
+    font-weight: 400;
+}
+.table-leadcaptureforms .ceratedupdated .userDet b{
+    font-weight: 700;
+}
+.table-leadcaptureforms  .fomdisplaymethods{
+    text-align: center;
+    position: relative;
+    z-index: 5;
+}
+.table-leadcaptureforms  .bootstrap-select .btn-default {
+    background: #ffffff !important;
+    border-radius: 5px;
+    color: #000 !important;
+}
+.table-leadcaptureforms  .bootstrap-select .bs-placeholder .filter-option{
+    color: #000 !important;
+}
+
 @media (max-width: 1366px) {
     .venue_cover_img img {
         width: 100%
